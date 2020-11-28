@@ -1,13 +1,13 @@
 export {}
 const { Router } = require('express')
+const workoutController = require('../controllers/workoutController')
 
 function workoutRouter (workoutModel) {
   const router = Router()
+  const workouts = workoutController(workoutModel)
 
   router.route('/')
-    .get((req, res) => {
-      res.send('hola')
-    })
+    .get(workouts.getAllMethod)
 
   return router
 }
