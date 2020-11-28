@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "typeRoots": ["@types", "node_modules/@types"],
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "types": ["node"]
+}
