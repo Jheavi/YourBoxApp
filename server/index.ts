@@ -10,6 +10,13 @@ const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 
 const server = express()
 const port = process.env.PORT || 2130
+const dbUrl = process.env.DBURL || 'mongodb+srv://Jheavi:GymAppSkylab@gymapp.yu4va.mongodb.net/gymappdb?retryWrites=true&w=majority'
+
+try {
+  mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+} catch (error) {
+  console.log(error)
+}
 
 server.use(morgan('dev'))
 
