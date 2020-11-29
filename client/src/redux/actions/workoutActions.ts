@@ -16,10 +16,10 @@ export function loadWorkoutError (error: any) {
   }
 }
 
-export function loadWorkout (day: string) {
+export function loadWorkout (date: string) {
   return async (dispatch: Function) => {
     try {
-      const { data } = await axios.get(serverUrls.workoutUrl, { params: day })
+      const { data } = await axios.get(`${serverUrls.workoutUrl}/${date}`)
 
       dispatch(loadWorkoutSuccess(data))
     } catch (error) {
