@@ -46,7 +46,6 @@ export function updateWorkout (date: string, updatedDescription: string) {
   return async (dispatch: Function) => {
     try {
       const { data } = await axios.patch(`${serverUrls.workoutUrl}/${date}`, { updatedDescription })
-      console.log(data)
 
       dispatch(updateWorkoutSuccess(data))
     } catch (error) {
