@@ -27,3 +27,30 @@ export function loadWorkout (date: string) {
     }
   }
 }
+
+export function updateWorkoutSuccess (workout: object) {
+  return {
+    type: actionTypes.UPDATE_WORKOUT,
+    workout
+  }
+}
+
+export function updateWorkoutError (error: any) {
+  return {
+    type: actionTypes.UPDATE_WORKOUT_ERROR,
+    error
+  }
+}
+
+export function updateWorkout (date: string, updatedDescription: string) {
+  return async (dispatch: Function) => {
+    try {
+      const { data } = await axios.patch(`${serverUrls.workoutUrl}/${date}`, { updatedDescription })
+      console.log(data)
+
+      dispatch(updateWorkoutSuccess(data))
+    } catch (error) {
+      dispatch(updateWorkoutError(error))
+    }
+  }
+}
