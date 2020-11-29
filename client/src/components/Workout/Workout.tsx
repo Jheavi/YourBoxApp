@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import { loadWorkout } from '../../redux/actions/workoutActions'
+import { todayData } from '../../utils/dateFunctions'
 import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'Roboto, Open Sans, sans-serif',
-    backgroundColor: '#000000'
+    backgroundColor: '#0d0d0d'
   },
   square: {
     width: '80%',
@@ -57,28 +58,23 @@ const calendarTheme = {
 }
 
 function Workout ({ workout, dispatch }: any) {
-  console.log(workout)
-
   useEffect(() => {
-    const today = new Date()
-    const day = today.getDate()
-    const month = today.getMonth() + 1
-    const year = today.getFullYear()
-    dispatch(loadWorkout(`${year}-${month}-${day}`))
+    const { todayString } = todayData()
+    dispatch(loadWorkout(todayString))
   }, [])
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 1 }} />
       <View style={styles.square}>
-        <Text style={styles.workoutText}>{workout.description}</Text>
+        <Text style={styles.workoutText}>{workout && workout.description}</Text>
       </View>
-      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 1 }}/>
       <Calendar
       theme={calendarTheme}
       firstDay={1}
       />
-      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 1 }}/>
     </ScrollView>
   )
 }
