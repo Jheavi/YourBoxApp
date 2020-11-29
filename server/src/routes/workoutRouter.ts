@@ -11,6 +11,7 @@ function workoutRouter (workoutModel) {
 
   router.route('/:date')
     .get(workouts.getWorkoutMethod)
+    .patch(workouts.patchWorkoutMethod)
 
   return router
 }
