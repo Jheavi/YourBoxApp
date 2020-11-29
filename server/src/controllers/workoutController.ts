@@ -11,7 +11,18 @@ function workoutController (workoutModel) {
     }
   }
 
-  return { getAllMethod }
+  async function getWorkoutMethod ({ params: { date } }, res) {
+    try {
+      console.log(date)
+      const queryToFind: object = { date }
+      const workout = await workoutModel.findOne(queryToFind)
+      res.send(workout)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  return { getAllMethod, getWorkoutMethod }
 }
 
 module.exports = workoutController
