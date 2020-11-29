@@ -1,9 +1,9 @@
-export {}
+const workoutModel = require('../models/workoutModel')
 
 function workoutController (workoutModel) {
   async function getAllMethod (req, res) {
     try {
-      const query: object = {}
+      const query = {}
       const workouts = await workoutModel.find(query)
       res.send(workouts)
     } catch (error) {
@@ -13,7 +13,7 @@ function workoutController (workoutModel) {
 
   async function getWorkoutMethod ({ params: { date } }, res) {
     try {
-      const queryToFind: object = { date }
+      const queryToFind = { date }
       const workout = await workoutModel.findOne(queryToFind)
       res.send(workout)
     } catch (error) {
@@ -23,7 +23,7 @@ function workoutController (workoutModel) {
 
   async function patchWorkoutMethod ({ params: { date }, body: { updatedDescription } }, res) {
     try {
-      const queryToFind: object = { date }
+      const queryToFind = { date }
       const workout = await workoutModel.findOneAndUpdate(
         queryToFind,
         { description: updatedDescription },

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "typeRoots": ["@types", "node_modules/@types"],
+    "target": "es5"
   },
   "exclude": [
     "node_modules"
