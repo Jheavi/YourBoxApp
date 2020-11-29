@@ -23,6 +23,8 @@ module.exports = {
     'linebreak-style': 0,
     'global-require': 0,
     'eslint linebreak-style': [0, 'error', 'windows'],
-    'no-unused-vars': 1
+    'no-unused-vars': 1,
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error']
   }
 }
