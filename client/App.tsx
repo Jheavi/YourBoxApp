@@ -1,23 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
-import { Calendar } from "react-native-calendars";
-
-export default function App() {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={{flex: 1}}></View>
-      <View style={styles.square}>
-        <Text></Text>
-      </View>
-      <View style={{flex: 1}}></View>
-      <Calendar
-      theme={calendarTheme}
-      firstDay={1}
-      />
-      <View style={{flex: 1}}></View>
-    </ScrollView>
-  );
-}
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { StyleSheet, View, ScrollView, Text } from 'react-native'
+import { Calendar } from 'react-native-calendars'
+import { loadWorkout } from './src/redux/actions/workoutActions'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +11,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'Roboto, Open Sans, sans-serif',
-    backgroundColor: '#000000',
+    backgroundColor: '#000000'
   },
   square: {
     width: '80%',
@@ -33,7 +19,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     height: '25%'
   }
-});
+})
 
 const calendarTheme = {
   textSectionTitleColor: '#cb1313',
@@ -59,7 +45,44 @@ const calendarTheme = {
   'stylesheet.calendar.main': {
     container: {
       padding: 0,
-      backgroundColor: '#ffffff',
+      backgroundColor: '#ffffff'
     }
   }
 }
+
+function App ({ workout, dispatch }: any) {
+  useEffect(() => {
+    const today = new Date()
+    const day = today.getDate()
+    const month = today.getMonth() + 1
+    const year = today.getFullYear()
+    dispatch(loadWorkout(`${year}-${month}-${day}`))
+  }, [])
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={{ flex: 1 }}></View>
+      <View style={styles.square}>
+        <Text>{workout.description}</Text>
+      </View>
+      <View style={{ flex: 1 }}></View>
+      <Calendar
+      theme={calendarTheme}
+      firstDay={1}
+      />
+      <View style={{ flex: 1 }}></View>
+    </ScrollView>
+  )
+}
+
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired
+}
+
+function mapStateToProps (state: any) {
+  return {
+    workout: state.workoutReducer.workout
+  }
+}
+
+export default connect(mapStateToProps)(App)
