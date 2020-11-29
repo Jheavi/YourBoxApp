@@ -9,6 +9,9 @@ function workoutRouter (workoutModel) {
   router.route('/')
     .get(workouts.getAllMethod)
 
+  router.route('/:date')
+    .get(workouts.getWorkoutMethod)
+
   return router
 }
 
