@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, View, ScrollView, Text } from 'react-native'
+import { StyleSheet, View, ScrollView, Button, TextInput } from 'react-native'
 import { Calendar } from 'react-native-calendars'
-import { loadWorkout } from '../../redux/actions/workoutActions'
+import { loadWorkout, updateWorkout } from '../../redux/actions/workoutActions'
 import { todayData } from '../../utils/dateFunctions'
 import PropTypes from 'prop-types'
 
@@ -58,17 +58,35 @@ const calendarTheme = {
 }
 
 function Workout ({ workout, dispatch }: any) {
+  const [descriptionValue, setDescriptionValue] = useState(workout?.description)
+  const { todayString } = todayData()
+
   useEffect(() => {
-    const { todayString } = todayData()
-    dispatch(loadWorkout(todayString))
+    loadWorkout(todayString)
   }, [])
+
+  useEffect(() => {
+    if (workout) {
+      setDescriptionValue(workout.description)
+    }
+  }, [workout])
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ flex: 1 }} />
       <View style={styles.square}>
-        <Text style={styles.workoutText}>{workout && workout.description}</Text>
+        <TextInput
+        style={styles.workoutText}
+        value={descriptionValue}
+        onChangeText={text => setDescriptionValue(text)}
+        />
       </View>
+      <Button
+      title="Save changes"
+      onPress={() => dispatch(updateWorkout(
+        workout.date || todayString,
+        descriptionValue))}
+      />
       <View style={{ flex: 1 }}/>
       <Calendar
       theme={calendarTheme}

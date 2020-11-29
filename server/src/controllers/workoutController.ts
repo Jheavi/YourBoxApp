@@ -13,7 +13,6 @@ function workoutController (workoutModel) {
 
   async function getWorkoutMethod ({ params: { date } }, res) {
     try {
-      console.log(date)
       const queryToFind: object = { date }
       const workout = await workoutModel.findOne(queryToFind)
       res.send(workout)
@@ -22,7 +21,21 @@ function workoutController (workoutModel) {
     }
   }
 
-  return { getAllMethod, getWorkoutMethod }
+  async function patchWorkoutMethod ({ params: { date }, body: { updatedDescription } }, res) {
+    try {
+      const queryToFind: object = { date }
+      const workout = await workoutModel.findOneAndUpdate(
+        queryToFind,
+        { description: updatedDescription },
+        { upsert: true, new: true })
+
+      res.send(workout)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  return { getAllMethod, getWorkoutMethod, patchWorkoutMethod }
 }
 
 module.exports = workoutController

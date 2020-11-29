@@ -7,6 +7,8 @@ export default function workoutReducer (state: object = initialState, action: Ac
   switch (action.type) {
     case actionTypes.LOAD_WORKOUT:
       return { ...state, workout: action.workout }
+    case actionTypes.UPDATE_WORKOUT:
+      return { ...state, workout: action.workout }
     default:
       return state
   }
