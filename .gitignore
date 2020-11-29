@@ -328,3 +328,8 @@ temp/
 
 # Firebase
 .firebase/
+
+# IOS
+
+/ios
+ios/
