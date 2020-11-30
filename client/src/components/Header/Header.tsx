@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, StatusBar } from 'react-native'
 import BurgerButton from './BurgerButton/BurgerButton'
 import UserButton from './UserButton/UserButton'
 // import { connect } from 'react-redux'
@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingTop: 20,
+    paddingTop: 10,
     fontFamily: 'Roboto, Open Sans, sans-serif',
     backgroundColor: '#262626',
-    height: 90,
+    height: 80,
     position: 'relative'
   },
 
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 35,
     position: 'absolute',
-    top: 30,
+    top: 20,
     left: 0,
     right: 0,
     textAlign: 'center'
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
 function Header () {
   return (
   <View style={styles.container}>
+      <StatusBar hidden={true}/>
     <View style={{ flex: 1 }} />
     <BurgerButton />
     <Text style={styles.title}>GymApp</Text>
