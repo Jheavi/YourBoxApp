@@ -47,11 +47,19 @@ const styles = StyleSheet.create({
     fontSize: 26,
     paddingTop: 20
   },
+  workoutType: {
+    color: 'white',
+    textAlign: 'left',
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginHorizontal: 30,
+    fontSize: 22
+  },
   workoutText: {
     color: 'white',
     textAlign: 'left',
     paddingBottom: 30,
-    paddingTop: 20,
+    paddingTop: 10,
     marginHorizontal: 30,
     fontSize: 22
   },
@@ -158,15 +166,17 @@ function Workout ({ workout, dispatch }: any) {
           <ImageBackground source={image} style={styles.image} />
           <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }}>
             <View style={styles.workoutTextView}>
-              <Text style={styles.workoutTitle}>{workout ? workout.title : noWorkout}</Text>
+              <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
+              <Text style={styles.workoutType}>{workout && workout.type}</Text>
               <Text style={styles.workoutText}>{workout ? workout.description : noWorkout}</Text>
               <Modal
-              style={styles.modal}
+                style={styles.modal}
                 animationIn="bounceIn"
                 isVisible={modalVisible}
                 onBackButtonPress={() => { setModalVisible(false) }}
+                onBackdropPress={() => { setModalVisible(false) }}
                 >
-                <FormModifyWorkout todayString={todayString} displayedDay={displayedDay}/>
+                <FormModifyWorkout todayString={todayString} displayedDay={displayedDay} setModalVisible={setModalVisible}/>
               </Modal>
             </View>
           </TouchableWithoutFeedback>

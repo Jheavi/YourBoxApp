@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay }: any) {
+function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setModalVisible }: any) {
   const [titleValue, setTitleValue] = useState(workout?.title)
   const [descriptionValue, setDescriptionValue] = useState(workout?.description)
   const [typeValue, setTypeValue] = useState(workout?.type)
@@ -65,14 +65,14 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay }: an
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <TextInput
-          placeholder="Enter the title"
           style={styles.titleText}
           value={titleValue}
+          placeholder="Enter the title"
           onChangeText={text => setTitleValue(text)}
         />
         <Picker
-          selectedValue={typeValue}
           style={styles.picker}
+          selectedValue={typeValue}
           onValueChange={(itemValue) =>
             setTypeValue(itemValue)
           }
@@ -82,21 +82,24 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay }: an
           <Picker.Item color="#0d0d0d" label="EMOM" value="EMOM" />
         </Picker>
         <TextInput
-          multiline={true}
-          value={descriptionValue}
-          onChangeText={text => setDescriptionValue(text)}
-          placeholder="Enter the workout"
           style={styles.descriptionText}
+          value={descriptionValue}
+          placeholder="Enter the workout"
+          onChangeText={text => setDescriptionValue(text)}
+          multiline={true}
           />
           <View style={{ marginBottom: 30, width: 'auto' }}>
             <Button
               title="Save changes"
               color="#14680c"
-              onPress={() => dispatch(updateWorkout(
-                displayedDay || todayString,
-                descriptionValue,
-                titleValue,
-                typeValue))}
+              onPress={() => {
+                dispatch(updateWorkout(
+                  displayedDay || todayString,
+                  descriptionValue,
+                  titleValue,
+                  typeValue))
+                setModalVisible(false)
+              }}
             />
           </View>
       </View>
