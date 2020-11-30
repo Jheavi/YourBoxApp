@@ -8,6 +8,7 @@
     "test": "jest --collect-coverage --watchAll"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^1.9.4",
     "@types/jest": "^26.0.15",
     "@types/react-native-vector-icons": "^6.4.6",
     "@types/react-test-renderer": "^17.0.0",
@@ -23,6 +24,7 @@
     "react-native-calendars": "^1.489.0",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-modal": "^11.5.6",
     "react-native-reanimated": "~1.13.0",
     "react-native-screens": "~2.10.1",
     "react-native-unimodules": "~0.11.0",
