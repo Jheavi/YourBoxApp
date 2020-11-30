@@ -1,6 +1,6 @@
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import serverUrls from '../constants/serverUrls'
+import serverUrls from '../../constants/serverUrls'
 import axios from 'axios'
 import * as actions from './workoutActions'
 import actionTypes from './action-types'

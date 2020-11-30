@@ -1,6 +1,6 @@
 import actionTypes from './action-types'
 import axios from 'axios'
-import serverUrls from '../constants/serverUrls'
+import serverUrls from '../../constants/serverUrls'
 
 export function loadWorkoutSuccess (workout: object) {
   return {
