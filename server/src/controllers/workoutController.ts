@@ -1,5 +1,3 @@
-const workoutModel = require('../models/workoutModel')
-
 function workoutController (workoutModel) {
   async function getAllMethod (req, res) {
     try {
