@@ -43,9 +43,6 @@ const styles = StyleSheet.create({
     width: 200,
     backgroundColor: '#0d0d0d',
     color: 'white'
-  },
-  pickerItem: {
-    color: '#cb1313'
   }
 })
 
@@ -79,11 +76,10 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay }: an
           onValueChange={(itemValue) =>
             setTypeValue(itemValue)
           }
-          itemStyle={ styles.pickerItem }
           >
-          <Picker.Item label="For Time" value="For Time" />
-          <Picker.Item label="AMRAP" value="AMRAP" />
-          <Picker.Item label="EMOM" value="EMOM" />
+          <Picker.Item color="#0d0d0d" label="For Time" value="For Time" />
+          <Picker.Item color="#0d0d0d" label="AMRAP" value="AMRAP" />
+          <Picker.Item color="#0d0d0d" label="EMOM" value="EMOM" />
         </Picker>
         <TextInput
           multiline={true}
@@ -98,7 +94,9 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay }: an
               color="#14680c"
               onPress={() => dispatch(updateWorkout(
                 displayedDay || todayString,
-                descriptionValue))}
+                descriptionValue,
+                titleValue,
+                typeValue))}
             />
           </View>
       </View>
