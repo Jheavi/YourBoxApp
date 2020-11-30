@@ -166,9 +166,9 @@ function Workout ({ workout, dispatch }: any) {
           <ImageBackground source={image} style={styles.image} />
           <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }}>
             <View style={styles.workoutTextView}>
-              <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
-              <Text style={styles.workoutType}>{workout && workout.type}</Text>
-              <Text style={styles.workoutText}>{workout ? workout.description : noWorkout}</Text>
+              <Text style={styles.workoutTitle}>{workout.title}</Text>
+              <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
+              <Text style={styles.workoutText}>{workout.description}</Text>
               <Modal
                 style={styles.modal}
                 animationIn="bounceIn"
