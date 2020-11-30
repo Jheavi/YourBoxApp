@@ -42,10 +42,22 @@ export function updateWorkoutError (error: any) {
   }
 }
 
-export function updateWorkout (date: string, updatedDescription: string) {
+export function updateWorkout (
+  date: string,
+  updatedDescription: string,
+  updatedTitle: string,
+  updatedType: string
+) {
   return async (dispatch: Function) => {
     try {
-      const { data } = await axios.patch(`${serverUrls.workoutUrl}/${date}`, { updatedDescription })
+      const { data } = await axios.patch(
+        `${serverUrls.workoutUrl}/${date}`,
+        {
+          updatedDescription,
+          updatedTitle,
+          updatedType
+        }
+      )
 
       dispatch(updateWorkoutSuccess(data))
     } catch (error) {

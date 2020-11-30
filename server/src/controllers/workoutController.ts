@@ -19,12 +19,16 @@ function workoutController (workoutModel) {
     }
   }
 
-  async function patchWorkoutMethod ({ params: { date }, body: { updatedDescription } }, res) {
+  async function patchWorkoutMethod ({ params: { date }, body: { updatedDescription, updatedTitle, updatedType } }, res) {
     try {
       const queryToFind = { date }
       const workout = await workoutModel.findOneAndUpdate(
         queryToFind,
-        { description: updatedDescription },
+        {
+          description: updatedDescription,
+          title: updatedTitle,
+          type: updatedType
+        },
         { upsert: true, new: true })
 
       res.send(workout)
