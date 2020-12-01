@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { StyleSheet, View, Button, TextInput } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { updateWorkout } from '../../../redux/actions/workoutActions'
-import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   container: {
@@ -48,8 +47,8 @@ const styles = StyleSheet.create({
 
 function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setModalVisible }: any) {
   const [titleValue, setTitleValue] = useState(workout?.title)
-  const [descriptionValue, setDescriptionValue] = useState(workout?.description)
   const [typeValue, setTypeValue] = useState(workout?.type)
+  const [descriptionValue, setDescriptionValue] = useState(workout?.description)
   const noWorkout = 'There is no workout for the selected day'
 
   useEffect(() => {
@@ -68,6 +67,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
           style={styles.titleText}
           value={titleValue}
           placeholder="Enter the title"
+          testID="inputTitle"
           onChangeText={text => setTitleValue(text)}
         />
         <Picker
@@ -76,6 +76,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
           onValueChange={(itemValue) =>
             setTypeValue(itemValue)
           }
+          testID="picker"
           >
           <Picker.Item color="#0d0d0d" label="For Time" value="For Time" />
           <Picker.Item color="#0d0d0d" label="AMRAP" value="AMRAP" />
@@ -85,6 +86,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
           style={styles.descriptionText}
           value={descriptionValue}
           placeholder="Enter the workout"
+          testID="inputDescription"
           onChangeText={text => setDescriptionValue(text)}
           multiline={true}
           />
@@ -92,6 +94,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
             <Button
               title="Save changes"
               color="#14680c"
+              testID="saveButton"
               onPress={() => {
                 dispatch(updateWorkout(
                   displayedDay || todayString,
@@ -105,10 +108,6 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
       </View>
     </View>
   )
-}
-
-FormModifyWorkout.propTypes = {
-  dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps (state: any) {
