@@ -32,5 +32,5 @@ export interface props {
 }
 
 export interface dayScheduleProps {
-  item: string
+  item: scheduleInterface
 }
