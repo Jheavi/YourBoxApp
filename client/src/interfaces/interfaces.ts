@@ -1,8 +1,9 @@
 export interface workoutInterface {
-  description: string,
-  gym: string,
+  description?: string,
+  gym?: string,
   date: string,
-  type: string
+  type?: string,
+  title?: string
 }
 
 export interface dateObject {
