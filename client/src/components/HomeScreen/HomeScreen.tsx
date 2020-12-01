@@ -67,7 +67,7 @@ function HomeScreen ({ navigation }: any) {
       </View>
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('AdminWorkout')}
+          onPress={() => navigation.navigate('AdminSchedules')}
           style={styles.buttons}
         >
           <Icon

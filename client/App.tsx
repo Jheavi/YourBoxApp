@@ -6,6 +6,7 @@ import configureStore from './src/redux/configureStore'
 import Workout from './src/components/Workout/Workout'
 import Header from './src/components/Header/Header'
 import HomeScreen from './src/components/HomeScreen/HomeScreen'
+import Schedules from './src/components/Schedules/Schedules'
 
 const store = configureStore({})
 const { Navigator, Screen } = createStackNavigator()
@@ -24,6 +25,12 @@ export default function App () {
           <Screen
           name="AdminWorkout"
           component={Workout}
+          options={{
+            header: () => <Header />
+          }}/>
+          <Screen
+          name="AdminSchedules"
+          component={Schedules}
           options={{
             header: () => <Header />
           }}/>

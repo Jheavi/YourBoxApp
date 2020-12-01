@@ -15,5 +15,10 @@ export interface dateObject {
 
 export interface props {
   dispatch: Function,
-  workout?: workoutInterface
- }
+  workout?: workoutInterface,
+  item: string
+}
+
+export interface dayScheduleProps {
+  item: string
+}
