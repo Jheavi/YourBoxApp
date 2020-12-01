@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
+import { scheduleInterface } from '../../interfaces/interfaces'
+import { loadSchedules } from '../../redux/actions/schedulesActions'
 import DaySchedule from './DaySchedule/DaySchedule'
 
 const { height } = Dimensions.get('window')
@@ -23,8 +25,11 @@ const styles = StyleSheet.create({
   }
 })
 
-function Schedules ({ schedules }: any) {
-  const daysWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+function Schedules ({ schedules, dispatch }: any) {
+  useEffect(() => {
+    dispatch(loadSchedules())
+  }, [])
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -33,8 +38,8 @@ function Schedules ({ schedules }: any) {
           horizontal={true}
           pagingEnabled={true}
         >
-          {daysWeek.map((day) => {
-            return <DaySchedule item={day} key={day} />
+          {schedules && schedules.length && schedules.map((schedule: scheduleInterface) => {
+            return <DaySchedule item={schedule} key={performance.now() * Math.random()} />
           })}
         </ScrollView>
       </ScrollView>
