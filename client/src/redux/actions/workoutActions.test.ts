@@ -31,58 +31,68 @@ describe('Workout actions', () => {
   describe('loadWorkout', () => {
     test('should call axios.get with the url and the newDate', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
-      await store.dispatch(actions.loadWorkout(newDate))
+      if (store) {
+        await store.dispatch(actions.loadWorkout(newDate))
+      }
 
       expect(axios.get).toHaveBeenCalledWith(`${serverUrls.workoutUrl}/${newDate}`)
     })
 
     test('the store should have an action with type LOAD_WORKOUT', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
-      await store.dispatch(actions.loadWorkout(newDate))
-
-      expect(store.getActions()[0]).toEqual({
-        type: actionTypes.LOAD_WORKOUT,
-        workout: fakeData.data
-      })
+      if (store) {
+        await store.dispatch(actions.loadWorkout(newDate))
+        expect(store.getActions()[0]).toEqual({
+          type: actionTypes.LOAD_WORKOUT,
+          workout: fakeData.data
+        })
+      }
     })
 
     test('the store should have an action with type LOAD_WORKOUT_ERROR if promise rejected', async () => {
       axios.get = jest.fn().mockRejectedValueOnce(fakeError)
-      await store.dispatch(actions.loadWorkout(newDate))
-
-      expect(store.getActions()[0]).toEqual({
-        type: actionTypes.LOAD_WORKOUT_ERROR,
-        error: fakeError
-      })
+      if (store) {
+        await store.dispatch(actions.loadWorkout(newDate))
+        expect(store.getActions()[0]).toEqual({
+          type: actionTypes.LOAD_WORKOUT_ERROR,
+          error: fakeError
+        })
+      }
     })
   })
 
   describe('updateWorkout', () => {
     test('should call axios.get with the url and the newDate', async () => {
       axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
-      await store.dispatch(actions.updateWorkout(newDate, newDescription))
+      if (store) {
+        await store.dispatch(actions.updateWorkout(newDate, newDescription))
+      }
 
       expect(axios.patch).toHaveBeenCalledWith(`${serverUrls.workoutUrl}/${newDate}`, { updatedDescription: newDescription })
     })
 
     test('the store should have an action with type UPDATE_WORKOUT', async () => {
       axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
-      await store.dispatch(actions.updateWorkout(newDate, newDescription))
+      if (store) {
+        await store.dispatch(actions.updateWorkout(newDate, newDescription))
 
-      expect(store.getActions()[0]).toEqual({
-        type: actionTypes.UPDATE_WORKOUT,
-        workout: fakeData.data
-      })
+        expect(store.getActions()[0]).toEqual({
+          type: actionTypes.UPDATE_WORKOUT,
+          workout: fakeData.data
+        })
+      }
     })
 
     test('the store should have an action with type UPDATE_WORKOUT_ERROR if promise rejected', async () => {
       axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
-      await store.dispatch(actions.updateWorkout(newDate, newDescription))
+      if (store) {
+        await store.dispatch(actions.updateWorkout(newDate, newDescription))
 
-      expect(store.getActions()[0]).toEqual({
-        type: actionTypes.UPDATE_WORKOUT_ERROR,
-        error: fakeError
-      })
+        expect(store.getActions()[0]).toEqual({
+          type: actionTypes.UPDATE_WORKOUT_ERROR,
+          error: fakeError
+        })
+      }
     })
   })
 })

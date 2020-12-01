@@ -2,7 +2,8 @@ export interface workoutInterface {
   description: string,
   gym: string,
   date: string,
-  type: string
+  type: string,
+  title: string
 }
 
 export interface dateObject {
@@ -11,3 +12,8 @@ export interface dateObject {
   year: number,
   todayString: string,
 }
+
+export interface props {
+  dispatch: Function,
+  workout?: workoutInterface
+ }
