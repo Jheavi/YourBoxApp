@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
 import DaySchedule from './DaySchedule/DaySchedule'
 
 const { height } = Dimensions.get('window')
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function Schedules () {
+function Schedules ({ schedules }: any) {
   const daysWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   return (
     <View style={styles.container}>
@@ -41,4 +42,10 @@ function Schedules () {
   )
 }
 
-export default Schedules
+function mapStateToProps ({ schedulesReducer }: any) {
+  return {
+    schedules: schedulesReducer.schedules
+  }
+}
+
+export default connect(mapStateToProps)(Schedules)
