@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
-const image = { uri: 'https://cdn.pixabay.com/photo/2017/03/13/20/41/tyre-flipping-2141109_960_720.jpg' }
+const image = { uri: 'https://trello-attachments.s3.amazonaws.com/5fc6ad22e8f1971a74d3b3a5/5fc6ade260f98805ecff5fd0/7ccd1dcd43eb5d424c3e06b094ced535/baby-beast-crossfit.jpg' }
 
 const styles = StyleSheet.create({
   container: {
@@ -28,11 +28,10 @@ const styles = StyleSheet.create({
     top: 0,
     marginVertical: 'auto',
     width: '100%',
-    height: 600,
+    height: '100%',
     resizeMode: 'cover',
     opacity: 0.4
   }
-
 })
 
 function HomeScreen ({ navigation }: any) {
