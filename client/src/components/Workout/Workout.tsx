@@ -1,120 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, View, ScrollView, ImageBackground, Dimensions, Text, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, View, ScrollView, ImageBackground, Text, TouchableWithoutFeedback } from 'react-native'
 import Modal from 'react-native-modal'
 import { Calendar, DateObject } from 'react-native-calendars'
 import { loadWorkout } from '../../redux/actions/workoutActions'
 import { extractDataFromTodayDate, extractDataFromDate } from '../../utils/dateFunctions'
-import PropTypes from 'prop-types'
 import FormModifyWorkout from './FormModifyWorkout/FormModifyWorkout'
+import { props } from '../../interfaces/interfaces'
+import { workoutStyle, calendarTheme } from './workoutStyle'
 
 const image = { uri: 'https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' }
-const height = Dimensions.get('window').height
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexGrow: 1,
-    height
-  },
-  scrollContent: {
-    flexGrow: 1,
-    alignItems: 'center',
-    fontFamily: 'Roboto, Open Sans, sans-serif',
-    backgroundColor: '#0d0d0d'
-  },
-  square: {
-    maxWidth: '80%',
-    minWidth: '80%',
-    minHeight: '30%',
-    borderColor: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    height: 'auto',
-    marginBottom: 30,
-    position: 'relative'
-  },
-  workoutTextView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 'auto',
-    width: '100%'
-  },
-  workoutTitle: {
-    color: 'white',
-    fontSize: 26,
-    paddingTop: 20
-  },
-  workoutType: {
-    color: 'white',
-    textAlign: 'left',
-    paddingBottom: 10,
-    paddingTop: 10,
-    marginHorizontal: 30,
-    fontSize: 22
-  },
-  workoutText: {
-    color: 'white',
-    textAlign: 'left',
-    paddingBottom: 30,
-    paddingTop: 10,
-    marginHorizontal: 30,
-    fontSize: 22
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  image: {
-    resizeMode: 'cover',
-    opacity: 0.4,
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: 0,
-    marginBottom: 'auto',
-    marginTop: 'auto'
-  },
-  dayText: {
-    color: 'white',
-    marginTop: 20,
-    marginBottom: 10,
-    fontSize: 20
-  }
-})
+const styles = StyleSheet.create(workoutStyle)
 
-const calendarTheme = {
-  textSectionTitleColor: '#cb1313',
-  calendarBackground: 'white',
-  selectedDayBackgroundColor: '#cb1313',
-  textDisabledColor: '#bbbbbb',
-  todayTextColor: '#cb1313',
-  arrowColor: 'white',
-  dayTextColor: 'black',
-  textMonthFontSize: 22,
-  monthTextColor: 'white',
-  textMonthBackground: '#cb1313',
-  'stylesheet.calendar.header': {
-    header: {
-      backgroundColor: '#cb1313',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingLeft: 10,
-      paddingRight: 10,
-      alignItems: 'center'
-    }
-  },
-  'stylesheet.calendar.main': {
-    container: {
-      padding: 0,
-      backgroundColor: '#ffffff'
-    }
-  }
-}
-
-function Workout ({ workout, dispatch }: any) {
+function Workout ({ workout, dispatch }: props) {
   const { todayString } = extractDataFromTodayDate()
   const [displayedDay, setDisplayedDay] = useState(todayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
@@ -164,12 +63,13 @@ function Workout ({ workout, dispatch }: any) {
         <Text style={styles.dayText} testID="workoutDate">{formattedDate && `${formattedDate.day}/${formattedDate.month}/${formattedDate.year}`}</Text>
         <View style={styles.square}>
           <ImageBackground source={image} style={styles.image} />
-          <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }}>
+          <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }} testID="touchableForModal">
             <View style={styles.workoutTextView}>
               <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
               <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
               <Text style={styles.workoutText}>{workout && workout.description}</Text>
               <Modal
+                testID="workoutModal"
                 style={styles.modal}
                 animationIn="bounceIn"
                 isVisible={modalVisible}
@@ -181,7 +81,7 @@ function Workout ({ workout, dispatch }: any) {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <View style={{ marginBottom: 30 }}>
+        <View style={{ marginBottom: 30, width: '80%' }}>
           <Calendar
             theme={calendarTheme}
             firstDay={1}
@@ -191,10 +91,6 @@ function Workout ({ workout, dispatch }: any) {
       </ScrollView>
     </View>
   )
-}
-
-Workout.propTypes = {
-  dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps (state: any) {
