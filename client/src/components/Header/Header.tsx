@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 function Header () {
   return (
   <View style={styles.container}>
-      <StatusBar hidden={true}/>
+    <StatusBar hidden={true}/>
     <View style={{ flex: 1 }} />
     <BurgerButton />
     <Text style={styles.title}>GymApp</Text>

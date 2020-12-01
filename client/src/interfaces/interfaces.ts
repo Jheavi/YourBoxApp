@@ -12,3 +12,8 @@ export interface dateObject {
   year: number,
   todayString?: string,
 }
+
+export interface props {
+  dispatch: Function,
+  workout?: workoutInterface
+ }

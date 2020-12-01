@@ -11,8 +11,8 @@ export function extractDataFromTodayDate (): dateObject {
   return { day, month, year, todayString: `${year}-${monthString}-${dayString}` }
 }
 
-export function extractDataFromDate (date: string): dateObject {
-  const [year, month, day] = date.split('-')
+export function extractDataFromDate (date: string | undefined): dateObject {
+  const [year, month, day] = date!.split('-')
 
   return { year: +year, month: +month, day: +day }
 }
