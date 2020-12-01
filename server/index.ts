@@ -8,6 +8,8 @@ const chalk = require('chalk')
 const debug = require('debug')('server')
 const workoutModel = require('./src/models/workoutModel')
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
+const scheduleModel = require('./src/models/scheduleModel')
+const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
 
 const server = express()
 const port = process.env.PORT || 2130
@@ -23,6 +25,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
 server.use('/workouts', workoutRouter)
+server.use('/schedules', scheduleRouter)
 
 server.listen(port, () => {
   debug(`Server listening on port ${chalk.blueBright(port)}...`)
