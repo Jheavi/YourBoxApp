@@ -2,13 +2,13 @@ import Action from '../actions/actionInterface'
 import actionTypes from '../actions/action-types'
 import { workoutInterface } from '../../interfaces/interfaces'
 
-export interface WorkoutState {
+interface workoutReducerInterface {
   workout?: workoutInterface
 }
 
 const initialState = {}
 
-export default function workoutReducer (state: WorkoutState = initialState, action: Action): WorkoutState {
+export default function workoutReducer (state: workoutReducerInterface = initialState, action: Action) {
   switch (action.type) {
     case actionTypes.LOAD_WORKOUT:
       return { ...state, workout: action.workout }

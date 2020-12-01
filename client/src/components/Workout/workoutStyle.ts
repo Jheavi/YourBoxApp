@@ -62,14 +62,15 @@ const workoutStyle: workoutStyleInterface = {
   },
   workoutTitle: {
     color: 'white',
-    fontSize: 26,
-    paddingTop: 20
+    fontSize: 28,
+    paddingTop: 20,
+    textTransform: 'uppercase'
   },
   workoutType: {
     color: 'white',
     textAlign: 'left',
     paddingBottom: 10,
-    paddingTop: 10,
+    paddingTop: 20,
     marginHorizontal: 30,
     fontSize: 22
   },
@@ -77,7 +78,7 @@ const workoutStyle: workoutStyleInterface = {
     color: 'white',
     textAlign: 'left',
     paddingBottom: 30,
-    paddingTop: 10,
+    paddingTop: 5,
     marginHorizontal: 30,
     fontSize: 22
   },

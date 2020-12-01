@@ -5,8 +5,8 @@ import Modal from 'react-native-modal'
 import { Calendar, DateObject } from 'react-native-calendars'
 import { loadWorkout } from '../../redux/actions/workoutActions'
 import { extractDataFromTodayDate, extractDataFromDate } from '../../utils/dateFunctions'
-import FormModifyWorkout from './FormModifyWorkout/FormModifyWorkout'
 import { props } from '../../interfaces/interfaces'
+import FormModifyWorkout from './FormModifyWorkout/FormModifyWorkout'
 import { workoutStyle, calendarTheme } from './workoutStyle'
 
 const image = { uri: 'https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' }
@@ -22,7 +22,7 @@ function Workout ({ workout, dispatch }: props) {
   const scrollRef = useRef<ScrollView>(null)
 
   useEffect(() => {
-    dispatch(loadWorkout(todayString))
+    dispatch(loadWorkout(todayString!))
   }, [])
 
   useEffect(() => {
@@ -93,9 +93,9 @@ function Workout ({ workout, dispatch }: props) {
   )
 }
 
-function mapStateToProps (state: any) {
+function mapStateToProps ({ workoutReducer }: any) {
   return {
-    workout: state.workoutReducer.workout
+    workout: workoutReducer.workout
   }
 }
 

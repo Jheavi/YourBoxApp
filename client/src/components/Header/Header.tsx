@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, StatusBar } from 'react-native'
+import { StyleSheet, View, Text, StatusBar, TouchableWithoutFeedback } from 'react-native'
 import BurgerButton from './BurgerButton/BurgerButton'
 import UserButton from './UserButton/UserButton'
+import { useNavigation } from '@react-navigation/native'
 // import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   container: {
@@ -29,16 +29,22 @@ const styles = StyleSheet.create({
 })
 
 function Header () {
+  const navigation = useNavigation()
   return (
-  <View style={styles.container}>
-    <StatusBar hidden={true}/>
-    <View style={{ flex: 1 }} />
-    <BurgerButton />
-    <Text style={styles.title}>GymApp</Text>
-    <View style={{ flex: 8 }} />
-    <UserButton />
-    <View style={{ flex: 1 }} />
-  </View>
+    <View style={styles.container}>
+      <StatusBar hidden={true}/>
+      <View style={{ flex: 1 }} />
+      <BurgerButton />
+      <TouchableWithoutFeedback
+        style={{ flex: 1 }}
+        onPress={() => { navigation.navigate('Home') }}
+      >
+        <Text style={styles.title}>GymApp</Text>
+      </TouchableWithoutFeedback>
+      <View style={{ flex: 8 }} />
+      <UserButton />
+      <View style={{ flex: 1 }} />
+    </View>
   )
 }
 
