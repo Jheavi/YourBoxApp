@@ -8,7 +8,7 @@ interface schedulesReducerInterface {
 
 const initialState = {}
 
-export default function workoutReducer (state: schedulesReducerInterface = initialState, action: Action) {
+export default function schedulesReducer (state: schedulesReducerInterface = initialState, action: Action) {
   switch (action.type) {
     case actionTypes.LOAD_SCHEDULES:
       return { ...state, schedules: action.schedules }
