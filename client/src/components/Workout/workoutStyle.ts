@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native'
 
-const height = Dimensions.get('window').height
+const { height } = Dimensions.get('window')
 
 interface workoutStyleInterface {
   container: object
