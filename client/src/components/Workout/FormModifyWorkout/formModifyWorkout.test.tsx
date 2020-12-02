@@ -43,7 +43,6 @@ describe('Workout', () => {
       />, { wrapper })
 
     const picker = getByTestId('picker')
-    console.log(picker.props)
 
     expect(picker.props.items.length).toBe(3)
   })
