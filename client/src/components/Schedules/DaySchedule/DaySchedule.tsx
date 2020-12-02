@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import Modal from 'react-native-modal'
 import { dayScheduleProps, sessionInterface } from '../../../interfaces/interfaces'
 import HourItem from '../HourItem/HourItem'
+import FormModifySession from '../FormModifySession/FormModifySession'
 
 const { width } = Dimensions.get('window')
 
@@ -52,12 +54,23 @@ const styles = StyleSheet.create({
 })
 
 function DaySchedule ({ weekDay }: dayScheduleProps) {
+  const [modalVisible, setModalVisible] = useState(false)
+
   return (
     <View style={styles.dayView}>
       <Text style={styles.dayText}>{weekDay.day}</Text>
-      <TouchableOpacity style={styles.createButton}>
+      <TouchableOpacity style={styles.createButton} onPress={() => { setModalVisible(true) }}>
         <Text style={styles.createButtonText}>+</Text>
       </TouchableOpacity>
+      <Modal
+        style={styles.modal}
+        animationIn="bounceIn"
+        isVisible={modalVisible}
+        onBackButtonPress={() => { setModalVisible(false) }}
+        onBackdropPress={() => { setModalVisible(false) }}
+      >
+        <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
+      </Modal>
       <View>
         {weekDay && (!weekDay.hours.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
