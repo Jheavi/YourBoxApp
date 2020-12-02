@@ -11,10 +11,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexGrow: 1,
-    height
-  },
-  scrollContent: {
-    flexGrow: 1,
+    height,
     alignItems: 'center',
     backgroundColor: '#0d0d0d'
   },
@@ -32,16 +29,14 @@ function Schedules ({ schedules, dispatch }: any) {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.titleText}>Your Schedules</Text>
-        <ScrollView
-          horizontal={true}
-          pagingEnabled={true}
-        >
-          {schedules && schedules.length && schedules.map((schedule: scheduleInterface) => {
-            return <DaySchedule weekDay={schedule} key={performance.now() * Math.random()} />
-          })}
-        </ScrollView>
+      <Text style={styles.titleText}>Your Schedules</Text>
+      <ScrollView
+        horizontal={true}
+        pagingEnabled={true}
+      >
+        {schedules && schedules.length && schedules.map((schedule: scheduleInterface) => {
+          return <DaySchedule weekDay={schedule} key={performance.now() * Math.random()} />
+        })}
       </ScrollView>
     </View>
   )

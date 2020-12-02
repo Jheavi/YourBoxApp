@@ -4,20 +4,22 @@ import Modal from 'react-native-modal'
 import FormModifySession from '../FormModifySession/FormModifySession'
 
 const styles = StyleSheet.create({
-  sessionText: {
-    color: 'white',
-    width: 150,
-    textAlign: 'center',
-    fontSize: 19
-  },
   sessionView: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     minHeight: 70,
+    maxHeight: 70,
     marginVertical: 5,
-    borderRadius: 25
+    borderRadius: 25,
+    paddingHorizontal: 8
+  },
+  sessionText: {
+    color: 'white',
+    width: 150,
+    textAlign: 'center',
+    fontSize: 19
   },
   modifyButton: {
     backgroundColor: '#14680c',
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function HourItem ({ day, session }: any) {
+function SessionItem ({ day, session }: any) {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
@@ -54,7 +56,7 @@ function HourItem ({ day, session }: any) {
           : '#a20000'
     }} >
       <View style={{ flex: 1 }}/>
-      <Text style={styles.sessionText}>{`${session.startHour}-${session.finishHour}`}</Text>
+      <Text style={styles.sessionText}>{`${session.startHour} - ${session.finishHour}`}</Text>
       <View style={{ flex: 2 }}/>
       <Text style={styles.sessionText}>{session.type}</Text>
       <View style={{ flex: 2 }}/>
@@ -78,4 +80,4 @@ function HourItem ({ day, session }: any) {
   )
 }
 
-export default HourItem
+export default SessionItem
