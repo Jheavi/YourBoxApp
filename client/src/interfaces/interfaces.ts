@@ -6,7 +6,7 @@ export interface workoutInterface {
   title?: string
 }
 
-export interface scheduleHour {
+export interface sessionInterface {
   finishHour: string,
   startHour: string,
   type: string
@@ -15,7 +15,7 @@ export interface scheduleHour {
 export interface scheduleInterface {
   day: string,
   gym?: string,
-  hours: [scheduleHour]
+  hours: [sessionInterface]
 }
 
 export interface dateObject {
@@ -28,9 +28,9 @@ export interface dateObject {
 export interface props {
   dispatch: Function,
   workout?: workoutInterface,
-  item: string
+  weekDay: string
 }
 
 export interface dayScheduleProps {
-  item: scheduleInterface
+  weekDay: scheduleInterface
 }
