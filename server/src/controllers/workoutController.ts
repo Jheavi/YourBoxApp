@@ -1,4 +1,10 @@
-function workoutController (workoutModel) {
+interface workoutControllerInterface {
+  getAllMethod: Function
+  getWorkoutMethod: Function
+  patchWorkoutMethod: Function
+}
+
+function workoutController (workoutModel): workoutControllerInterface {
   async function getAllMethod (req, res) {
     try {
       const query = {}
