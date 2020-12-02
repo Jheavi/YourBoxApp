@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { dayScheduleProps, sessionInterface } from '../../../interfaces/interfaces'
-import HourItem from '../HourItem/HourItem'
+import SessionItem from '../SessionItem/SessionItem'
 import FormModifySession from '../FormModifySession/FormModifySession'
 
 const { width } = Dimensions.get('window')
@@ -80,7 +80,7 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
         {weekDay && (!weekDay.hours.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
           : (weekDay.hours.map((session: sessionInterface) => {
-              return <HourItem day={weekDay.day} session={session} key={performance.now() * Math.random()} />
+              return <SessionItem day={weekDay.day} session={session} key={performance.now() * Math.random()} />
             })
             ))
           }

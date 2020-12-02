@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     minHeight: 70,
     maxHeight: 70,
     marginVertical: 5,
-    borderRadius: 25
+    borderRadius: 25,
+    paddingHorizontal: 8
   },
   sessionText: {
     color: 'white',
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function HourItem ({ day, session }: any) {
+function SessionItem ({ day, session }: any) {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
@@ -55,7 +56,7 @@ function HourItem ({ day, session }: any) {
           : '#a20000'
     }} >
       <View style={{ flex: 1 }}/>
-      <Text style={styles.sessionText}>{`${session.startHour}-${session.finishHour}`}</Text>
+      <Text style={styles.sessionText}>{`${session.startHour} - ${session.finishHour}`}</Text>
       <View style={{ flex: 2 }}/>
       <Text style={styles.sessionText}>{session.type}</Text>
       <View style={{ flex: 2 }}/>
@@ -79,4 +80,4 @@ function HourItem ({ day, session }: any) {
   )
 }
 
-export default HourItem
+export default SessionItem
