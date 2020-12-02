@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 function Schedules ({ schedules, dispatch }: any) {
   useEffect(() => {
-    dispatch(loadSchedules())
+    if (!schedules || !schedules.length) { dispatch(loadSchedules()) }
   }, [])
 
   return (
