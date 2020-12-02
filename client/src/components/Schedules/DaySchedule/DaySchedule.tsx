@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { dayScheduleProps, sessionInterface } from '../../../interfaces/interfaces'
 import HourItem from '../HourItem/HourItem'
@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     width: width - 10,
     marginHorizontal: 5,
     position: 'relative'
+  },
+  scrollContent: {
+    flexGrow: 1,
+    alignItems: 'center',
+    backgroundColor: '#0d0d0d'
   },
   dayText: {
     fontSize: 24,
@@ -71,7 +76,7 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
       >
         <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
       </Modal>
-      <View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.hours.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
           : (weekDay.hours.map((session: sessionInterface) => {
@@ -79,7 +84,7 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
             })
             ))
           }
-      </View>
+      </ScrollView>
     </View>
   )
 }
