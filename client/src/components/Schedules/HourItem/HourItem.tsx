@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
-import FormModifyHour from '../FormModifyHour/FormModifyHour'
+import FormModifySession from '../FormModifySession/FormModifySession'
 
 const styles = StyleSheet.create({
   sessionText: {
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     minHeight: 70,
-    marginVertical: 5
+    marginVertical: 5,
+    borderRadius: 25
   },
   modifyButton: {
     backgroundColor: '#14680c',
@@ -71,7 +72,7 @@ function HourItem ({ day, session }: any) {
         onBackButtonPress={() => { setModalVisible(false) }}
         onBackdropPress={() => { setModalVisible(false) }}
       >
-        <FormModifyHour session={session} setModalVisible={setModalVisible} day={day}/>
+        <FormModifySession session={session} setModalVisible={setModalVisible} day={day}/>
       </Modal>
     </View>
   )
