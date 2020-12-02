@@ -2,9 +2,11 @@ interface actionTypesInterface {
   LOAD_WORKOUT: string
   LOAD_WORKOUT_ERROR: string
   UPDATE_WORKOUT: string
-  UPDATE_WORKOUT_ERROR: string,
+  UPDATE_WORKOUT_ERROR: string
   LOAD_SCHEDULES: string
   LOAD_SCHEDULES_ERROR: string
+  UPDATE_SESSION: string
+  UPDATE_SESSION_ERROR: string
 }
 
 const actionTypes: actionTypesInterface = {
@@ -13,7 +15,9 @@ const actionTypes: actionTypesInterface = {
   UPDATE_WORKOUT: 'UPDATE_WORKOUT',
   UPDATE_WORKOUT_ERROR: 'UPDATE_WORKOUT_ERROR',
   LOAD_SCHEDULES: 'LOAD_SCHEDULES',
-  LOAD_SCHEDULES_ERROR: 'LOAD_SCHEDULES_ERROR'
+  LOAD_SCHEDULES_ERROR: 'LOAD_SCHEDULES_ERROR',
+  UPDATE_SESSION: 'UPDATE_SESSION',
+  UPDATE_SESSION_ERROR: 'UPDATE_SESSION_ERROR'
 }
 
 export default actionTypes
