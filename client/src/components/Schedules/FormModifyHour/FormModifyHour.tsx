@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { View, Button, StyleSheet, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import hourSelection from '../../../constants/hours'
+import { updateSession } from '../../../redux/actions/schedulesActions'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function FormModifyHour ({ day, session, setModalVisible }: any) {
+function FormModifyHour ({ day, dispatch, session, setModalVisible }: any) {
   const [finishHourValue, setFinishHourValue] = useState(session.finishHour)
   const [startHourValue, setStartHourValue] = useState(session.startHour)
   const [typeValue, setTypeValue] = useState(session.type)
@@ -66,9 +68,11 @@ function FormModifyHour ({ day, session, setModalVisible }: any) {
           <Picker
             style={styles.picker}
             selectedValue={startHourValue}
-            onValueChange={(itemValue) =>
+            onValueChange={(itemValue) => {
               setStartHourValue(itemValue)
-            }
+              const itemInArray = itemValue.toString().split(':')
+              setFinishHourValue(`${+itemInArray[0] + 1}:${itemInArray[1]}`)
+            }}
             mode="dropdown"
             testID="startHourPicker"
           >
@@ -117,7 +121,10 @@ function FormModifyHour ({ day, session, setModalVisible }: any) {
             title="Save changes"
             color="#14680c"
             testID="saveButton"
-            onPress={() => { setModalVisible(false) }}
+            onPress={() => {
+              dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
+              setModalVisible(false)
+            }}
           />
         </View>
       </View>
@@ -125,4 +132,4 @@ function FormModifyHour ({ day, session, setModalVisible }: any) {
   )
 }
 
-export default FormModifyHour
+export default connect(null)(FormModifyHour)
