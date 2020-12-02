@@ -69,3 +69,39 @@ export function updateSession (
     }
   }
 }
+
+export function createSessionSuccess (schedules: [scheduleInterface]): Action {
+  return {
+    type: actionTypes.CREATE_SESSION,
+    schedules
+  }
+}
+
+export function createSessionError (error: any): Action {
+  return {
+    type: actionTypes.CREATE_SESSION_ERROR,
+    error
+  }
+}
+export function createSession (
+  day: string,
+  finishHourValue: string,
+  startHourValue: string,
+  typeValue: string
+): AppThunk {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { data } = await axios.post(`${serverUrls.scheduleUrl}/${day}`,
+        {
+          finishHourValue,
+          startHourValue,
+          typeValue
+        }
+      )
+
+      dispatch(createSessionSuccess(data))
+    } catch (error) {
+      dispatch(createSessionError(error))
+    }
+  }
+}
