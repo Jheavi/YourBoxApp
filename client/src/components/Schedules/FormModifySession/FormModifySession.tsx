@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
 })
 
 function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
-  const [finishHourValue, setFinishHourValue] = useState(session.finishHour)
-  const [startHourValue, setStartHourValue] = useState(session.startHour)
-  const [typeValue, setTypeValue] = useState(session.type)
+  const [finishHourValue, setFinishHourValue] = useState(session.finishHour || '08:00')
+  const [startHourValue, setStartHourValue] = useState(session.startHour || '07:00')
+  const [typeValue, setTypeValue] = useState(session.type || 'WOD')
 
   return (
     <View style={styles.container}>
