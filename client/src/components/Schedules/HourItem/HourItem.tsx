@@ -4,20 +4,21 @@ import Modal from 'react-native-modal'
 import FormModifySession from '../FormModifySession/FormModifySession'
 
 const styles = StyleSheet.create({
-  sessionText: {
-    color: 'white',
-    width: 150,
-    textAlign: 'center',
-    fontSize: 19
-  },
   sessionView: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     minHeight: 70,
+    maxHeight: 70,
     marginVertical: 5,
     borderRadius: 25
+  },
+  sessionText: {
+    color: 'white',
+    width: 150,
+    textAlign: 'center',
+    fontSize: 19
   },
   modifyButton: {
     backgroundColor: '#14680c',
