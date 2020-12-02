@@ -11,29 +11,30 @@ import Schedules from './src/components/Schedules/Schedules'
 const store = configureStore({})
 const { Navigator, Screen } = createStackNavigator()
 
+const header = {
+  header: () => <Header />
+}
+
 export default function App () {
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Navigator initialRouteName="Home">
           <Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            header: () => <Header />
-          }} />
+            name="Home"
+            component={HomeScreen}
+            options={header}
+          />
           <Screen
-          name="AdminWorkout"
-          component={Workout}
-          options={{
-            header: () => <Header />
-          }}/>
+            name="AdminWorkout"
+            component={Workout}
+            options={header}
+          />
           <Screen
-          name="AdminSchedules"
-          component={Schedules}
-          options={{
-            header: () => <Header />
-          }}/>
+            name="AdminSchedules"
+            component={Schedules}
+            options={header}
+          />
         </Navigator>
       </NavigationContainer>
     </Provider>
