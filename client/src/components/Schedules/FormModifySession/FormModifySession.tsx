@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Button, StyleSheet, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import hourSelection from '../../../constants/hours'
-import { updateSession } from '../../../redux/actions/schedulesActions'
+import { createSession, updateSession } from '../../../redux/actions/schedulesActions'
 import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
 })
 
 function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
-  const [finishHourValue, setFinishHourValue] = useState(session.finishHour || '08:00')
-  const [startHourValue, setStartHourValue] = useState(session.startHour || '07:00')
-  const [typeValue, setTypeValue] = useState(session.type || 'WOD')
+  const [finishHourValue, setFinishHourValue] = useState(session?.finishHour || '08:00')
+  const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
+  const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
 
   return (
     <View style={styles.container}>
@@ -71,7 +71,8 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
             onValueChange={(itemValue) => {
               setStartHourValue(itemValue)
               const itemInArray = itemValue.toString().split(':')
-              setFinishHourValue(`${+itemInArray[0] + 1}:${itemInArray[1]}`)
+              const finishHourModified = +itemInArray[0] + 1 < 10 ? `0${+itemInArray[0] + 1}:${itemInArray[1]}` : `${+itemInArray[0] + 1}:${itemInArray[1]}`
+              setFinishHourValue(finishHourModified)
             }}
             mode="dropdown"
             testID="startHourPicker"
@@ -122,7 +123,11 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
             color="#14680c"
             testID="saveButton"
             onPress={() => {
-              dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
+              if (session) {
+                dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
+              } else {
+                dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
+              }
               setModalVisible(false)
             }}
           />
