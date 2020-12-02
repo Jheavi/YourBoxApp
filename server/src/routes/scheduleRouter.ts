@@ -11,6 +11,7 @@ function scheduleRouter (scheduleModel) {
 
   router.route('/:day')
     .get(schedules.getMethod)
+    .patch(schedules.patchSessionMethod)
 
   return router
 }
