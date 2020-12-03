@@ -11,13 +11,13 @@ export interface scheduleHour {
 export interface schedule {
   day: string,
   gym?: string,
-  hours: [scheduleHour]
+  sessions: [scheduleHour]
 }
 
 const scheduleSchema: schedule = new Schema({
   day: String,
   gym: { type: Schema.Types.ObjectId, ref: 'Gym' },
-  hours: [Object]
+  sessions: [Object]
 })
 
 module.exports = model('Schedule', scheduleSchema)
