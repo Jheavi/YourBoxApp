@@ -94,14 +94,14 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
             }
             mode="dropdown"
             testID="finishHourPicker"
-          >
+            >
           {hourSelection.map((hour) => {
             return (
-            <Picker.Item
+              <Picker.Item
               key={performance.now() * Math.random()}
               label={hour}
               value={hour}
-            />)
+              />)
           })}
           </Picker>
         </View>
@@ -111,6 +111,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
           onValueChange={(itemValue) =>
             setTypeValue(itemValue)
           }
+          mode="dropdown"
           testID="typePicker"
         >
           <Picker.Item color="#0d0d0d" label="WOD" value="WOD" />
