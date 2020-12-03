@@ -29,7 +29,7 @@ function Schedules ({ schedules, dispatch }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Your Schedules</Text>
+      <Text style={styles.titleText} testID="schedulesTitle">Your Schedules</Text>
       <ScrollView
         horizontal={true}
         pagingEnabled={true}
