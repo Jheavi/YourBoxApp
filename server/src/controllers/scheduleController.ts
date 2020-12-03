@@ -2,22 +2,11 @@ import { Request, Response } from 'express'
 
 interface scheduleControllerInterface {
   getMethod: Function
-  getAllMethod: Function
   patchSessionMethod: Function,
   postMethod: Function
 }
 
 function scheduleController (scheduleModel): scheduleControllerInterface {
-  async function getAllMethod (req: Request, res: Response) {
-    try {
-      const query = { }
-      const schedules = await scheduleModel.find(query)
-      res.send(schedules)
-    } catch (error) {
-      res.send(error)
-    }
-  }
-
   async function getMethod ({ params: { day } }: Request, res: Response) {
     try {
       const query = { day }
@@ -67,7 +56,7 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
     }
   }
 
-  return { getMethod, getAllMethod, patchSessionMethod, postMethod }
+  return { getMethod, patchSessionMethod, postMethod }
 }
 
 module.exports = scheduleController
