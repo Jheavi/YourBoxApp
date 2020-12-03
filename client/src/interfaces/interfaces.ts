@@ -6,16 +6,16 @@ export interface workoutInterface {
   title?: string
 }
 
+export interface scheduleInterface {
+  day: string,
+  gym?: string,
+  sessions: sessionInterface[]
+}
+
 export interface sessionInterface {
   finishHour: string,
   startHour: string,
   type: string
-}
-
-export interface scheduleInterface {
-  day: string,
-  gym?: string,
-  hours: [sessionInterface]
 }
 
 export interface dateObject {

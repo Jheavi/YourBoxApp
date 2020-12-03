@@ -4,6 +4,6 @@ export default interface Action {
   type: string
   workout?: workoutInterface
   error?: any
-  schedules?: [scheduleInterface]
+  schedules?: scheduleInterface[]
   updatedSchedule?: scheduleInterface
 }

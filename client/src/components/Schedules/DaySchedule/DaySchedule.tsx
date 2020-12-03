@@ -77,9 +77,9 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
         <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
       </Modal>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {weekDay && (!weekDay.hours.length
+        {weekDay && (!weekDay.sessions.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
-          : (weekDay.hours.map((session: sessionInterface) => {
+          : (weekDay.sessions.map((session: sessionInterface) => {
               return <SessionItem day={weekDay.day} session={session} key={performance.now() * Math.random()} />
             })
             ))
