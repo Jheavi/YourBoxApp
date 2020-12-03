@@ -63,7 +63,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.titleText}>{day}</Text>
+        <Text style={styles.titleText} testID="textTitle">{day}</Text>
         <View style={{ flexDirection: 'row' }}>
           <Picker
             style={styles.picker}
@@ -94,14 +94,14 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
             }
             mode="dropdown"
             testID="finishHourPicker"
-          >
+            >
           {hourSelection.map((hour) => {
             return (
-            <Picker.Item
+              <Picker.Item
               key={performance.now() * Math.random()}
               label={hour}
               value={hour}
-            />)
+              />)
           })}
           </Picker>
         </View>
@@ -111,6 +111,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
           onValueChange={(itemValue) =>
             setTypeValue(itemValue)
           }
+          mode="dropdown"
           testID="typePicker"
         >
           <Picker.Item color="#0d0d0d" label="WOD" value="WOD" />

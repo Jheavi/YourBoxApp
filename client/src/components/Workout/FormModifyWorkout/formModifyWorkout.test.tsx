@@ -1,11 +1,9 @@
-/* eslint-disable react/prop-types */
 import React, { ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import FormModifyWorkout from './FormModifyWorkout'
 import { fireEvent, render } from '@testing-library/react-native'
-// Note: test renderer must be required after react-native.
 import { dateObject } from '../../../interfaces/interfaces'
 import { extractDataFromTodayDate } from '../../../utils/dateFunctions'
 import { updateWorkout } from '../../../redux/actions/workoutActions'

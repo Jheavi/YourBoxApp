@@ -56,13 +56,14 @@ function SessionItem ({ day, session }: any) {
           : '#a20000'
     }} >
       <View style={{ flex: 1 }}/>
-      <Text style={styles.sessionText}>{`${session.startHour} - ${session.finishHour}`}</Text>
+      <Text style={styles.sessionText} testID="hourText">{`${session.startHour} - ${session.finishHour}`}</Text>
       <View style={{ flex: 2 }}/>
-      <Text style={styles.sessionText}>{session.type}</Text>
+      <Text style={styles.sessionText} testID="typeText">{session.type}</Text>
       <View style={{ flex: 2 }}/>
       <TouchableOpacity
         style={styles.modifyButton}
         onPress={() => setModalVisible(true)}
+        testID="touchableModal"
       >
         <Text style={styles.modifyButtonText}>Modify</Text>
       </TouchableOpacity>
@@ -73,6 +74,7 @@ function SessionItem ({ day, session }: any) {
         isVisible={modalVisible}
         onBackButtonPress={() => { setModalVisible(false) }}
         onBackdropPress={() => { setModalVisible(false) }}
+        testID="sessionModal"
       >
         <FormModifySession session={session} setModalVisible={setModalVisible} day={day}/>
       </Modal>

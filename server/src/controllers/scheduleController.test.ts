@@ -13,8 +13,8 @@ describe('scheduleController', () => {
   beforeEach(() => {
     res = { send: jest.fn() }
     req = { body: { session: {} }, params: { date: '123' } }
-    fakeSchedule = { hours: ['today'] }
-    fakeSchedules = [{ hours: ['today'] }, { hours: ['tomorrow'] }]
+    fakeSchedule = { sessions: ['today'] }
+    fakeSchedules = [{ sessions: ['today'] }, { sessions: ['tomorrow'] }]
     fakeError = 'error'
   })
 

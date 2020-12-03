@@ -1,12 +1,23 @@
 import { Request, Response } from 'express'
 
 interface scheduleControllerInterface {
+  getAllMethod: Function
   getMethod: Function
   patchSessionMethod: Function,
   postMethod: Function
 }
 
 function scheduleController (scheduleModel): scheduleControllerInterface {
+  async function getAllMethod (req: Request, res: Response) {
+    try {
+      const query = { }
+      const schedules = await scheduleModel.find(query)
+      res.send(schedules)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
   async function getMethod ({ params: { day } }: Request, res: Response) {
     try {
       const query = { day }
@@ -21,15 +32,15 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
     try {
       const query = {
         day,
-        'hours.finishHour': session.finishHour,
-        'hours.startHour': session.startHour,
-        'hours.type': session.type
+        'sessions.finishHour': session.finishHour,
+        'sessions.startHour': session.startHour,
+        'sessions.type': session.type
       }
       const update = {
         $set: {
-          'hours.$.finishHour': finishHourValue,
-          'hours.$.startHour': startHourValue,
-          'hours.$.type': typeValue
+          'sessions.$.finishHour': finishHourValue,
+          'sessions.$.startHour': startHourValue,
+          'sessions.$.type': typeValue
         }
       }
 
@@ -45,7 +56,7 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
   async function postMethod ({ params: { day }, body: { finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
     try {
       const query = { day }
-      const update = { $addToSet: { hours: { finishHour: finishHourValue, startHour: startHourValue, type: typeValue } } }
+      const update = { $addToSet: { sessions: { finishHour: finishHourValue, startHour: startHourValue, type: typeValue } } }
 
       await scheduleModel.findOneAndUpdate(query, update)
 
@@ -56,7 +67,7 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
     }
   }
 
-  return { getMethod, patchSessionMethod, postMethod }
+  return { getMethod, patchSessionMethod, postMethod, getAllMethod }
 }
 
 module.exports = scheduleController
