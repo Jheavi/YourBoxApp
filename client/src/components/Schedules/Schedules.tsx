@@ -34,8 +34,8 @@ function Schedules ({ schedules, dispatch }: any) {
         horizontal={true}
         pagingEnabled={true}
       >
-        {schedules && schedules.length && schedules.map((schedule: scheduleInterface) => {
-          return <DaySchedule weekDay={schedule} key={performance.now() * Math.random()} />
+        {schedules && schedules.length && schedules.map((weekDay: scheduleInterface) => {
+          return <DaySchedule weekDay={weekDay} key={performance.now() * Math.random()} />
         })}
       </ScrollView>
     </View>
