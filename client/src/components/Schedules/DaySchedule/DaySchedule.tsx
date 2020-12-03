@@ -63,8 +63,12 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
 
   return (
     <View style={styles.dayView}>
-      <Text style={styles.dayText}>{weekDay.day}</Text>
-      <TouchableOpacity style={styles.createButton} onPress={() => { setModalVisible(true) }}>
+      <Text style={styles.dayText} testID={'dayScheduleTitle'}>{weekDay.day}</Text>
+      <TouchableOpacity
+        style={styles.createButton}
+        onPress={() => { setModalVisible(true) }}
+        testID="touchableModal"
+      >
         <Text style={styles.createButtonText}>+</Text>
       </TouchableOpacity>
       <Modal
@@ -73,6 +77,7 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
         isVisible={modalVisible}
         onBackButtonPress={() => { setModalVisible(false) }}
         onBackdropPress={() => { setModalVisible(false) }}
+        testID="sessionModal"
       >
         <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
       </Modal>
