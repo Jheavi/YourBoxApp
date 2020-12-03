@@ -6,6 +6,7 @@ import { fireEvent, render } from '@testing-library/react-native'
 import DaySchedule from './DaySchedule'
 
 jest.mock('../SessionItem/SessionItem')
+jest.mock('../FormModifySession/FormModifySession')
 
 const buildStore = configureStore([thunk])
 
