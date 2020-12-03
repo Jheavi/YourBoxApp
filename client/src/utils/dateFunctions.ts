@@ -16,5 +16,3 @@ export function extractDataFromDate (date: string | undefined): dateObject {
 
   return { year: +year, month: +month, day: +day }
 }
-
-console.log(extractDataFromTodayDate())
