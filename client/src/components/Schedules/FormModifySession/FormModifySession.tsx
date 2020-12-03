@@ -63,7 +63,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.titleText}>{day}</Text>
+        <Text style={styles.titleText} testID="textTitle">{day}</Text>
         <View style={{ flexDirection: 'row' }}>
           <Picker
             style={styles.picker}
