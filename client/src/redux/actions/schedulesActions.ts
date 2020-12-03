@@ -5,15 +5,16 @@ import Action from './actionInterface'
 import { AppThunk } from '../reducers'
 import { AppDispatch } from '../configureStore'
 import { scheduleInterface, sessionInterface } from '../../interfaces/interfaces'
+import { AnyAction } from 'redux'
 
-export function loadSchedulesSuccess (schedules: [scheduleInterface]): Action {
+export function loadSchedulesSuccess (schedules: [scheduleInterface]): AnyAction {
   return {
     type: actionTypes.LOAD_SCHEDULES,
     schedules
   }
 }
 
-export function loadSchedulesError (error: any): Action {
+export function loadSchedulesError (error: any): AnyAction {
   return {
     type: actionTypes.LOAD_SCHEDULES_ERROR,
     error
@@ -39,7 +40,7 @@ export function updateSessionSuccess (schedules: [scheduleInterface]): Action {
   }
 }
 
-export function updateSessionError (error: any): Action {
+export function updateSessionError (error: any): AnyAction {
   return {
     type: actionTypes.UPDATE_SESSION_ERROR,
     error
@@ -54,14 +55,14 @@ export function updateSession (
 ): AppThunk {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.patch(`${serverUrls.scheduleUrl}/${day}`,
-        {
-          session,
-          finishHourValue,
-          startHourValue,
-          typeValue
-        }
-      )
+      const body = {
+        session,
+        finishHourValue,
+        startHourValue,
+        typeValue
+      }
+
+      const { data } = await axios.patch(`${serverUrls.scheduleUrl}/${day}`, body)
 
       dispatch(updateSessionSuccess(data))
     } catch (error) {
@@ -70,14 +71,14 @@ export function updateSession (
   }
 }
 
-export function createSessionSuccess (schedules: [scheduleInterface]): Action {
+export function createSessionSuccess (schedules: [scheduleInterface]): AnyAction {
   return {
     type: actionTypes.CREATE_SESSION,
     schedules
   }
 }
 
-export function createSessionError (error: any): Action {
+export function createSessionError (error: any): AnyAction {
   return {
     type: actionTypes.CREATE_SESSION_ERROR,
     error
@@ -91,13 +92,13 @@ export function createSession (
 ): AppThunk {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.post(`${serverUrls.scheduleUrl}/${day}`,
-        {
-          finishHourValue,
-          startHourValue,
-          typeValue
-        }
-      )
+      const body = {
+        finishHourValue,
+        startHourValue,
+        typeValue
+      }
+
+      const { data } = await axios.post(`${serverUrls.scheduleUrl}/${day}`, body)
 
       dispatch(createSessionSuccess(data))
     } catch (error) {
