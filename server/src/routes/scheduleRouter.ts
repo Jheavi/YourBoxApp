@@ -6,9 +6,6 @@ function scheduleRouter (scheduleModel) {
   const router = Router()
   const schedules = scheduleController(scheduleModel)
 
-  router.route('/')
-    .get(schedules.getAllMethod)
-
   router.route('/:day')
     .get(schedules.getMethod)
     .patch(schedules.patchSessionMethod)
