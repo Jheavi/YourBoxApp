@@ -1,7 +1,7 @@
 import { dateObject } from '../interfaces/interfaces'
 
 export function extractDataFromTodayDate (): dateObject {
-  const today: Date = new Date()
+  const today: Date = new Date(Date.now())
   const day: number = today.getDate()
   const dayString: string = day > 9 ? `${day}` : `0${day}`
   const month: number = today.getMonth() + 1
@@ -16,3 +16,5 @@ export function extractDataFromDate (date: string | undefined): dateObject {
 
   return { year: +year, month: +month, day: +day }
 }
+
+console.log(extractDataFromTodayDate())
