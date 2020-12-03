@@ -1,8 +1,8 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Text } from 'react-native'
 
 function SessionItem () {
-  return <View />
+  return <Text>MockedSessionItem</Text>
 }
 
 export default SessionItem

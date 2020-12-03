@@ -1,8 +1,8 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Text } from 'react-native'
 
 function FormModifySession () {
-  return <View />
+  return <Text>MockedForm</Text>
 }
 
 export default FormModifySession
