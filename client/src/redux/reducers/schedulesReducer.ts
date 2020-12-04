@@ -8,7 +8,7 @@ export interface schedulesState {
 
 const initialState: schedulesState = {}
 
-export default function schedulesReducer (state = initialState, action: AnyAction) {
+export default function schedulesReducer (state = initialState, action: AnyAction): schedulesState {
   let schedulesWithOrderedHours
   let updatedState
   switch (action.type) {

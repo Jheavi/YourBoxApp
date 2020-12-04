@@ -8,7 +8,7 @@ export interface workoutState {
 
 const initialState: workoutState = {}
 
-export default function workoutReducer (state = initialState, action: AnyAction) {
+export default function workoutReducer (state = initialState, action: AnyAction): workoutState {
   switch (action.type) {
     case actionTypes.LOAD_WORKOUT:
       return { ...state, workout: action.workout }
