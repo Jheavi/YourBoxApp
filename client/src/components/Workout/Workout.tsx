@@ -65,7 +65,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
         <View style={styles.square}>
           <ImageBackground source={images.workoutbackground} style={styles.image} />
           {workoutLoading &&
-          <View style={{ ...styles.container, justifyContent: 'center' }}>
+          <View style={styles.workoutTextView}>
             <ActivityIndicator size="large" color="#cb1313"/>
           </View>}
           {!workoutLoading &&
