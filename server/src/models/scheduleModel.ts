@@ -11,7 +11,7 @@ export interface scheduleHour {
 export interface schedule {
   day: string,
   gym?: string,
-  sessions: [scheduleHour]
+  sessions: scheduleHour[]
 }
 
 const scheduleSchema: schedule = new Schema({
