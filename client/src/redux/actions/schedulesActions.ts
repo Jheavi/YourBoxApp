@@ -1,27 +1,25 @@
 import actionTypes from './action-types'
 import axios from 'axios'
 import serverUrls from '../../constants/serverUrls'
-import Action from './actionInterface'
-import { AppThunk } from '../reducers'
-import { AppDispatch } from '../configureStore'
+import { SchedulesActionTypes } from './schedulesActionsInterface'
 import { scheduleInterface, sessionInterface } from '../../interfaces/interfaces'
-import { AnyAction } from 'redux'
+import { AppDispatch } from '../configureStore'
 
-export function loadSchedulesSuccess (schedules: [scheduleInterface]): AnyAction {
+export function loadSchedulesSuccess (schedules: [scheduleInterface]): SchedulesActionTypes {
   return {
     type: actionTypes.LOAD_SCHEDULES,
     schedules
   }
 }
 
-export function loadSchedulesError (error: any): AnyAction {
+export function loadSchedulesError (error: any): SchedulesActionTypes {
   return {
     type: actionTypes.LOAD_SCHEDULES_ERROR,
     error
   }
 }
 
-export function loadSchedules (): AppThunk {
+export function loadSchedules (): any {
   return async (dispatch: AppDispatch) => {
     try {
       const { data } = await axios.get(serverUrls.scheduleUrl)
@@ -33,14 +31,14 @@ export function loadSchedules (): AppThunk {
   }
 }
 
-export function updateSessionSuccess (schedules: [scheduleInterface]): Action {
+export function updateSessionSuccess (schedules: [scheduleInterface]): SchedulesActionTypes {
   return {
     type: actionTypes.UPDATE_SESSION,
     schedules
   }
 }
 
-export function updateSessionError (error: any): AnyAction {
+export function updateSessionError (error: any): SchedulesActionTypes {
   return {
     type: actionTypes.UPDATE_SESSION_ERROR,
     error
@@ -52,7 +50,7 @@ export function updateSession (
   finishHourValue: string,
   startHourValue: string,
   typeValue: string
-): AppThunk {
+): any {
   return async (dispatch: AppDispatch) => {
     try {
       const body = {
@@ -71,14 +69,14 @@ export function updateSession (
   }
 }
 
-export function createSessionSuccess (schedules: [scheduleInterface]): AnyAction {
+export function createSessionSuccess (schedules: [scheduleInterface]): SchedulesActionTypes {
   return {
     type: actionTypes.CREATE_SESSION,
     schedules
   }
 }
 
-export function createSessionError (error: any): AnyAction {
+export function createSessionError (error: any): SchedulesActionTypes {
   return {
     type: actionTypes.CREATE_SESSION_ERROR,
     error
@@ -89,7 +87,7 @@ export function createSession (
   finishHourValue: string,
   startHourValue: string,
   typeValue: string
-): AppThunk {
+): any {
   return async (dispatch: AppDispatch) => {
     try {
       const body = {

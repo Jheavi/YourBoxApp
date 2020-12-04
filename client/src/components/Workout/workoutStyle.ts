@@ -1,4 +1,5 @@
 import { Dimensions } from 'react-native'
+import { CalendarTheme } from 'react-native-calendars'
 
 const { height } = Dimensions.get('window')
 
@@ -13,20 +14,6 @@ interface workoutStyleInterface {
   modal: object
   image: object
   dayText: object
-}
-
-interface calendarThemeInterface {
-  textSectionTitleColor: string
-  calendarBackground: string
-  textDisabledColor: string
-  todayTextColor: string
-  arrowColor: string
-  dayTextColor: string
-  textMonthFontSize: number
-  monthTextColor: string
-  textMonthBackground: string
-  'stylesheet.calendar.header': object
-  'stylesheet.calendar.main': object
 }
 
 const workoutStyle: workoutStyleInterface = {
@@ -104,7 +91,7 @@ const workoutStyle: workoutStyleInterface = {
   }
 }
 
-const calendarTheme: calendarThemeInterface = {
+const calendarTheme: CalendarTheme = {
   textSectionTitleColor: '#cb1313',
   calendarBackground: 'white',
   textDisabledColor: '#bbbbbb',
@@ -113,7 +100,6 @@ const calendarTheme: calendarThemeInterface = {
   dayTextColor: 'black',
   textMonthFontSize: 22,
   monthTextColor: 'white',
-  textMonthBackground: '#cb1313',
   'stylesheet.calendar.header': {
     header: {
       backgroundColor: '#cb1313',

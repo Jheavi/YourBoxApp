@@ -36,42 +36,40 @@ describe('Schedules actions', () => {
   describe('loadSchedules', () => {
     test('should call axios.get with the url', async () => {
       axios.get = jest.fn()
-      if (store) {
-        await store.dispatch(loadSchedules())
-      }
+
+      await store!.dispatch(loadSchedules())
 
       expect(axios.get).toHaveBeenCalledWith(serverUrls.scheduleUrl)
     })
 
     test('the store should have an action with type LOAD_SCHEDULES', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
-      if (store) {
-        await store.dispatch(loadSchedules())
-        expect(store.getActions()[0]).toEqual({
-          type: actionTypes.LOAD_SCHEDULES,
-          schedules: fakeData.data
-        })
-      }
+
+      await store!.dispatch(loadSchedules())
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.LOAD_SCHEDULES,
+        schedules: fakeData.data
+      })
     })
 
     test('the store should have an action with type LOAD_SCHEDULES_ERROR if promise rejected', async () => {
       axios.get = jest.fn().mockRejectedValueOnce(fakeError)
-      if (store) {
-        await store.dispatch(loadSchedules())
-        expect(store.getActions()[0]).toEqual({
-          type: actionTypes.LOAD_SCHEDULES_ERROR,
-          error: fakeError
-        })
-      }
+
+      await store!.dispatch(loadSchedules())
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.LOAD_SCHEDULES_ERROR,
+        error: fakeError
+      })
     })
   })
 
   describe('updateSession', () => {
     test('should call axios.patch with the url', async () => {
       axios.patch = jest.fn()
-      if (store) {
-        await store.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
-      }
+
+      await store!.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
 
       const args = [
         `${serverUrls.scheduleUrl}/${newDate}`,
@@ -83,33 +81,32 @@ describe('Schedules actions', () => {
 
     test('the store should have an action with type UPDATE_SESSION', async () => {
       axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
-      if (store) {
-        await store.dispatch(updateSession())
-        expect(store.getActions()[0]).toEqual({
-          type: actionTypes.UPDATE_SESSION,
-          schedules: fakeData.data
-        })
-      }
+
+      await store!.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.UPDATE_SESSION,
+        schedules: fakeData.data
+      })
     })
 
     test('the store should have an action with type UPDATE_SESSION_ERROR if promise rejected', async () => {
       axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
-      if (store) {
-        await store.dispatch(updateSession())
-        expect(store.getActions()[0]).toEqual({
-          type: actionTypes.UPDATE_SESSION_ERROR,
-          error: fakeError
-        })
-      }
+
+      await store!.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.UPDATE_SESSION_ERROR,
+        error: fakeError
+      })
     })
   })
 
   describe('createSession', () => {
     test('should call axios.post with the url', async () => {
       axios.post = jest.fn()
-      if (store) {
-        await store.dispatch(createSession(newDate, '2', '2', '2'))
-      }
+
+      await store!.dispatch(createSession(newDate, '2', '2', '2'))
 
       const args = [
         `${serverUrls.scheduleUrl}/${newDate}`,
@@ -121,24 +118,24 @@ describe('Schedules actions', () => {
 
     test('the store should have an action with type CREATE_SESSION', async () => {
       axios.post = jest.fn().mockResolvedValueOnce(fakeData)
-      if (store) {
-        await store.dispatch(createSession())
-        expect(store.getActions()[0]).toEqual({
-          type: actionTypes.CREATE_SESSION,
-          schedules: fakeData.data
-        })
-      }
+
+      await store!.dispatch(createSession(newDate, '2', '2', '2'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.CREATE_SESSION,
+        schedules: fakeData.data
+      })
     })
 
     test('the store should have an action with type CREATE_SESSION_ERROR if promise rejected', async () => {
       axios.post = jest.fn().mockRejectedValueOnce(fakeError)
-      if (store) {
-        await store.dispatch(createSession())
-        expect(store.getActions()[0]).toEqual({
-          type: actionTypes.CREATE_SESSION_ERROR,
-          error: fakeError
-        })
-      }
+
+      await store!.dispatch(createSession(newDate, '2', '2', '2'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.CREATE_SESSION_ERROR,
+        error: fakeError
+      })
     })
   })
 })
