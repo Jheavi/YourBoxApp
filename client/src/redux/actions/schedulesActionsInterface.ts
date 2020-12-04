@@ -11,6 +11,10 @@ interface LoadSchedulesErrorAction {
   error: any
 }
 
+interface SchedulesLoadingAction {
+  type: typeof actionTypes.SCHEDULES_LOADING
+}
+
 interface UpdateSessionAction {
   type: typeof actionTypes.UPDATE_SESSION
   schedules: scheduleInterface[]
@@ -33,6 +37,7 @@ interface CreateSessionErrorAction {
 
 export type SchedulesActionTypes = LoadSchedulesAction |
 LoadSchedulesErrorAction |
+SchedulesLoadingAction |
 UpdateSessionAction |
 UpdateSessionErrorAction |
 CreateSessionAction |
