@@ -2,8 +2,6 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import images from '../../constants/images'
 
-const image = { uri: images.homeScreen }
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -41,11 +39,13 @@ function Login ({ user }: any) {
     <View style={styles.container}>
       <ImageBackground
         style={styles.backImage}
-        source={image}
+        source={images.homeScreen}
       />
       {!user &&
       <>
-        <TouchableOpacity style={styles.buttonView}>
+        <TouchableOpacity
+          style={styles.buttonView}
+        >
           <Text style={styles.buttonsText}>Sign up</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonView}>
@@ -53,7 +53,9 @@ function Login ({ user }: any) {
         </TouchableOpacity>
       </>}
       {user &&
-      <TouchableOpacity style={styles.buttonView}>
+      <TouchableOpacity
+        style={styles.buttonView}
+      >
         <Text style={styles.buttonsText}>Logout</Text>
       </TouchableOpacity>
       }
