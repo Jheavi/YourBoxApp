@@ -20,4 +20,4 @@ const scheduleSchema: schedule = new Schema({
   sessions: [Object]
 })
 
-module.exports = model('Schedule', scheduleSchema)
+export default model('Schedule', scheduleSchema)

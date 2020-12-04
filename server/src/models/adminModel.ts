@@ -20,4 +20,4 @@ const adminSchema: adminInterface = new Schema({
   signInDate: String
 })
 
-module.exports = model('Admin', adminSchema)
+export default model('Admin', adminSchema)

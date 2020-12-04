@@ -36,4 +36,4 @@ const userSchema: userInterface = new Schema({
   signInDate: String
 })
 
-module.exports = model('User', userSchema)
+export default model('User', userSchema)

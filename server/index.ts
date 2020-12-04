@@ -1,4 +1,6 @@
-export {}
+import scheduleModel from './src/models/scheduleModel'
+import workoutModel from './src/models/workoutModel'
+import userModel from './src/models/userModel'
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -6,12 +8,9 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const chalk = require('chalk')
 const debug = require('debug')('server')
-const workoutModel = require('./src/models/workoutModel')
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
-const scheduleModel = require('./src/models/scheduleModel')
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
-const userModel = require('./src/models/userModel')
-const userRouter = require('./src/routes/scheduleRouter')(userModel)
+const userRouter = require('./src/routes/userRouter')(userModel)
 
 const server = express()
 const port = process.env.PORT || 2130
