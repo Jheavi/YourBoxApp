@@ -7,8 +7,7 @@ import actionTypes from './action-types'
 
 jest.mock('axios')
 
-const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
+const mockStore = configureMockStore([thunk])
 
 describe('Workout actions', () => {
   let fakeData: {data: {}}

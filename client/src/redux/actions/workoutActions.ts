@@ -1,26 +1,25 @@
 import actionTypes from './action-types'
 import axios from 'axios'
 import serverUrls from '../../constants/serverUrls'
-import Action from './actionInterface'
-import { AppThunk } from '../reducers'
-import { AppDispatch } from '../configureStore'
+import { WorkoutActionTypes } from './workoutActionInterfaces'
 import { workoutInterface } from '../../interfaces/interfaces'
+import { AppDispatch } from '../configureStore'
 
-export function loadWorkoutSuccess (workout: workoutInterface): Action {
+export function loadWorkoutSuccess (workout: workoutInterface): WorkoutActionTypes {
   return {
     type: actionTypes.LOAD_WORKOUT,
     workout
   }
 }
 
-export function loadWorkoutError (error: any): Action {
+export function loadWorkoutError (error: any): WorkoutActionTypes {
   return {
     type: actionTypes.LOAD_WORKOUT_ERROR,
     error
   }
 }
 
-export function loadWorkout (date: string): AppThunk {
+export function loadWorkout (date: string): any {
   return async (dispatch: AppDispatch) => {
     try {
       const { data } = await axios.get(`${serverUrls.workoutUrl}/${date}`)
@@ -32,14 +31,14 @@ export function loadWorkout (date: string): AppThunk {
   }
 }
 
-export function updateWorkoutSuccess (workout: workoutInterface): Action {
+export function updateWorkoutSuccess (workout: workoutInterface): WorkoutActionTypes {
   return {
     type: actionTypes.UPDATE_WORKOUT,
     workout
   }
 }
 
-export function updateWorkoutError (error: any): Action {
+export function updateWorkoutError (error: any): WorkoutActionTypes {
   return {
     type: actionTypes.UPDATE_WORKOUT_ERROR,
     error
@@ -51,8 +50,8 @@ export function updateWorkout (
   updatedDescription?: string,
   updatedTitle?: string,
   updatedType?: string
-) {
-  return async (dispatch: AppDispatch) => {
+): any {
+  return async (dispatch:AppDispatch) => {
     try {
       const { data } = await axios.patch(
         `${serverUrls.workoutUrl}/${date}`,

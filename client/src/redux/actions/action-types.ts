@@ -1,4 +1,4 @@
-interface actionTypesInterface {
+export interface actionTypesInterface {
   LOAD_WORKOUT: string
   LOAD_WORKOUT_ERROR: string
   UPDATE_WORKOUT: string
