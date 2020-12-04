@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     borderRadius: 60,
-    borderColor: '#ffffff',
+    borderColor: 'white',
     borderWidth: 1,
     overflow: 'hidden',
     zIndex: 10
