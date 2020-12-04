@@ -8,5 +8,6 @@
     "assetBundlePatterns": [
       "**/*"
     ]
-  }
+  },
+  "scheme": "gymapp"
 }
