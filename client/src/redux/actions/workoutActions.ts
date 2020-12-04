@@ -31,6 +31,12 @@ export function loadWorkout (date: string): any {
   }
 }
 
+export function isWorkoutLoading () {
+  return {
+    type: actionTypes.SCHEDULES_LOADING
+  }
+}
+
 export function updateWorkoutSuccess (workout: workoutInterface): WorkoutActionTypes {
   return {
     type: actionTypes.UPDATE_WORKOUT,

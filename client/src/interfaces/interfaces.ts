@@ -1,3 +1,5 @@
+import { AppDispatch } from '../redux/configureStore'
+
 export interface workoutInterface {
   description?: string,
   gym?: string,
@@ -26,8 +28,9 @@ export interface dateObject {
 }
 
 export interface props {
-  dispatch: Function,
+  dispatch: AppDispatch,
   workout?: workoutInterface,
+  workoutLoading: boolean
   weekDay: string
 }
 

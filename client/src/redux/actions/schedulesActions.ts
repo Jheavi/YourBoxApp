@@ -31,6 +31,12 @@ export function loadSchedules (): any {
   }
 }
 
+export function isSchedulesLoading () {
+  return {
+    type: actionTypes.SCHEDULES_LOADING
+  }
+}
+
 export function updateSessionSuccess (schedules: [scheduleInterface]): SchedulesActionTypes {
   return {
     type: actionTypes.UPDATE_SESSION,
