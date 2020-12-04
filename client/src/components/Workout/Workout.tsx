@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, View, ScrollView, ImageBackground, Text, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, View, ScrollView, ImageBackground, Text, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
 import { Calendar, DateObject } from 'react-native-calendars'
-import { loadWorkout } from '../../redux/actions/workoutActions'
+import { isWorkoutLoading, loadWorkout } from '../../redux/actions/workoutActions'
 import { extractDataFromTodayDate, extractDataFromDate } from '../../utils/dateFunctions'
 import { props } from '../../interfaces/interfaces'
 import images from '../../constants/images'
@@ -12,7 +12,7 @@ import { workoutStyle, calendarTheme } from './workoutStyle'
 
 const styles = StyleSheet.create(workoutStyle)
 
-function Workout ({ workout, dispatch }: props) {
+function Workout ({ workout, workoutLoading, dispatch }: props) {
   const { todayString } = extractDataFromTodayDate()
   const [displayedDay, setDisplayedDay] = useState(todayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
@@ -22,6 +22,7 @@ function Workout ({ workout, dispatch }: props) {
 
   useEffect(() => {
     dispatch(loadWorkout(todayString!))
+    dispatch(isWorkoutLoading())
   }, [])
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function Workout ({ workout, dispatch }: props) {
   }
 
   function onDayPress (day: DateObject) {
+    dispatch(isWorkoutLoading())
     dispatch(loadWorkout(day.dateString))
     setDisplayedDay(day.dateString)
     scrollToStart()
@@ -62,23 +64,29 @@ function Workout ({ workout, dispatch }: props) {
         <Text style={styles.dayText} testID="workoutDate">{formattedDate && `${formattedDate.day}/${formattedDate.month}/${formattedDate.year}`}</Text>
         <View style={styles.square}>
           <ImageBackground source={images.workoutbackground} style={styles.image} />
-          <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }} testID="touchableForModal">
-            <View style={styles.workoutTextView}>
-              <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
-              <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
-              <Text style={styles.workoutText}>{workout && workout.description}</Text>
-              <Modal
-                testID="workoutModal"
-                style={styles.modal}
-                animationIn="bounceIn"
-                isVisible={modalVisible}
-                onBackButtonPress={() => { setModalVisible(false) }}
-                onBackdropPress={() => { setModalVisible(false) }}
-                >
-                <FormModifyWorkout todayString={todayString} displayedDay={displayedDay} setModalVisible={setModalVisible}/>
-              </Modal>
-            </View>
-          </TouchableWithoutFeedback>
+          {workoutLoading &&
+          <View style={{ ...styles.container, justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color="#cb1313"/>
+          </View>}
+          {!workoutLoading &&
+            <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }} testID="touchableForModal">
+              <View style={styles.workoutTextView}>
+                <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
+                <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
+                <Text style={styles.workoutText}>{workout && workout.description}</Text>
+                <Modal
+                  testID="workoutModal"
+                  style={styles.modal}
+                  animationIn="bounceIn"
+                  isVisible={modalVisible}
+                  onBackButtonPress={() => { setModalVisible(false) }}
+                  onBackdropPress={() => { setModalVisible(false) }}
+                  >
+                  <FormModifyWorkout todayString={todayString} displayedDay={displayedDay} setModalVisible={setModalVisible}/>
+                </Modal>
+              </View>
+            </TouchableWithoutFeedback>
+          }
         </View>
         <View style={{ marginBottom: 30, width: '80%' }}>
           <Calendar
@@ -94,7 +102,8 @@ function Workout ({ workout, dispatch }: props) {
 
 function mapStateToProps ({ workoutReducer }: any) {
   return {
-    workout: workoutReducer.workout
+    workout: workoutReducer.workout,
+    workoutLoading: workoutReducer.workoutLoading
   }
 }
 
