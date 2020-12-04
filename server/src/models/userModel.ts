@@ -19,8 +19,8 @@ export interface userInterface {
   affiliatedProgram?: string
   email: string,
   name: string,
-  pastSessions?: pastSession[],
-  reservedSessions?: reservedSession[],
+  pastSessions: pastSession[],
+  reservedSessions: reservedSession[],
   signInDate: string,
 }
 
