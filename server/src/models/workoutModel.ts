@@ -18,4 +18,4 @@ const workoutSchema: workout = new Schema({
   type: String
 })
 
-module.exports = model('Workout', workoutSchema)
+export default model('Workout', workoutSchema)

@@ -333,3 +333,7 @@ temp/
 
 /ios
 ios/
+
+# expo/web
+
+/.expo/packager-info.json
