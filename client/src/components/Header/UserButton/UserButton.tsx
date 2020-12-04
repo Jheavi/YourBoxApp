@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useNavigation } from '@react-navigation/native'
 // import { connect } from 'react-redux'
 // import PropTypes from 'prop-types'
 
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     borderRadius: 60,
-    borderColor: '#ffffff',
+    borderColor: 'white',
     borderWidth: 1,
     overflow: 'hidden',
     zIndex: 10
@@ -19,12 +20,11 @@ const styles = StyleSheet.create({
 })
 
 function userButton () {
-  function onPress () {
-    alert('You tapped the button!')
-  }
+  const navigation = useNavigation()
+
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => navigation.navigate('Login')}
       style={styles.userButton}
       hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
     >

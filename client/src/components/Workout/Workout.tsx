@@ -6,10 +6,9 @@ import { Calendar, DateObject } from 'react-native-calendars'
 import { loadWorkout } from '../../redux/actions/workoutActions'
 import { extractDataFromTodayDate, extractDataFromDate } from '../../utils/dateFunctions'
 import { props } from '../../interfaces/interfaces'
+import images from '../../constants/images'
 import FormModifyWorkout from './FormModifyWorkout/FormModifyWorkout'
 import { workoutStyle, calendarTheme } from './workoutStyle'
-
-const image = { uri: 'https://trello-attachments.s3.amazonaws.com/5fc6ad22e8f1971a74d3b3a5/5fc6ade260f98805ecff5fd0/8174a262d41dc582d175bf5e3adf8685/clean.jpeg' }
 
 const styles = StyleSheet.create(workoutStyle)
 
@@ -62,7 +61,7 @@ function Workout ({ workout, dispatch }: props) {
       >
         <Text style={styles.dayText} testID="workoutDate">{formattedDate && `${formattedDate.day}/${formattedDate.month}/${formattedDate.year}`}</Text>
         <View style={styles.square}>
-          <ImageBackground source={image} style={styles.image} />
+          <ImageBackground source={images.workoutbackground} style={styles.image} />
           <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }} testID="touchableForModal">
             <View style={styles.workoutTextView}>
               <Text style={styles.workoutTitle}>{workout && workout.title}</Text>

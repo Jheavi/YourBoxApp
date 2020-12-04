@@ -2,8 +2,7 @@ import React from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-
-const image = { uri: 'https://trello-attachments.s3.amazonaws.com/5fc6ad22e8f1971a74d3b3a5/5fc6ade260f98805ecff5fd0/7ccd1dcd43eb5d424c3e06b094ced535/baby-beast-crossfit.jpg' }
+import images from '../../constants/images'
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +38,7 @@ function HomeScreen ({ navigation }: any) {
     <View style={styles.container}>
       <ImageBackground
       style={styles.backImage}
-      source={image}
+      source={images.homeScreen}
       />
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
