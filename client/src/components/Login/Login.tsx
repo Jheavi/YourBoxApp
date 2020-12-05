@@ -1,6 +1,9 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import images from '../../constants/images'
+import jwtDecode from 'jwt-decode'
+import { onLogin } from '../../utils/authFunctions'
+import { maybeCompleteAuthSession } from 'expo-web-browser'
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +37,19 @@ const styles = StyleSheet.create({
   }
 })
 
+maybeCompleteAuthSession()
+
 function Login ({ user }: any) {
+  async function loginBtn () {
+    const response = await onLogin()
+    console.log(response)
+
+    if (response.type === 'success') {
+      const decodedJwtIdToken = jwtDecode(response.params.id_token)
+      console.log(decodedJwtIdToken)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -45,6 +60,7 @@ function Login ({ user }: any) {
       <>
         <TouchableOpacity
           style={styles.buttonView}
+          onPress={() => loginBtn()}
         >
           <Text style={styles.buttonsText}>Sign up</Text>
         </TouchableOpacity>
