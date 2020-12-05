@@ -11,6 +11,10 @@ export interface actionTypesInterface {
   UPDATE_SESSION_ERROR: string
   CREATE_SESSION: string
   CREATE_SESSION_ERROR: string
+  USER_LOGIN: string,
+  USER_LOGIN_ERROR: string,
+  USER_LOGOUT: string
+  USER_LOGOUT_ERROR: string
 }
 
 const actionTypes: actionTypesInterface = {
@@ -25,7 +29,11 @@ const actionTypes: actionTypesInterface = {
   UPDATE_SESSION: 'UPDATE_SESSION',
   UPDATE_SESSION_ERROR: 'UPDATE_SESSION_ERROR',
   CREATE_SESSION: 'CREATE_SESSION',
-  CREATE_SESSION_ERROR: 'CREATE_SESSION_ERROR'
+  CREATE_SESSION_ERROR: 'CREATE_SESSION_ERROR',
+  USER_LOGIN: 'USER_LOGIN',
+  USER_LOGIN_ERROR: 'USER_LOGIN_ERROR',
+  USER_LOGOUT: 'USER_LOGOUT',
+  USER_LOGOUT_ERROR: 'USER_LOGOUT_ERROR'
 }
 
 export default actionTypes
