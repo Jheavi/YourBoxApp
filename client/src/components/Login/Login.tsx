@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import images from '../../constants/images'
+import { login, logout } from '../../redux/actions/userActions'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function Login ({ user }: any) {
+function Login ({ user, dispatch }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -45,16 +47,15 @@ function Login ({ user }: any) {
       <>
         <TouchableOpacity
           style={styles.buttonView}
+          onPress={() => dispatch(login())}
         >
-          <Text style={styles.buttonsText}>Sign up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonView}>
           <Text style={styles.buttonsText}>Login</Text>
         </TouchableOpacity>
       </>}
       {user &&
       <TouchableOpacity
         style={styles.buttonView}
+        onPress={() => dispatch(logout())}
       >
         <Text style={styles.buttonsText}>Logout</Text>
       </TouchableOpacity>
@@ -63,4 +64,11 @@ function Login ({ user }: any) {
   )
 }
 
-export default Login
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user,
+    isLogged: userReducer.isLogged
+  }
+}
+
+export default connect(mapStateToProps)(Login)

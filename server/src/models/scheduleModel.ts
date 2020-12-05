@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const { Schema, model } = mongoose
 
-export interface scheduleHour {
+export interface sessionInterface {
   finishHour: string,
   startHour: string,
   type: string
@@ -11,7 +11,7 @@ export interface scheduleHour {
 export interface schedule {
   day: string,
   gym?: string,
-  sessions: scheduleHour[]
+  sessions: sessionInterface[]
 }
 
 const scheduleSchema: schedule = new Schema({

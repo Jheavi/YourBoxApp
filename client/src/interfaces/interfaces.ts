@@ -37,3 +37,36 @@ export interface props {
 export interface dayScheduleProps {
   weekDay: scheduleInterface
 }
+
+export interface StringMap {
+  [key: string]: string;
+}
+
+export interface Auth0UserInterface {
+  connection: string,
+  email?: string,
+  name?: string,
+  userId: string
+}
+
+export interface reservedSession extends sessionInterface {
+  day: string
+}
+
+export interface pastSession extends reservedSession {
+  result?: string
+}
+
+export interface userInterface {
+  active: boolean
+  readonly admin: boolean,
+  affiliatedGym?: string,
+  affiliatedProgram?: string,
+  connection: string,
+  email: string,
+  name: string,
+  pastSessions: pastSession[],
+  reservedSessions: reservedSession[],
+  signInDate: string,
+  userId: string
+}
