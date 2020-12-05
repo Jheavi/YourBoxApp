@@ -22,22 +22,21 @@ function userController (userModel): userControllerInterface {
     }
   }
 
-  async function postUser ({ body: { newUser } }: Request, res: Response) {
+  async function postUser ({ body: { user } }: Request, res: Response) {
     try {
-      const queryUserExists = { email: newUser.email }
-      const userExists = await userModel.find(queryUserExists)
-      console.log(userExists)
+      const queryUserExists = { userId: user.userId }
+      const userExists = await userModel.findOne(queryUserExists)
 
-      const { todayString } = extractDataFromTodayDate()
-
-      if (userExists.length) {
-        res.send('Email already used')
+      if (userExists) {
+        res.send(userExists)
       } else {
-        const userToCreate = { ...newUser, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: todayString }
-        const user = await userModel.create(userToCreate)
+        const { todayString } = extractDataFromTodayDate()
+        const userToCreate = { ...user, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: todayString }
+        const userCreated = await userModel.create(userToCreate)
         // user.populate('affiliatedProgram')
         // user.exec((error, usersFound) => error ? res.send(error) : res.send(usersFound))
-        res.send(user)
+
+        res.send(userCreated)
       }
     } catch (error) {
       console.log(error)
