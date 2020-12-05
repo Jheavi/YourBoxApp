@@ -18,7 +18,8 @@ export async function onLogin () {
     client_id: auth0data.clientId,
     redirect_uri: redirectUri,
     response_type: 'token id_token',
-    nonce: 'nonce'
+    nonce: 'nonce',
+    prompt: 'select_account'
   }
 
   const queryParams = toQueryString(params)
@@ -26,5 +27,22 @@ export async function onLogin () {
   const authUrl = `https://${auth0data.domain}/authorize${queryParams}`
 
   const response = await startAsync({ authUrl, showInRecents: true })
+  return response
+}
+
+export async function onLogout () {
+  const useProxy = Platform.select({ web: false, default: true })
+  const redirectUri = makeRedirectUri({ native: auth0data.logoutUri, useProxy })
+
+  const params = {
+    client_id: auth0data.clientId,
+    returnTo: redirectUri
+  }
+
+  const queryParams = toQueryString(params)
+
+  const authUrl = `https://${auth0data.domain}/v2/logout${queryParams}&federated`
+
+  const response = await startAsync({ authUrl })
   return response
 }
