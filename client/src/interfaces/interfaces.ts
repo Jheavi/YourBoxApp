@@ -37,3 +37,7 @@ export interface props {
 export interface dayScheduleProps {
   weekDay: scheduleInterface
 }
+
+export interface StringMap {
+  [key: string]: string;
+}
