@@ -1,6 +1,5 @@
 import React from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import images from '../../constants/images'
 
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function HomeScreen ({ navigation }: any) {
+function AdminHome ({ navigation }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -92,8 +91,4 @@ function HomeScreen ({ navigation }: any) {
   )
 }
 
-HomeScreen.propTypes = {
-  navigation: PropTypes.object.isRequired
-}
-
-export default HomeScreen
+export default AdminHome
