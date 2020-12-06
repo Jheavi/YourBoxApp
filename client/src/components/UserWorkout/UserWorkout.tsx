@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Calendar, CalendarTheme } from 'react-native-calendars'
-import Icon from 'react-native-vector-icons/Entypo'
 import { connect } from 'react-redux'
 import images from '../../constants/images'
+import { props } from '../../interfaces/interfaces'
 import { isWorkoutLoading, loadWorkout } from '../../redux/actions/workoutActions'
 import { extractDataFromTodayDate } from '../../utils/dateFunctions'
 
@@ -17,30 +17,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height
   },
-  upperView: {
-    marginTop: 60,
-    marginBottom: 15,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  upperIconResultsView: {
-    flexDirection: 'column',
+  scrollContent: {
     alignItems: 'center',
-    marginHorizontal: 16
-  },
-  result: {
-    color: 'white',
-    fontSize: 20
-  },
-  upperText: {
-    color: 'white',
-    textAlign: 'left',
-    paddingTop: 5,
-    fontSize: 15
-  },
-  remainingClassesView: {
-    flexDirection: 'column',
-    marginHorizontal: 16
+    width: '100%'
   },
   square: {
     maxWidth: '80%',
@@ -52,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 2,
     height: 'auto',
-    marginBottom: 30,
+    marginVertical: 30,
     position: 'relative'
   },
   workoutTextView: {
@@ -122,7 +101,7 @@ const calendarTheme: CalendarTheme = {
   }
 }
 
-function UserView ({ dispatch, workoutLoading, workout }: any) {
+function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
   const { todayString } = extractDataFromTodayDate()
   const noWorkout = 'There is no workout for the selected day'
 
@@ -133,48 +112,37 @@ function UserView ({ dispatch, workoutLoading, workout }: any) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.upperView}>
-        <View style={styles.upperIconResultsView}>
-          <Icon
-            name="blackboard"
-            size={40}
-            color="white"
-          />
-          <Text style={styles.result}>Your results</Text>
-        </View>
-        <View style={styles.remainingClassesView}>
-          <Text style={styles.upperText}>Classes used this month: </Text>
-          <Text style={styles.upperText}>Remaining classes: </Text>
-        </View>
-      </View>
-      <View style={styles.square}>
-        <ImageBackground source={images.workoutbackground} style={styles.image} />
-        {workoutLoading &&
-        <View style={styles.workoutTextView}>
-          <ActivityIndicator size="large" color="#cb1313"/>
-        </View>}
-        {!workoutLoading &&
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.square}>
+          <ImageBackground source={images.workoutbackground} style={styles.image} />
+          {workoutLoading &&
           <View style={styles.workoutTextView}>
-            <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
-            <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
-            <Text style={styles.workoutText}>{workout && workout.description}</Text>
+            <ActivityIndicator size="large" color="#cb1313"/>
           </View>}
-      </View>
-      <View style={{ marginBottom: 30, width: '80%' }}>
+          {!workoutLoading &&
+            <View style={styles.workoutTextView}>
+              <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
+              <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
+              <Text style={styles.workoutText}>{workout && workout.description}</Text>
+            </View>}
+        </View>
+        <View style={{ marginBottom: 30, width: '80%' }}>
           <Calendar
             theme={calendarTheme}
             firstDay={1}
           />
         </View>
+      </ScrollView>
     </View>
   )
 }
 
-function mapStateToProps ({ workoutReducer }: any) {
+function mapStateToProps ({ userReducer, workoutReducer }: any) {
   return {
+    user: userReducer.user,
     workout: workoutReducer.workout,
     workoutLoading: workoutReducer.workoutLoading
   }
 }
 
-export default connect(mapStateToProps)(UserView)
+export default connect(mapStateToProps)(UserWorkout)
