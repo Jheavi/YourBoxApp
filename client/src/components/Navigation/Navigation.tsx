@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Workout from '../Workout/Workout'
 import Header from '../Header/Header'
-import AdminHome from '../HomeScreen/AdminHome'
+import AdminHome from '../AdminHome/AdminHome'
 import Schedules from '../Schedules/Schedules'
 import Login from '../UserControl/Login/Login'
 import UserView from '../UserView/UserView'
@@ -20,11 +20,12 @@ const header = {
 function Navigation ({ user }: props) {
   return (
     <NavigationContainer>
-      <Navigator initialRouteName={!user
-        ? 'Login'
-        : user.admin
-          ? 'Home'
-          : 'UserView'}>
+      <Navigator initialRouteName={
+        !user
+          ? 'Login'
+          : user.admin
+            ? 'Home'
+            : 'UserView'}>
         {!user
           ? <Screen
               name="Login"
