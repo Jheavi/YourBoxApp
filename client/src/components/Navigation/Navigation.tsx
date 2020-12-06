@@ -8,8 +8,9 @@ import Header from '../Header/Header'
 import AdminHome from '../AdminHome/AdminHome'
 import Schedules from '../Schedules/Schedules'
 import Login from '../UserControl/Login/Login'
-import UserView from '../UserView/UserView'
+import UserWorkout from '../UserView/UserView'
 import Logout from '../UserControl/Logout/Logout'
+import UserHome from '../UserHome/UserHome'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -34,39 +35,44 @@ function Navigation ({ user }: props) {
             />
           : user.admin
             ? <>
-              <Screen
-                name="Home"
-                component={AdminHome}
-                options={header}
-              />
-              <Screen
-                name="AdminWorkout"
-                component={Workout}
-                options={header}
-              />
-              <Screen
-                name="AdminSchedules"
-                component={Schedules}
-                options={header}
-              />
-              <Screen
-                name="Logout"
-                component={Logout}
-                options={header}
-              />
-            </>
+                <Screen
+                  name="Home"
+                  component={AdminHome}
+                  options={header}
+                />
+                <Screen
+                  name="AdminWorkout"
+                  component={Workout}
+                  options={header}
+                />
+                <Screen
+                  name="AdminSchedules"
+                  component={Schedules}
+                  options={header}
+                />
+                <Screen
+                  name="Logout"
+                  component={Logout}
+                  options={header}
+                />
+              </>
             : <>
-              <Screen
-                name="UserView"
-                component={UserView}
-                options={header}
-              />
-              <Screen
-                name="Logout"
-                component={Logout}
-                options={header}
-              />
-            </>
+                <Screen
+                  name="UserHome"
+                  component={UserHome}
+                  options={header}
+                />
+                <Screen
+                  name="UserWorkout"
+                  component={UserWorkout}
+                  options={header}
+                />
+                <Screen
+                  name="Logout"
+                  component={Logout}
+                  options={header}
+                />
+              </>
         }
       </Navigator>
     </NavigationContainer>
