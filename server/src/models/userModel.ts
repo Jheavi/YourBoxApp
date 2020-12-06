@@ -1,8 +1,6 @@
 import { sessionInterface } from './scheduleModel'
 
-const mongoose = require('mongoose')
-
-const { Schema, model } = mongoose
+const { Schema, model } = require('mongoose')
 
 export interface reservedSession extends sessionInterface {
   day: string
