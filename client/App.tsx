@@ -8,6 +8,7 @@ import Header from './src/components/Header/Header'
 import HomeScreen from './src/components/HomeScreen/HomeScreen'
 import Schedules from './src/components/Schedules/Schedules'
 import Login from './src/components/Login/Login'
+import UserView from './src/components/UserView/UserView'
 
 const store = configureStore({})
 const { Navigator, Screen } = createStackNavigator()
@@ -39,6 +40,11 @@ export default function App () {
           <Screen
             name="Login"
             component={Login}
+            options={header}
+          />
+          <Screen
+            name="UserView"
+            component={UserView}
             options={header}
           />
         </Navigator>
