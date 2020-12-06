@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native'
+import { connect } from 'react-redux'
+import { props } from '../../../interfaces/interfaces'
 // import { connect } from 'react-redux'
 // import PropTypes from 'prop-types'
 
@@ -19,12 +21,14 @@ const styles = StyleSheet.create({
   }
 })
 
-function userButton () {
+function userButton ({ user }: props) {
   const navigation = useNavigation()
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Login')}
+      onPress={() => !user
+        ? navigation.navigate('Login')
+        : navigation.navigate('Logout')}
       style={styles.userButton}
       hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
     >
@@ -37,4 +41,10 @@ function userButton () {
   )
 }
 
-export default userButton
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(userButton)

@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, StatusBar, TouchableWithoutFeedback } from 'rea
 import BurgerButton from './BurgerButton/BurgerButton'
 import UserButton from './UserButton/UserButton'
 import { useNavigation } from '@react-navigation/native'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
+import { props } from '../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function Header () {
+function Header ({ user }: props) {
   const navigation = useNavigation()
   return (
     <View style={styles.container}>
@@ -37,7 +38,13 @@ function Header () {
       <BurgerButton />
       <TouchableWithoutFeedback
         style={{ flex: 1 }}
-        onPress={() => { navigation.navigate('Home') }}
+        onPress={() => {
+          !user
+            ? navigation.navigate('Login')
+            : user.admin
+              ? navigation.navigate('Home')
+              : navigation.navigate('UserView')
+        }}
       >
         <Text style={styles.title}>GymApp</Text>
       </TouchableWithoutFeedback>
@@ -48,4 +55,10 @@ function Header () {
   )
 }
 
-export default Header
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(Header)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
-import images from '../../constants/images'
-import { login, logout } from '../../redux/actions/userActions'
+import images from '../../../constants/images'
+import { logout } from '../../../redux/actions/userActions'
 import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
@@ -36,39 +36,21 @@ const styles = StyleSheet.create({
   }
 })
 
-function Login ({ user, dispatch }: any) {
+function Login ({ dispatch }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
         style={styles.backImage}
         source={images.homeScreen}
       />
-      {!user &&
-      <>
-        <TouchableOpacity
-          style={styles.buttonView}
-          onPress={() => dispatch(login())}
-        >
-          <Text style={styles.buttonsText}>Login</Text>
-        </TouchableOpacity>
-      </>}
-      {user &&
       <TouchableOpacity
         style={styles.buttonView}
         onPress={() => dispatch(logout())}
       >
         <Text style={styles.buttonsText}>Logout</Text>
       </TouchableOpacity>
-      }
     </View>
   )
 }
 
-function mapStateToProps ({ userReducer }: any) {
-  return {
-    user: userReducer.user,
-    isLogged: userReducer.isLogged
-  }
-}
-
-export default connect(mapStateToProps)(Login)
+export default connect(null)(Login)
