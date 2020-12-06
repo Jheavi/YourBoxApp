@@ -8,7 +8,7 @@ import Header from '../Header/Header'
 import AdminHome from '../AdminHome/AdminHome'
 import Schedules from '../Schedules/Schedules'
 import Login from '../UserControl/Login/Login'
-import UserWorkout from '../UserView/UserView'
+import UserWorkout from '../UserWorkout/UserWorkout'
 import Logout from '../UserControl/Logout/Logout'
 import UserHome from '../UserHome/UserHome'
 
