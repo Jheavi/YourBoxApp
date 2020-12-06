@@ -1,3 +1,4 @@
+import { StackNavigationProp } from '@react-navigation/stack'
 import { AppDispatch } from '../redux/configureStore'
 
 export interface workoutInterface {
@@ -27,11 +28,21 @@ export interface dateObject {
   todayString?: string,
 }
 
+type RootStackParamList = {
+  UserView: undefined
+  Home: undefined
+  AdminWorkout: undefined
+  AdminSchedules: undefined
+  Login: undefined
+};
+
 export interface props {
   dispatch: AppDispatch,
+  user?: userInterface,
+  navigation?: StackNavigationProp< RootStackParamList>
+  weekDay: string,
   workout?: workoutInterface,
-  workoutLoading: boolean
-  weekDay: string
+  workoutLoading: boolean,
 }
 
 export interface dayScheduleProps {
