@@ -12,13 +12,19 @@ import { workoutStyle, calendarTheme } from './workoutStyle'
 
 const styles = StyleSheet.create(workoutStyle)
 
-function Workout ({ workout, workoutLoading, dispatch }: props) {
+function Workout ({ workout, workoutLoading, navigation, dispatch, user }: props) {
   const { todayString } = extractDataFromTodayDate()
   const [displayedDay, setDisplayedDay] = useState(todayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
   const [modalVisible, setModalVisible] = useState(false)
   const noWorkout = 'There is no workout for the selected day'
   const scrollRef = useRef<ScrollView>(null)
+
+  useEffect(() => {
+    if (user && !user.admin) {
+      navigation!.navigate('UserView')
+    }
+  })
 
   useEffect(() => {
     dispatch(loadWorkout(todayString!))
@@ -100,10 +106,11 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
   )
 }
 
-function mapStateToProps ({ workoutReducer }: any) {
+function mapStateToProps ({ workoutReducer, userReducer }: any) {
   return {
     workout: workoutReducer.workout,
-    workoutLoading: workoutReducer.workoutLoading
+    workoutLoading: workoutReducer.workoutLoading,
+    user: userReducer.user
   }
 }
 
