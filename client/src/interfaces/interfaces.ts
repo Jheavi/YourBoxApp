@@ -34,6 +34,9 @@ type RootStackParamList = {
   AdminWorkout: undefined
   AdminSchedules: undefined
   Login: undefined
+  Logout: undefined
+  UserHome: undefined
+  UserWorkout: undefined
 };
 
 export interface props {
