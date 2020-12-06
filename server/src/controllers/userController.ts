@@ -28,14 +28,13 @@ function userController (userModel): userControllerInterface {
       const userExists = await userModel.findOne(queryUserExists)
 
       if (userExists) {
+        await userExists.populate('affiliatedProgram').execPopulate()
         res.send(userExists)
       } else {
         const { todayString } = extractDataFromTodayDate()
         const userToCreate = { ...user, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: todayString }
         const userCreated = await userModel.create(userToCreate)
-        // user.populate('affiliatedProgram')
-        // user.exec((error, usersFound) => error ? res.send(error) : res.send(usersFound))
-
+        await userCreated.populate('affiliatedProgram').execPopulate()
         res.send(userCreated)
       }
     } catch (error) {

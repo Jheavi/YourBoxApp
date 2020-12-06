@@ -1,6 +1,7 @@
 import scheduleModel from './src/models/scheduleModel'
 import workoutModel from './src/models/workoutModel'
 import userModel from './src/models/userModel'
+import programModel from './src/models/programModel'
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -10,7 +11,7 @@ const chalk = require('chalk')
 const debug = require('debug')('server')
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
-const userRouter = require('./src/routes/userRouter')(userModel)
+const userRouter = require('./src/routes/userRouter')(userModel, programModel)
 
 const server = express()
 const port = process.env.PORT || 2130
