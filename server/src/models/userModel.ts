@@ -1,8 +1,6 @@
 import { sessionInterface } from './scheduleModel'
 
-const mongoose = require('mongoose')
-
-const { Schema, model } = mongoose
+const { Schema, model } = require('mongoose')
 
 export interface reservedSession extends sessionInterface {
   day: string
@@ -20,6 +18,7 @@ export interface userInterface {
   connection: string,
   email: string,
   name: string,
+  ownerOfGym?: string,
   pastSessions: pastSession[],
   reservedSessions: reservedSession[],
   signInDate: string,
@@ -34,6 +33,7 @@ const userSchema: userInterface = new Schema({
   connection: String,
   email: String,
   name: String,
+  ownerOfGym: { type: Schema.Types.ObjectId, ref: 'Gym' },
   pastSessions: [Object],
   reservedSessions: [Object],
   signInDate: String,
