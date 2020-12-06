@@ -44,7 +44,7 @@ export function login (): any {
 
         dispatch(loginSuccess(data))
       } else {
-        console.log(response.type)
+        dispatch(loginError(response.type))
       }
     } catch (error) {
       dispatch(loginError(error))
@@ -75,7 +75,7 @@ export function logout (): any {
 
         dispatch(logoutSuccess())
       } else {
-        console.log(response.type)
+        dispatch(logoutError(response.type))
       }
     } catch (error) {
       dispatch(logoutError(error))
