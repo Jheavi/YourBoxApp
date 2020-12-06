@@ -112,7 +112,7 @@ function UserHome ({ navigation, user }: props) {
       <View style={styles.lowerView}>
         <View style={styles.remainingClassesView}>
           <Text style={styles.lowerText}>Classes used this month: {user!.pastSessions.length}</Text>
-          <Text style={styles.lowerText}>Remaining classes: {user!.pastSessions.length}</Text>
+          <Text style={styles.lowerText}>Remaining classes: {typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - user!.pastSessions.length}</Text>
         </View>
       </View>
       <View style={{ flex: 1 }}/>
