@@ -17,7 +17,7 @@ describe('workoutReducer', () => {
 
     const state = workoutReducer(undefined, fakeAction)
 
-    expect(state).toEqual({ workout: fakeWorkout })
+    expect(state).toEqual({ workout: fakeWorkout, workoutLoading: false })
   })
 
   it('should return the workout in a property called workout if action type is UPDATE_WORKOUT', () => {
@@ -30,5 +30,14 @@ describe('workoutReducer', () => {
     const state = workoutReducer(undefined, fakeAction)
 
     expect(state).toEqual({ workout: fakeWorkout })
+  })
+
+  it('should return the property workoutLoading if action type is WORKOUT_LOADING', () => {
+    const fakeAction = {
+      type: actionTypes.WORKOUT_LOADING
+    }
+    const state = workoutReducer(undefined, fakeAction)
+
+    expect(state).toEqual({ workoutLoading: true })
   })
 })

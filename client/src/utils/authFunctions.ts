@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import { StringMap } from '../interfaces/interfaces'
 import auth0data from '../constants/auth0data'
 
-function toQueryString (params: StringMap) {
+export function toQueryString (params: StringMap) {
   const paramsJoined: string = Object.entries(params).map(([key, value]) =>
       `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
   ).join('&')

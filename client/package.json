@@ -71,7 +71,7 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker)/)"
+      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules)/)"
     ]
   },
   "private": true

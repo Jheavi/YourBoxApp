@@ -1,4 +1,4 @@
-import { extractDataFromDate, extractDataFromTodayDate } from './dateFunctions'
+import { extractDataFromDate, extractDataFromTodayDate, sortByWeekDays } from './dateFunctions'
 
 describe('Date Functions', () => {
   const RealDate = Date.now
@@ -47,5 +47,25 @@ describe('Date Functions', () => {
       year: 2020,
       todayString: '2020-09-02'
     })
+  })
+
+  test('sortByWeekDays should return 1 if dayOne.day is tuesday and dayTwo.day is monday', () => {
+    // Mocked Date-now to return always the date 02/September/2020
+    const dayOne = { day: 'tuesday', sessions: [] }
+    const dayTwo = { day: 'monday', sessions: [] }
+
+    const response = sortByWeekDays(dayOne, dayTwo)
+
+    expect(response).toBe(1)
+  })
+
+  test('sortByWeekDays should return -1 if dayOne.day is monday and dayTwo.day is tuesday', () => {
+    // Mocked Date-now to return always the date 02/September/2020
+    const dayOne = { day: 'monday', sessions: [] }
+    const dayTwo = { day: 'tuesday', sessions: [] }
+
+    const response = sortByWeekDays(dayOne, dayTwo)
+
+    expect(response).toBe(-1)
   })
 })
