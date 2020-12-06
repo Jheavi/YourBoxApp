@@ -71,11 +71,17 @@ export interface pastSession extends reservedSession {
   result?: string
 }
 
+export interface affiliatedProgram {
+  name: string
+  gym?: string
+  sessionsPerMonth: number
+}
+
 export interface userInterface {
   active: boolean
   readonly admin: boolean,
   affiliatedGym?: string,
-  affiliatedProgram?: string,
+  affiliatedProgram: affiliatedProgram | string,
   connection: string,
   email: string,
   name: string,
