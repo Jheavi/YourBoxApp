@@ -94,4 +94,12 @@ describe('Workout actions', () => {
       }
     })
   })
+
+  test('the store should have an action with type WORKOUT_LOADING', () => {
+    store!.dispatch(actions.isWorkoutLoading())
+
+    expect(store!.getActions()[0]).toEqual({
+      type: actionTypes.WORKOUT_LOADING
+    })
+  })
 })

@@ -21,4 +21,12 @@ type UpdateWorkoutErrorAction = {
   error: any
 }
 
-export type WorkoutActionTypes = LoadWorkoutAction | LoadWorkoutErrorAction | UpdateWorkoutAction | UpdateWorkoutErrorAction
+type isWorkoutLoadingAction = {
+  type: typeof actionTypes.WORKOUT_LOADING
+}
+
+export type WorkoutActionTypes = LoadWorkoutAction |
+LoadWorkoutErrorAction |
+UpdateWorkoutAction |
+UpdateWorkoutErrorAction |
+isWorkoutLoadingAction
