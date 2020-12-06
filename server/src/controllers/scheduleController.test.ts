@@ -18,6 +18,22 @@ describe('scheduleController', () => {
     fakeError = 'error'
   })
 
+  test('getAllMethod should call res.send with the schedule', async () => {
+    scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedule)
+
+    await scheduleControllerTest.getAllMethod(null, res)
+
+    expect(res.send).toHaveBeenCalledWith(fakeSchedule)
+  })
+
+  test('getAllMethod should call res.send with the error if promise rejected', async () => {
+    scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+
+    await scheduleControllerTest.getAllMethod(null, res)
+
+    expect(res.send).toHaveBeenCalledWith(fakeError)
+  })
+
   test('getMethod should call res.send with the schedule', async () => {
     scheduleModel.findOne = jest.fn().mockResolvedValueOnce(fakeSchedule)
 
