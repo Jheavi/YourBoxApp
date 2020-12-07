@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { loadWorkout } from '../../redux/actions/workoutActions'
 import Workout from './Workout'
-import { extractDataFromTodayDate } from '../../utils/dateFunctions'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 import { fireEvent, render } from '@testing-library/react-native'
 import { dateObject } from '../../interfaces/interfaces'
 
@@ -27,7 +27,7 @@ describe('Workout', () => {
   }
 
   beforeEach(() => {
-    todayDate = extractDataFromTodayDate()
+    todayDate = extractDataFromDate()
   })
 
   it('renders correctly', () => {
@@ -45,11 +45,13 @@ describe('Workout', () => {
   it('should call loadWorkout', () => {
     const initialState = { workoutReducer: {} }
     const wrapper = wrapperFactory(initialState)
+
     render(<Workout />, { wrapper })
+
     expect(loadWorkout).toHaveBeenCalled()
   })
 
-  it('should load the activityIndicator if workout is Loading the modal to visible if touchableModal is touched', () => {
+  it('should load the activityIndicator if workout is Loading', () => {
     const initialState = { workoutReducer: { workoutLoading: true } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Workout />, { wrapper })
@@ -65,9 +67,8 @@ describe('Workout', () => {
     const { queryByText, getByTestId } = render(<Workout />, { wrapper })
     const dateTitle = getByTestId('workoutDate')
     const day20button = queryByText('20')
-    if (day20button) {
-      fireEvent(day20button, 'press')
-    }
+
+    fireEvent(day20button!, 'press')
 
     expect(dateTitle.children[0]).toBe(`20/${todayDate.month}/${todayDate.year}`)
   })

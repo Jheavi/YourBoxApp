@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setModalVisible }: any) {
+function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setModalVisible }: any) {
   const [titleValue, setTitleValue] = useState(workout?.title)
   const [typeValue, setTypeValue] = useState(workout?.type || 'For Time')
   const [descriptionValue, setDescriptionValue] = useState(workout?.description)
@@ -99,7 +99,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
             testID="saveButton"
             onPress={() => {
               dispatch(updateWorkout(
-                displayedDay || todayString,
+                displayedDay || dayString,
                 descriptionValue,
                 titleValue,
                 typeValue))

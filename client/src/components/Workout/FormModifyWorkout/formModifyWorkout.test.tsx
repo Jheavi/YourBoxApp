@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store'
 import FormModifyWorkout from './FormModifyWorkout'
 import { fireEvent, render } from '@testing-library/react-native'
 import { dateObject } from '../../../interfaces/interfaces'
-import { extractDataFromTodayDate } from '../../../utils/dateFunctions'
+import { extractDataFromDate } from '../../../utils/dateFunctions'
 import { updateWorkout } from '../../../redux/actions/workoutActions'
 
 jest.mock('../../../redux/actions/workoutActions')
@@ -28,7 +28,7 @@ describe('Workout', () => {
   }
 
   beforeEach(() => {
-    todayDate = extractDataFromTodayDate()
+    todayDate = extractDataFromDate()
     setModalVisible = jest.fn()
   })
 
@@ -36,7 +36,7 @@ describe('Workout', () => {
     const initialState = { workoutReducer: {} }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
-      todayString={todayDate.todayString}
+      todayString={todayDate.dayString}
       setModalVisible={setModalVisible}
       />, { wrapper })
 
@@ -50,7 +50,7 @@ describe('Workout', () => {
     const initialState = { workoutReducer: { workout: { title: 'aa' } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
-      todayString={todayDate.todayString}
+      todayString={todayDate.dayString}
       setModalVisible={setModalVisible}
       />, { wrapper })
 
@@ -65,7 +65,7 @@ describe('Workout', () => {
     const initialState = { workoutReducer: { workout: { description: 'aa' } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
-      todayString={todayDate.todayString}
+      todayString={todayDate.dayString}
       setModalVisible={setModalVisible}
       />, { wrapper })
 
@@ -81,7 +81,7 @@ describe('Workout', () => {
     const initialState = { workoutReducer: { workout: { description: 'aa' } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
-      todayString={todayDate.todayString}
+      todayString={todayDate.dayString}
       setModalVisible={setModalVisible}
       />, { wrapper })
 
@@ -95,7 +95,7 @@ describe('Workout', () => {
     const initialState = { workoutReducer: { workout: { description: 'aa' } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
-      todayString={todayDate.todayString}
+      todayString={todayDate.dayString}
       setModalVisible={setModalVisible}
       />, { wrapper })
 
