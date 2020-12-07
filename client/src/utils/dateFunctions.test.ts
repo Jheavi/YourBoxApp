@@ -22,7 +22,8 @@ describe('Date Functions', () => {
       month: 11,
       year: 2020,
       dayString: '2020-11-25',
-      formattedDate: '25/11/2020'
+      formattedDate: '25/11/2020',
+      weekDay: 'wednesday'
     })
   })
 
@@ -37,7 +38,8 @@ describe('Date Functions', () => {
       month: 9,
       year: 2020,
       dayString: '2020-09-02',
-      formattedDate: '02/09/2020'
+      formattedDate: '02/09/2020',
+      weekDay: 'wednesday'
     })
   })
 
@@ -50,8 +52,57 @@ describe('Date Functions', () => {
       month: 9,
       year: 2020,
       dayString: '2020-09-02',
-      formattedDate: '02/09/2020'
+      formattedDate: '02/09/2020',
+      weekDay: 'wednesday'
     })
+  })
+
+  test('extractDataFromDate should return weekDay = monday date is monday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-07')
+
+    expect(weekDay).toBe('monday')
+  })
+
+  test('extractDataFromDate should return weekDay = tuesday date is tuesday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-08')
+
+    expect(weekDay).toBe('tuesday')
+  })
+
+  test('extractDataFromDate should return weekDay = wednesday if date is wednesday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-09')
+
+    expect(weekDay).toBe('wednesday')
+  })
+
+  test('extractDataFromDate should return weekDay = thursday if date is thursday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-10')
+
+    expect(weekDay).toBe('thursday')
+  })
+
+  test('extractDataFromDate should return weekDay = friday if date is friday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-11')
+
+    expect(weekDay).toBe('friday')
+  })
+
+  test('extractDataFromDate should return weekDay = saturday if date is saturday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-12')
+
+    expect(weekDay).toBe('saturday')
+  })
+
+  test('extractDataFromDate should return weekDay = sunday if date is sunday', () => {
+    const { weekDay } = extractDataFromDate('2020-12-13')
+
+    expect(weekDay).toBe('sunday')
+  })
+
+  test('extractDataFromDate should return weekDay = error if date is error', () => {
+    const { weekDay } = extractDataFromDate('fakedate')
+
+    expect(weekDay).toBe('error')
   })
 
   test('sortByWeekDays should return 1 if dayOne.day is tuesday and dayTwo.day is monday', () => {
