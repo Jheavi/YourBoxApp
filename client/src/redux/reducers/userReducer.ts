@@ -10,12 +10,19 @@ export interface userState {
 const initialState: userState = { isLogged: false }
 
 export default function userReducer (state = initialState, action: AnyAction): userState {
+  let updatedState: userState
   switch (action.type) {
     case actionTypes.USER_LOGIN:
-      return { ...state, user: action.user, isLogged: true }
+    case actionTypes.ADD_OR_REMOVE_SESSION:
+      updatedState = { ...state, user: action.user, isLogged: true }
+      break
     case actionTypes.USER_LOGOUT:
-      return { ...state, user: null, isLogged: false }
+      updatedState = { ...state, user: null, isLogged: false }
+      break
     default:
-      return state
+      updatedState = state
+      break
   }
+
+  return updatedState
 }
