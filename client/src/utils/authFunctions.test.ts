@@ -4,6 +4,7 @@ import { Platform } from 'react-native'
 
 jest.mock('react-native')
 jest.mock('expo-auth-session')
+// jest.mock('@unimodules/react-native-adapter', () => {})
 
 describe('authFunctions', () => {
   test('toQueryString should return a string with the params joined', () => {

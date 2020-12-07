@@ -22,6 +22,7 @@
     "axios": "^0.21.0",
     "expo": "~39.0.2",
     "expo-auth-session": "~2.0.0",
+    "expo-module-scripts": "^1.2.0",
     "expo-splash-screen": "~0.6.2",
     "expo-updates": "~0.3.3",
     "expo-web-browser": "~8.5.0",
@@ -71,7 +72,7 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@expo/vector-icons|expo-font|expo-asset|expo-file-system|@unimodules/react-native-adapter)/)"
+      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@unimodules/.|@unimodules/react-native-adapter/src|@expo/vector-icons|expo-font|expo-asset|expo-file-system)/)"
     ]
   },
   "private": true
