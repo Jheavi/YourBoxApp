@@ -31,9 +31,9 @@ export function loadWorkout (date: string): any {
   }
 }
 
-export function isWorkoutLoading () {
+export function isWorkoutLoading (): WorkoutActionTypes {
   return {
-    type: actionTypes.SCHEDULES_LOADING
+    type: actionTypes.WORKOUT_LOADING
   }
 }
 

@@ -61,7 +61,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
   }, [workout])
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="container">
       <View style={styles.innerContainer}>
         <TextInput
           style={styles.titleText}
@@ -78,7 +78,7 @@ function FormModifyWorkout ({ workout, dispatch, todayString, displayedDay, setM
           onValueChange={(itemValue) =>
             setTypeValue(itemValue)
           }
-          testID="picker"
+          testID="typePicker"
         >
           <Picker.Item color="#0d0d0d" label="For Time" value="For Time" />
           <Picker.Item color="#0d0d0d" label="AMRAP" value="AMRAP" />

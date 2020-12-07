@@ -2,7 +2,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import serverUrls from '../../constants/serverUrls'
 import axios from 'axios'
-import { loadSchedules, updateSession, createSession } from './schedulesActions'
+import { loadSchedules, updateSession, createSession, isSchedulesLoading } from './schedulesActions'
 import actionTypes from './action-types'
 import { sessionInterface } from '../../interfaces/interfaces'
 
@@ -136,6 +136,14 @@ describe('Schedules actions', () => {
         type: actionTypes.CREATE_SESSION_ERROR,
         error: fakeError
       })
+    })
+  })
+
+  test('the store should have an action with type SCHEDULES_LOADING', async () => {
+    await store!.dispatch(isSchedulesLoading())
+
+    expect(store!.getActions()[0]).toEqual({
+      type: actionTypes.SCHEDULES_LOADING
     })
   })
 })

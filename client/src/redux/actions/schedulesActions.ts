@@ -31,7 +31,7 @@ export function loadSchedules (): any {
   }
 }
 
-export function isSchedulesLoading () {
+export function isSchedulesLoading (): SchedulesActionTypes {
   return {
     type: actionTypes.SCHEDULES_LOADING
   }

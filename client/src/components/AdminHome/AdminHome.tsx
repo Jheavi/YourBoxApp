@@ -43,13 +43,14 @@ function AdminHome ({ navigation }: any) {
         <TouchableOpacity
           onPress={() => navigation.navigate('AdminWorkout')}
           style={styles.buttons}
+          testID="workoutBtn"
         >
           <Icon
           name="dumbbell"
           size={50}
           color="white"
           />
-          <Text style={styles.buttonsText}>Your workouts</Text>
+          <Text style={styles.buttonsText} testID="workoutTextBtn">Your workouts</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('AdminWorkout')}
@@ -67,6 +68,7 @@ function AdminHome ({ navigation }: any) {
         <TouchableOpacity
           onPress={() => navigation.navigate('AdminSchedules')}
           style={styles.buttons}
+          testID="schedulesBtn"
         >
           <Icon
           name="calendar"
