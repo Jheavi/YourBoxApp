@@ -2,7 +2,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import serverUrls from '../../constants/serverUrls'
 import axios from 'axios'
-import { loadSchedules, updateSession, createSession, isSchedulesLoading } from './schedulesActions'
+import { loadSchedules, updateSession, createSession, isSchedulesLoading, loadSchedule } from './schedulesActions'
 import actionTypes from './action-types'
 import { sessionInterface } from '../../interfaces/interfaces'
 
@@ -144,6 +144,38 @@ describe('Schedules actions', () => {
 
     expect(store!.getActions()[0]).toEqual({
       type: actionTypes.SCHEDULES_LOADING
+    })
+  })
+
+  describe('loadSchedule', () => {
+    test('should call axios.get with the url', async () => {
+      axios.get = jest.fn()
+
+      await store!.dispatch(loadSchedule('2020-12-07'))
+
+      expect(axios.get).toHaveBeenCalledWith(`${serverUrls.scheduleUrl}/monday`)
+    })
+
+    test('the store should have an action with type LOAD_SCHEDULE', async () => {
+      axios.get = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(loadSchedule('2020-12-07'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.LOAD_SCHEDULE,
+        schedule: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type LOAD_SCHEDULE_ERROR if promise rejected', async () => {
+      axios.get = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(loadSchedule('2020-12-07'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.LOAD_SCHEDULE_ERROR,
+        error: fakeError
+      })
     })
   })
 })
