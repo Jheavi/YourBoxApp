@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { props } from '../../interfaces/interfaces'
 import Workout from '../Workout/Workout'
@@ -20,7 +19,6 @@ const header = {
 
 function Navigation ({ user }: props) {
   return (
-    <NavigationContainer>
       <Navigator initialRouteName={
         !user
           ? 'Login'
@@ -75,7 +73,6 @@ function Navigation ({ user }: props) {
               </>
         }
       </Navigator>
-    </NavigationContainer>
   )
 }
 
