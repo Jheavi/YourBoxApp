@@ -54,8 +54,9 @@ export interface props {
 }
 
 export interface dayScheduleProps {
-  weekDay: scheduleInterface,
-  user: userInterface
+  day: string
+  weekDay: scheduleInterface
+  user?: userInterface
 }
 
 export interface StringMap {
