@@ -45,13 +45,7 @@ const styles = StyleSheet.create({
 
 function UserSessionItem ({ day, dispatch, session, user }: props) {
   function OnEnrollPress () {
-    dispatch(addOrRemoveReservedSession(
-      {
-        ...session,
-        day
-      },
-      user
-    ))
+    dispatch(addOrRemoveReservedSession({ ...session, day }, user))
   }
 
   return (
