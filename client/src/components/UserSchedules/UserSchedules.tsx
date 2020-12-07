@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   scheduleView: {
-    flex: 1
+    flex: 1,
+    marginBottom: 20
   }
 })
 
@@ -64,6 +65,11 @@ function UserSchedules ({ dispatch, schedule, schedulesLoading }: props) {
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
 
   useEffect(() => {
+    dispatch(loadSchedule(dayString))
+    dispatch(isSchedulesLoading())
+  }, [])
+
+  useEffect(() => {
     setFormattedDate(extractDataFromDate(displayedDay).formattedDate)
   }, [displayedDay])
 
@@ -80,6 +86,7 @@ function UserSchedules ({ dispatch, schedule, schedulesLoading }: props) {
         scrollEnabled={true}
       >
         <Calendar
+              style={{ marginTop: 20 }}
               theme={calendarTheme}
               firstDay={1}
               onDayPress={onDayPress}
