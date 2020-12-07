@@ -66,12 +66,12 @@
     "typescript": "~3.9.5"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules)/)"
+      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@expo/vector-icons|expo-font|expo-asset|expo-file-system|@unimodules/react-native-adapter)/)"
     ]
   },
   "private": true
