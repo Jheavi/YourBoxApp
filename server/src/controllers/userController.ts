@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { extractDataFromTodayDate } from '../utils/dateFunctions'
+import { extractDataFromDate } from '../utils/dateFunctions'
 
 interface userControllerInterface {
   // deleteUser: Function
@@ -31,8 +31,8 @@ function userController (userModel): userControllerInterface {
         await userExists.populate('affiliatedProgram').execPopulate()
         res.send(userExists)
       } else {
-        const { todayString } = extractDataFromTodayDate()
-        const userToCreate = { ...user, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: todayString }
+        const { dayString } = extractDataFromDate()
+        const userToCreate = { ...user, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: dayString }
         const userCreated = await userModel.create(userToCreate)
         await userCreated.populate('affiliatedProgram').execPopulate()
         res.send(userCreated)
