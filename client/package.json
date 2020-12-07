@@ -68,12 +68,19 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "setupFiles": [
+      "<rootDir>/jest/jestSetup.js"
+    ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@unimodules/.|@unimodules/react-native-adapter/src|@expo/vector-icons|expo-font|expo-asset|expo-file-system)/)"
-    ]
+      "node_modules/(?!(react-native|react-native-gesture-handler|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@unimodules/.|@unimodules/react-native-adapter/src|@expo/vector-icons|expo-font|expo-asset|expo-file-system|react-native-iphone-x-helper)/)"
+    ],
+    "moduleNameMapper": {
+         "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/__mocks__/fileMock.js",
+         "\\.(css|less)$": "<rootDir>/jest/__mocks__/fileMock.js"
+       }
   },
   "private": true
 }
