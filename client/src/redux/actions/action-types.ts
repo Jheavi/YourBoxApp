@@ -17,6 +17,8 @@ export interface actionTypesInterface {
   USER_LOGOUT_ERROR: string
   LOAD_SCHEDULE: string
   LOAD_SCHEDULE_ERROR: string
+  ADD_OR_REMOVE_SESSION: string
+  ADD_OR_REMOVE_SESSION_ERROR: string
 }
 
 const actionTypes: actionTypesInterface = {
@@ -37,7 +39,9 @@ const actionTypes: actionTypesInterface = {
   USER_LOGOUT: 'USER_LOGOUT',
   USER_LOGOUT_ERROR: 'USER_LOGOUT_ERROR',
   LOAD_SCHEDULE: 'LOAD_SCHEDULE',
-  LOAD_SCHEDULE_ERROR: 'LOAD_SCHEDULE_ERROR'
+  LOAD_SCHEDULE_ERROR: 'LOAD_SCHEDULE_ERROR',
+  ADD_OR_REMOVE_SESSION: 'ADD_OR_REMOVE_SESSION',
+  ADD_OR_REMOVE_SESSION_ERROR: 'ADD_OR_REMOVE_SESSION_ERROR'
 }
 
 export default actionTypes
