@@ -1,4 +1,4 @@
-import { extractDataFromDate, sortByWeekDays } from './dateFunctions'
+import { extractDataFromDate } from './dateFunctions'
 
 describe('Date Functions', () => {
   const RealDate = Date.now
@@ -103,25 +103,5 @@ describe('Date Functions', () => {
     const { weekDay } = extractDataFromDate('fakedate')
 
     expect(weekDay).toBe('error')
-  })
-
-  test('sortByWeekDays should return 1 if dayOne.day is tuesday and dayTwo.day is monday', () => {
-    // Mocked Date-now to return always the date 02/September/2020
-    const dayOne = { day: 'tuesday', sessions: [] }
-    const dayTwo = { day: 'monday', sessions: [] }
-
-    const response = sortByWeekDays(dayOne, dayTwo)
-
-    expect(response).toBe(1)
-  })
-
-  test('sortByWeekDays should return -1 if dayOne.day is monday and dayTwo.day is tuesday', () => {
-    // Mocked Date-now to return always the date 02/September/2020
-    const dayOne = { day: 'monday', sessions: [] }
-    const dayTwo = { day: 'tuesday', sessions: [] }
-
-    const response = sortByWeekDays(dayOne, dayTwo)
-
-    expect(response).toBe(-1)
   })
 })

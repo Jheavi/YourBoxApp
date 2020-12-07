@@ -1,4 +1,4 @@
-import { scheduleInterface, dateObject } from '../interfaces/interfaces'
+import { dateObject } from '../interfaces/interfaces'
 
 export function extractDataFromDate (date?: string): dateObject {
   const dayToFormat: Date = new Date(date || Date.now())
@@ -44,12 +44,4 @@ export function extractDataFromDate (date?: string): dateObject {
     formattedDate: `${dayString}/${monthString}/${year}`,
     weekDay
   }
-}
-
-export function sortByWeekDays (dayOne: scheduleInterface, dayTWo: scheduleInterface) {
-  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-
-  const dayOneIndex = days.indexOf(dayOne.day)
-  const dayTWoIndex = days.indexOf(dayTWo.day)
-  return dayOneIndex > dayTWoIndex ? 1 : -1
 }
