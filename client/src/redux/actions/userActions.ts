@@ -89,12 +89,14 @@ function addOrRemoveSessionError (error: any): UserActionTypes {
 
 export function addOrRemoveReservedSession (
   reservedSession: ReservedSession,
-  user: userInterface
+  user: userInterface,
+  option: 'add' | 'remove'
 ): any {
   return async (dispatch: AppDispatch) => {
     try {
       const { data } = await axios.patch(`${serverUrls.userUrl}/${user.email}`, {
-        reservedSession
+        reservedSession,
+        option
       })
 
       dispatch(addOrRemoveSessionSuccess(data))
