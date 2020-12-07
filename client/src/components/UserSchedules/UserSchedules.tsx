@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
 import { isSchedulesLoading, loadSchedule } from '../../redux/actions/schedulesActions'
 import { extractDataFromDate } from '../../utils/dateFunctions'
-import UserDaySchedule from '../Schedules/UserDaySchedule/UserDaySchedule'
+import UserDaySchedule from './UserDaySchedule/UserDaySchedule'
 
 const { height } = Dimensions.get('window')
 

@@ -58,8 +58,6 @@ const styles = StyleSheet.create({
 })
 
 function UserDaySchedule ({ day, weekDay }: dayScheduleProps) {
-  console.log(day)
-
   return (
     <View style={styles.dayView}>
       <Text style={styles.dayText} testID={'dayScheduleTitle'}>{weekDay.day}</Text>
