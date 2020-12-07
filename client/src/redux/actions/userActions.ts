@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { maybeCompleteAuthSession } from 'expo-web-browser'
 import jwtDecode from 'jwt-decode'
 import serverUrls from '../../constants/serverUrls'
 import { Auth0UserInterface } from '../../interfaces/interfaces'
@@ -40,7 +39,6 @@ export function login (): any {
             userId
           }
         })
-        maybeCompleteAuthSession()
 
         dispatch(loginSuccess(data))
       } else {
@@ -71,8 +69,6 @@ export function logout (): any {
       const response = await onLogout()
 
       if (response.type === 'success') {
-        maybeCompleteAuthSession()
-
         dispatch(logoutSuccess())
       } else {
         dispatch(logoutError(response.type))
