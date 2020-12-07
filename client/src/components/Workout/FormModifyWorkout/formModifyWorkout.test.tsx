@@ -40,9 +40,9 @@ describe('Workout', () => {
       setModalVisible={setModalVisible}
       />, { wrapper })
 
-    const picker = getByTestId('picker')
+    const container = getByTestId('container')
 
-    expect(picker.props.items.length).toBe(3)
+    expect(container).toBeDefined()
   })
 
   it('should change the title', () => {
@@ -58,6 +58,22 @@ describe('Workout', () => {
     fireEvent.changeText(inputTitle, changedTitle)
 
     expect(inputTitle.props.value).toBe(changedTitle)
+  })
+
+  it('should change the type', () => {
+    const changedType = 'AMRAP'
+    const initialState = { workoutReducer: { workout: { description: 'aa' } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<FormModifyWorkout
+      todayString={todayDate.todayString}
+      setModalVisible={setModalVisible}
+      />, { wrapper })
+
+    const typePicker = getByTestId('typePicker')
+    fireEvent(typePicker, 'ValueChange', changedType)
+    const selectedIndex = typePicker.props.selectedIndex
+
+    expect(typePicker.props.items[selectedIndex].value).toBe(changedType)
   })
 
   it('should change the description', () => {
