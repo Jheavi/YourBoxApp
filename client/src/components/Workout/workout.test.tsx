@@ -49,6 +49,16 @@ describe('Workout', () => {
     expect(loadWorkout).toHaveBeenCalled()
   })
 
+  it('should load the activityIndicator if workout is Loading the modal to visible if touchableModal is touched', () => {
+    const initialState = { workoutReducer: { workoutLoading: true } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Workout />, { wrapper })
+
+    const activityIndicator = getByTestId('workoutActivity')
+
+    expect(activityIndicator).toBeDefined()
+  })
+
   it('should change the date of workoutDate with the day selected', () => {
     const initialState = { workoutReducer: {} }
     const wrapper = wrapperFactory(initialState)
@@ -74,7 +84,7 @@ describe('Workout', () => {
     expect(modal.props.visible).toBe(true)
   })
 
-  it('should change the modal to visible if touchableModal is touched', () => {
+  it('should put the workout date int the title when the workout is loaded', () => {
     const initialState = { workoutReducer: { workout: { date: '2020-11-20' } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Workout />, { wrapper })

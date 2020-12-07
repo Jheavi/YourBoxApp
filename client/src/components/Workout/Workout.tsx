@@ -12,19 +12,13 @@ import { workoutStyle, calendarTheme } from './workoutStyle'
 
 const styles = StyleSheet.create(workoutStyle)
 
-function Workout ({ workout, workoutLoading, navigation, dispatch, user }: props) {
+function Workout ({ workout, workoutLoading, dispatch }: props) {
   const { todayString } = extractDataFromTodayDate()
   const [displayedDay, setDisplayedDay] = useState(todayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
   const [modalVisible, setModalVisible] = useState(false)
   const noWorkout = 'There is no workout for the selected day'
   const scrollRef = useRef<ScrollView>(null)
-
-  useEffect(() => {
-    if (user && !user.admin) {
-      navigation!.navigate('UserView')
-    }
-  })
 
   useEffect(() => {
     dispatch(loadWorkout(todayString!))
@@ -38,19 +32,15 @@ function Workout ({ workout, workoutLoading, navigation, dispatch, user }: props
   }, [workout])
 
   useEffect(() => {
-    if (displayedDay) {
-      setFormattedDate(extractDataFromDate(displayedDay))
-    }
+    setFormattedDate(extractDataFromDate(displayedDay))
   }, [displayedDay])
 
   function scrollToStart () {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        x: 0,
-        y: 0,
-        animated: true
-      })
-    }
+    scrollRef.current!.scrollTo({
+      x: 0,
+      y: 0,
+      animated: true
+    })
   }
 
   function onDayPress (day: DateObject) {
@@ -72,7 +62,7 @@ function Workout ({ workout, workoutLoading, navigation, dispatch, user }: props
           <ImageBackground source={images.workoutbackground} style={styles.image} />
           {workoutLoading &&
           <View style={styles.workoutTextView}>
-            <ActivityIndicator size="large" color="#cb1313"/>
+            <ActivityIndicator size="large" color="#cb1313" testID="workoutActivity"/>
           </View>}
           {!workoutLoading &&
             <TouchableWithoutFeedback onPress={() => { setModalVisible(!modalVisible) }} testID="touchableForModal">
@@ -106,11 +96,10 @@ function Workout ({ workout, workoutLoading, navigation, dispatch, user }: props
   )
 }
 
-function mapStateToProps ({ workoutReducer, userReducer }: any) {
+function mapStateToProps ({ workoutReducer }: any) {
   return {
     workout: workoutReducer.workout,
-    workoutLoading: workoutReducer.workoutLoading,
-    user: userReducer.user
+    workoutLoading: workoutReducer.workoutLoading
   }
 }
 
