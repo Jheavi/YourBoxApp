@@ -49,10 +49,13 @@ export interface props {
   weekDay: string,
   workout?: workoutInterface,
   workoutLoading: boolean,
+  schedule?: scheduleInterface,
+  schedulesLoading?: boolean
 }
 
 export interface dayScheduleProps {
-  weekDay: scheduleInterface
+  weekDay: scheduleInterface,
+  user: userInterface
 }
 
 export interface StringMap {
