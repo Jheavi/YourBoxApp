@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
 import { isSchedulesLoading, loadSchedule } from '../../redux/actions/schedulesActions'
 import { extractDataFromDate } from '../../utils/dateFunctions'
-import DaySchedule from '../Schedules/DaySchedule/DaySchedule'
+import UserDaySchedule from '../Schedules/UserDaySchedule/UserDaySchedule'
 
 const { height } = Dimensions.get('window')
 
@@ -92,7 +92,7 @@ function UserSchedules ({ dispatch, schedule, schedulesLoading }: props) {
         </View>
         }
         {!schedulesLoading && schedule &&
-          <DaySchedule weekDay={schedule} />
+          <UserDaySchedule weekDay={schedule} day={displayedDay}/>
         }
       </View>
       </ScrollView>
