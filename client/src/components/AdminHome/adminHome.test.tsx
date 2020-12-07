@@ -9,7 +9,7 @@ jest.mock('@react-navigation/native')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('AdminHome', () => {
   let navigation: {navigate: jest.Mock<any, any>}
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
