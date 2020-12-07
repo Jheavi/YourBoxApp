@@ -4,6 +4,7 @@ import { scheduleInterface } from '../../interfaces/interfaces'
 
 describe('schedulesReducer', () => {
   let fakeSchedules: scheduleInterface[]
+  let fakeSchedule: scheduleInterface
 
   beforeEach(() => {
     fakeSchedules = [
@@ -16,6 +17,14 @@ describe('schedulesReducer', () => {
         ]
       }
     ]
+    fakeSchedule = {
+      day: '2',
+      sessions: [
+        { finishHour: '6', startHour: '6', type: '6' },
+        { finishHour: '4', startHour: '4', type: '4' },
+        { finishHour: '5', startHour: '5', type: '5' }
+      ]
+    }
   })
 
   it('should return the default state', () => {
@@ -64,5 +73,16 @@ describe('schedulesReducer', () => {
     const state = schedulesReducer(undefined, fakeAction)
 
     expect(state).toEqual({ schedulesLoading: true })
+  })
+
+  it('should return the schedules in a property called schedules if action type is LOAD_SCHEDULE', () => {
+    const fakeAction = {
+      type: actionTypes.LOAD_SCHEDULE,
+      schedule: fakeSchedule
+    }
+
+    const state = schedulesReducer(undefined, fakeAction)
+
+    expect(state).toEqual({ schedule: fakeSchedule, schedulesLoading: false })
   })
 })
