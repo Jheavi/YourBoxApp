@@ -4,6 +4,7 @@ import serverUrls from '../../constants/serverUrls'
 import { SchedulesActionTypes } from './schedulesActionsInterface'
 import { scheduleInterface, sessionInterface } from '../../interfaces/interfaces'
 import { AppDispatch } from '../configureStore'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 
 export function loadSchedulesSuccess (schedules: [scheduleInterface]): SchedulesActionTypes {
   return {
@@ -107,6 +108,33 @@ export function createSession (
       dispatch(createSessionSuccess(data))
     } catch (error) {
       dispatch(createSessionError(error))
+    }
+  }
+}
+
+export function loadScheduleSuccess (schedule: scheduleInterface): SchedulesActionTypes {
+  return {
+    type: actionTypes.LOAD_SCHEDULE,
+    schedule
+  }
+}
+
+export function loadScheduleError (error: any): SchedulesActionTypes {
+  return {
+    type: actionTypes.LOAD_SCHEDULE_ERROR,
+    error
+  }
+}
+export function loadSchedule (date: string): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { weekDay } = extractDataFromDate(date)
+
+      const { data } = await axios.get(`${serverUrls.scheduleUrl}/${weekDay}`)
+
+      dispatch(loadScheduleSuccess(data))
+    } catch (error) {
+      dispatch(loadScheduleError(error))
     }
   }
 }

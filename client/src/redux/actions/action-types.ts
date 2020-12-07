@@ -15,6 +15,8 @@ export interface actionTypesInterface {
   USER_LOGIN_ERROR: string,
   USER_LOGOUT: string
   USER_LOGOUT_ERROR: string
+  LOAD_SCHEDULE: string
+  LOAD_SCHEDULE_ERROR: string
 }
 
 const actionTypes: actionTypesInterface = {
@@ -33,7 +35,9 @@ const actionTypes: actionTypesInterface = {
   USER_LOGIN: 'USER_LOGIN',
   USER_LOGIN_ERROR: 'USER_LOGIN_ERROR',
   USER_LOGOUT: 'USER_LOGOUT',
-  USER_LOGOUT_ERROR: 'USER_LOGOUT_ERROR'
+  USER_LOGOUT_ERROR: 'USER_LOGOUT_ERROR',
+  LOAD_SCHEDULE: 'LOAD_SCHEDULE',
+  LOAD_SCHEDULE_ERROR: 'LOAD_SCHEDULE_ERROR'
 }
 
 export default actionTypes
