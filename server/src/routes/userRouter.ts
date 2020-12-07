@@ -12,7 +12,7 @@ function userRouter (userModel) {
 
   router.route('/:email')
     .get(users.getUser)
-  //   .patch(users.updateUser)
+    .patch(users.updateUser)
   //   .delete(users.deleteUser)
 
   return router

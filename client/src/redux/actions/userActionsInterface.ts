@@ -19,7 +19,21 @@ type logoutUserErrorAction = {
   type: typeof actionTypes.USER_LOGOUT_ERROR
   error: any
 }
-export type UserActionTypes = loginUserAction |
+
+type addOrRemoveSessionAction = {
+  type: typeof actionTypes.ADD_OR_REMOVE_SESSION
+  user: Auth0UserInterface
+}
+
+type addOrRemoveSessionErrorAction = {
+  type: typeof actionTypes.ADD_OR_REMOVE_SESSION_ERROR
+  error: any
+}
+
+export type UserActionTypes =
+loginUserAction |
 loginUserErrorAction |
 logoutUserAction |
-logoutUserErrorAction
+logoutUserErrorAction |
+addOrRemoveSessionAction |
+addOrRemoveSessionErrorAction

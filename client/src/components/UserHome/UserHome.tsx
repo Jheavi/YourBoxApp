@@ -76,6 +76,7 @@ function UserHome ({ navigation, user }: props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
+            onPress={() => navigation!.navigate('UserSchedules')}
             >
             <IconFont5
             name="calendar"
@@ -111,8 +112,9 @@ function UserHome ({ navigation, user }: props) {
       <View style={{ flex: 0.25 }}/>
       <View style={styles.lowerView}>
         <View style={styles.remainingClassesView}>
-          <Text style={styles.lowerText}>Classes used this month: {user!.pastSessions.length}</Text>
-          <Text style={styles.lowerText}>Remaining classes: {typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - user!.pastSessions.length}</Text>
+          <Text style={styles.lowerText}>Sessions used this month: {user!.pastSessions.length}</Text>
+          <Text style={styles.lowerText}>Sessions actually reserved: {user!.reservedSessions.length}</Text>
+          <Text style={styles.lowerText}>Remaining sessions: {typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - user!.pastSessions.length - user!.reservedSessions.length}</Text>
         </View>
       </View>
       <View style={{ flex: 1 }}/>

@@ -1,18 +1,20 @@
 import actionTypes from '../actions/action-types'
-import { scheduleInterface } from '../../interfaces/interfaces'
+import { scheduleInterface, sessionInterface } from '../../interfaces/interfaces'
 import { AnyAction } from 'redux'
 import { sortByWeekDays } from '../../utils/dateFunctions'
 
 export interface schedulesState {
-  schedules?: [scheduleInterface]
+  schedules?: scheduleInterface[]
+  schedule?: scheduleInterface
   schedulesLoading?: boolean
 }
 
 const initialState: schedulesState = {}
 
 export default function schedulesReducer (state = initialState, action: AnyAction): schedulesState {
-  let schedulesWithOrderedHours
-  let updatedState
+  let scheduleWithOrderedHours: scheduleInterface
+  let schedulesWithOrderedHours: scheduleInterface[]
+  let updatedState: schedulesState
   switch (action.type) {
     case actionTypes.LOAD_SCHEDULES:
     case actionTypes.UPDATE_SESSION:
@@ -24,6 +26,16 @@ export default function schedulesReducer (state = initialState, action: AnyActio
       break
     case actionTypes.SCHEDULES_LOADING:
       updatedState = { ...state, schedulesLoading: true }
+      break
+    case actionTypes.LOAD_SCHEDULE:
+      scheduleWithOrderedHours = {
+        ...action.schedule,
+        sessions: action.schedule.sessions.sort(
+          (session1: sessionInterface, session2: sessionInterface) => (
+            session1.startHour >= session2.startHour ? 1 : -1
+          ))
+      }
+      updatedState = { ...state, schedule: scheduleWithOrderedHours, schedulesLoading: false }
       break
     default:
       updatedState = state

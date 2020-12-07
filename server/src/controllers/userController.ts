@@ -6,7 +6,7 @@ interface userControllerInterface {
   getUsers: Function
   getUser: Function
   postUser: Function
-  // updateUser: Function
+  updateUser: Function
 }
 
 function userController (userModel): userControllerInterface {
@@ -53,12 +53,31 @@ function userController (userModel): userControllerInterface {
     }
   }
 
+  async function updateUser ({ body: { reservedSession, option }, params: { email } }: Request, res: Response) {
+    try {
+      const query = { email }
+      if (option === 'add') {
+        const update = { $addToSet: { reservedSessions: reservedSession } }
+        const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+        await updatedUser.populate('affiliatedProgram').execPopulate()
+        res.send(updatedUser)
+      } else {
+        const update = { $pull: { reservedSessions: reservedSession } }
+        const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+        await updatedUser.populate('affiliatedProgram').execPopulate()
+        res.send(updatedUser)
+      }
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
   return {
     // deleteUser,
     getUsers,
     getUser,
-    postUser
-    // updateUser,
+    postUser,
+    updateUser
   }
 }
 
