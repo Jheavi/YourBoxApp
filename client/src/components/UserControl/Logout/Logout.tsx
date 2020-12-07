@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function Login ({ dispatch }: any) {
+function Logout ({ dispatch }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -53,4 +53,4 @@ function Login ({ dispatch }: any) {
   )
 }
 
-export default connect(null)(Login)
+export default connect(null)(Logout)
