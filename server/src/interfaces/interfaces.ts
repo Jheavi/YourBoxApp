@@ -2,5 +2,7 @@ export interface dateObject {
   day: number,
   month: number,
   year: number,
-  todayString?: string,
+  dayString: string,
+  formattedDate: string,
+  weekDay: string
 }

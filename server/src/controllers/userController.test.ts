@@ -9,75 +9,112 @@ describe('userController', () => {
   let fakeUser
   let newUser
   let fakeError
+  let fakeReservedSession
 
   beforeEach(() => {
     res = { send: jest.fn() }
     fakeUser = { name: 'aa', populate: jest.fn().mockReturnValueOnce({ execPopulate: jest.fn() }) }
     newUser = { name: 'aa', populate: jest.fn().mockReturnValueOnce({ execPopulate: jest.fn() }) }
     fakeError = 'error'
+    fakeReservedSession = {}
   })
 
-  test('getUsers should call res.send with the user', async () => {
-    req = { query: { active: true } }
-    userModel.find = jest.fn().mockResolvedValueOnce(fakeUser)
+  describe('getUsers', () => {
+    test('should call res.send with the user', async () => {
+      req = { query: { active: true } }
+      userModel.find = jest.fn().mockResolvedValueOnce(fakeUser)
 
-    await userControllerTest.getUsers(req, res)
+      await userControllerTest.getUsers(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeUser)
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      req = { query: { } }
+      userModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.getUsers(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getUsers should call res.send with the error if promise rejected', async () => {
-    req = { query: { } }
-    userModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+  describe('postUser', () => {
+    test('should call res.send with the user if the user already exists', async () => {
+      req = { body: { user: {} } }
+      userModel.findOne = jest.fn().mockResolvedValueOnce(fakeUser)
 
-    await userControllerTest.getUsers(req, res)
+      await userControllerTest.postUser(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with a new user if the user doesn\'t exists previously', async () => {
+      req = { body: { user: {} } }
+      userModel.findOne = jest.fn().mockResolvedValueOnce(null)
+      userModel.create = jest.fn().mockResolvedValueOnce(newUser)
+
+      await userControllerTest.postUser(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(newUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      req = { body: { user: {} } }
+      userModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.postUser(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('postUser should call res.send with the user if the user already exists', async () => {
-    req = { body: { user: {} } }
-    userModel.findOne = jest.fn().mockResolvedValueOnce(fakeUser)
+  describe('getUser', () => {
+    test('should call res.send with the user', async () => {
+      req = { params: { email: 'fake' } }
+      userModel.findOne = jest.fn().mockResolvedValueOnce(fakeUser)
 
-    await userControllerTest.postUser(req, res)
+      await userControllerTest.getUser(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeUser)
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      req = { params: { email: 'fake' } }
+      userModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.getUser(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('postUser should call res.send with a new user if the user doesn\'t exists previously', async () => {
-    req = { body: { user: {} } }
-    userModel.findOne = jest.fn().mockResolvedValueOnce(null)
-    userModel.create = jest.fn().mockResolvedValueOnce(newUser)
+  describe('updateUser', () => {
+    test('should call res.send with the user if option is "add"', async () => {
+      req = { params: { email: 'fake' }, body: { option: 'add', reservedSession: fakeReservedSession } }
+      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
 
-    await userControllerTest.postUser(req, res)
+      await userControllerTest.updateUser(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(newUser)
-  })
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
 
-  test('postUser should call res.send with the error if promise rejected', async () => {
-    req = { body: { user: {} } }
-    userModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+    test('should call res.send with the user if option is "remove"', async () => {
+      req = { params: { email: 'fake' }, body: { option: 'remove', reservedSession: fakeReservedSession } }
+      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
 
-    await userControllerTest.postUser(req, res)
+      await userControllerTest.updateUser(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
-  })
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
 
-  test('getUser should call res.send with the user', async () => {
-    req = { params: { email: 'fake' } }
-    userModel.findOne = jest.fn().mockResolvedValueOnce(fakeUser)
+    test('should call res.send with the error if promise rejected', async () => {
+      req = { params: { email: 'fake' }, body: { option: 'remove', reservedSession: fakeReservedSession } }
+      userModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
 
-    await userControllerTest.getUser(req, res)
+      await userControllerTest.updateUser(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeUser)
-  })
-
-  test('getUser should call res.send with the user', async () => {
-    req = { params: { email: 'fake' } }
-    userModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
-
-    await userControllerTest.getUser(req, res)
-
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 })
