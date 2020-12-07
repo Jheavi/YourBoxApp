@@ -23,12 +23,13 @@ describe('Schedules actions', () => {
   let fakeData: {data: {}}
   let fakeError: string
   let store: MockStoreEnhanced<unknown, {}> | null
-  let spyOnLogin
   let spyOnLogout
+  let idToken: string
   beforeEach(() => {
     store = mockStore()
     fakeData = { data: { id: 1 } }
     fakeError = 'error'
+    idToken = 'abc'
   })
 
   afterEach(() => {
@@ -37,16 +38,9 @@ describe('Schedules actions', () => {
 
   describe('login', () => {
     test('should call axios.get with the url', async () => {
-      spyOnLogin = jest.spyOn(authFunctions, 'onLogin').mockResolvedValueOnce({
-        type: 'success',
-        params: { id_token: 'a' },
-        authentication: null,
-        errorCode: null,
-        url: 'a'
-      })
       axios.post = jest.fn().mockReturnValueOnce(fakeData)
 
-      await store!.dispatch(login())
+      await store!.dispatch(login(idToken))
 
       expect(axios.post).toHaveBeenCalledWith(serverUrls.userUrl, {
         user: {
@@ -59,16 +53,9 @@ describe('Schedules actions', () => {
     })
 
     test('the store should have an action with type USER_LOGIN', async () => {
-      spyOnLogin = jest.spyOn(authFunctions, 'onLogin').mockResolvedValueOnce({
-        type: 'success',
-        params: { id_token: 'a' },
-        authentication: null,
-        errorCode: null,
-        url: 'a'
-      })
       axios.post = jest.fn().mockReturnValueOnce(fakeData)
 
-      await store!.dispatch(login())
+      await store!.dispatch(login(idToken))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.USER_LOGIN,
@@ -77,33 +64,13 @@ describe('Schedules actions', () => {
     })
 
     test('the store should have an action with type USER_LOGIN_ERROR if promise rejected', async () => {
-      spyOnLogin = jest.spyOn(authFunctions, 'onLogin').mockResolvedValueOnce({
-        type: 'success',
-        params: { id_token: 'a' },
-        authentication: null,
-        errorCode: null,
-        url: 'a'
-      })
       axios.post = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await store!.dispatch(login())
+      await store!.dispatch(login(idToken))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.USER_LOGIN_ERROR,
         error: fakeError
-      })
-    })
-
-    test('the store should have an action with type USER_LOGIN_ERROR if response.type is not "success"', async () => {
-      spyOnLogin = jest.spyOn(authFunctions, 'onLogin').mockResolvedValueOnce({
-        type: 'dismiss'
-      })
-
-      await store!.dispatch(login())
-
-      expect(store!.getActions()[0]).toEqual({
-        type: actionTypes.USER_LOGIN_ERROR,
-        error: 'dismiss'
       })
     })
   })
