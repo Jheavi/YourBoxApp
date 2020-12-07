@@ -4,7 +4,6 @@ import Modal from 'react-native-modal'
 import { dayScheduleProps, sessionInterface } from '../../../interfaces/interfaces'
 import SessionItem from '../SessionItem/SessionItem'
 import FormModifySession from '../FormModifySession/FormModifySession'
-import { connect } from 'react-redux'
 
 const { width } = Dimensions.get('window')
 
@@ -59,32 +58,29 @@ const styles = StyleSheet.create({
   }
 })
 
-function DaySchedule ({ user, weekDay }: dayScheduleProps) {
+function DaySchedule ({ weekDay }: dayScheduleProps) {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <View style={styles.dayView}>
       <Text style={styles.dayText} testID={'dayScheduleTitle'}>{weekDay.day}</Text>
-      { user.admin &&
-      <>
-        <TouchableOpacity
-          style={styles.createButton}
-          onPress={() => { setModalVisible(true) }}
-          testID="touchableModal"
-        >
-          <Text style={styles.createButtonText}>+</Text>
-        </TouchableOpacity>
-        <Modal
+      <TouchableOpacity
+        style={styles.createButton}
+        onPress={() => { setModalVisible(true) }}
+        testID="touchableModal"
+      >
+        <Text style={styles.createButtonText}>+</Text>
+      </TouchableOpacity>
+      <Modal
         style={styles.modal}
         animationIn="bounceIn"
         isVisible={modalVisible}
         onBackButtonPress={() => { setModalVisible(false) }}
         onBackdropPress={() => { setModalVisible(false) }}
         testID="sessionModal"
-        >
-          <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
-        </Modal>
-      </>}
+      >
+        <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
+      </Modal>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
@@ -98,10 +94,4 @@ function DaySchedule ({ user, weekDay }: dayScheduleProps) {
   )
 }
 
-function mapStateToProps ({ userReducer }: any) {
-  return {
-    user: userReducer.user
-  }
-}
-
-export default connect(mapStateToProps)(DaySchedule)
+export default DaySchedule
