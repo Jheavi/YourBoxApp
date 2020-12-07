@@ -15,7 +15,7 @@ const styles = StyleSheet.create(workoutStyle)
 function Workout ({ workout, workoutLoading, dispatch }: props) {
   const { dayString } = extractDataFromDate()
   const [displayedDay, setDisplayedDay] = useState(dayString)
-  const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
+  const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
   const [modalVisible, setModalVisible] = useState(false)
   const noWorkout = 'There is no workout for the selected day'
   const scrollRef = useRef<ScrollView>(null)
@@ -32,7 +32,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
   }, [workout])
 
   useEffect(() => {
-    setFormattedDate(extractDataFromDate(displayedDay))
+    setFormattedDate(extractDataFromDate(displayedDay).formattedDate)
   }, [displayedDay])
 
   function scrollToStart () {
@@ -57,7 +57,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
         scrollEnabled={true}
         ref={scrollRef}
       >
-        <Text style={styles.dayText} testID="workoutDate">{formattedDate && `${formattedDate.day}/${formattedDate.month}/${formattedDate.year}`}</Text>
+        <Text style={styles.dayText} testID="workoutDate">{formattedDate}</Text>
         <View style={styles.square}>
           <ImageBackground source={images.workoutbackground} style={styles.image} />
           {workoutLoading &&

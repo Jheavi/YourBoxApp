@@ -37,9 +37,7 @@ describe('Workout', () => {
 
     const dateTitle = getByTestId('workoutDate')
 
-    expect(dateTitle.children[0]).toBe(
-      `${todayDate.day}/${todayDate.month}/${todayDate.year}`
-    )
+    expect(dateTitle.children[0]).toBe(todayDate.formattedDate)
   })
 
   it('should call loadWorkout', () => {
