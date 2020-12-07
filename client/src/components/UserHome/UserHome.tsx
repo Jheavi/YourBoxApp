@@ -71,8 +71,9 @@ function UserHome ({ navigation, user }: props) {
             name="dumbbell"
             size={50}
             color="white"
+            testID="workoutBtn"
             />
-            <Text style={styles.buttonsText}>Workout of the day</Text>
+            <Text style={styles.buttonsText} testID="workoutTextBtn">Workout of the day</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
@@ -82,6 +83,7 @@ function UserHome ({ navigation, user }: props) {
             name="calendar"
             size={50}
             color="white"
+            testID="bookBtn"
             />
             <Text style={styles.buttonsText}>Book</Text>
           </TouchableOpacity>
@@ -112,9 +114,9 @@ function UserHome ({ navigation, user }: props) {
       <View style={{ flex: 0.25 }}/>
       <View style={styles.lowerView}>
         <View style={styles.remainingClassesView}>
-          <Text style={styles.lowerText}>Sessions used this month: {user!.pastSessions.length}</Text>
-          <Text style={styles.lowerText}>Sessions actually reserved: {user!.reservedSessions.length}</Text>
-          <Text style={styles.lowerText}>Remaining sessions: {typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - user!.pastSessions.length - user!.reservedSessions.length}</Text>
+          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${user!.pastSessions.length}`}</Text>
+          <Text style={styles.lowerText}>{`Sessions actually reserved: ${user!.reservedSessions.length}`}</Text>
+          <Text style={styles.lowerText} testID="remainingText">Remaining sessions: {typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - user!.pastSessions.length - user!.reservedSessions.length}</Text>
         </View>
       </View>
       <View style={{ flex: 1 }}/>

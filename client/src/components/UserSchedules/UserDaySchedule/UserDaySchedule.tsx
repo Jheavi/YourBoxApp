@@ -63,7 +63,7 @@ function UserDaySchedule ({ day, weekDay }: dayScheduleProps) {
       <Text style={styles.dayText} testID={'dayScheduleTitle'}>{weekDay.day}</Text>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length
-          ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
+          ? <Text style={styles.noScheduleText} testID="noScheduleText">There is no schedule for this day</Text>
           : (weekDay.sessions.map((session: sessionInterface) => {
               return <UserSessionItem day={day} session={session} key={performance.now() * Math.random()} />
             })
