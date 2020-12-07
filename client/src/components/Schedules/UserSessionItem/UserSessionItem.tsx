@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
+import { props } from '../../../interfaces/interfaces'
+import { addOrRemoveReservedSession } from '../../../redux/actions/userActions'
 
 const styles = StyleSheet.create({
   sessionView: {
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 19
   },
-  modifyButton: {
+  enrollButton: {
     backgroundColor: '#14680c',
     height: 40,
     paddingVertical: 5,
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     elevation: 8
   },
-  modifyButtonText: {
+  enrollButtonText: {
     color: 'white',
     fontSize: 18
   },
@@ -41,29 +43,39 @@ const styles = StyleSheet.create({
   }
 })
 
-function UserSessionItem ({ day, session, user }: any) {
+function UserSessionItem ({ day, dispatch, session, user }: props) {
+  function OnEnrollPress () {
+    dispatch(addOrRemoveReservedSession(
+      {
+        ...session,
+        day
+      },
+      user
+    ))
+  }
+
   return (
     <View style={{
       ...styles.sessionView,
       backgroundColor:
-      session.type === 'WOD'
+      session!.type === 'WOD'
         ? '#014aa5'
-        : session.type === 'Open Box'
+        : session!.type === 'Open Box'
           ? '#016500'
           : '#a20000'
     }} >
       <View style={{ flex: 1 }}/>
-      <Text style={styles.sessionText} testID="hourText">{`${session.startHour} - ${session.finishHour}`}</Text>
+      <Text style={styles.sessionText} testID="hourText">{`${session!.startHour} - ${session!.finishHour}`}</Text>
       <View style={{ flex: 2 }}/>
-      <Text style={styles.sessionText} testID="typeText">{session.type}</Text>
+      <Text style={styles.sessionText} testID="typeText">{session!.type}</Text>
       <View style={{ flex: 2 }}/>
       {user && !user.admin &&
         <TouchableOpacity
-          style={styles.modifyButton}
-          onPress={() => user.reservedSessions.push(day)}
+          style={styles.enrollButton}
+          onPress={OnEnrollPress}
           testID="enrollBtn"
         >
-          <Text style={styles.modifyButtonText}>Enroll</Text>
+          <Text style={styles.enrollButtonText}>Enroll</Text>
         </TouchableOpacity>
       }
     </View>

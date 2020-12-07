@@ -43,14 +43,16 @@ type RootStackParamList = {
 };
 
 export interface props {
-  dispatch: AppDispatch,
-  user?: userInterface,
-  navigation?: StackNavigationProp< RootStackParamList>
-  weekDay: string,
-  workout?: workoutInterface,
-  workoutLoading: boolean,
-  schedule?: scheduleInterface,
-  schedulesLoading?: boolean
+  day: string
+  dispatch: AppDispatch
+  user: userInterface
+  navigation: StackNavigationProp< RootStackParamList>
+  weekDay: string
+  workout: workoutInterface
+  workoutLoading: boolean
+  schedule: scheduleInterface
+  schedulesLoading: boolean
+  session: sessionInterface
 }
 
 export interface dayScheduleProps {
@@ -70,11 +72,11 @@ export interface Auth0UserInterface {
   userId: string
 }
 
-export interface reservedSession extends sessionInterface {
+export interface ReservedSession extends sessionInterface {
   day: string
 }
 
-export interface pastSession extends reservedSession {
+export interface PastSession extends ReservedSession {
   result?: string
 }
 
@@ -92,8 +94,8 @@ export interface userInterface {
   connection: string,
   email: string,
   name: string,
-  pastSessions: pastSession[],
-  reservedSessions: reservedSession[],
+  pastSessions: PastSession[],
+  reservedSessions: ReservedSession[],
   signInDate: string,
   userId: string
 }
