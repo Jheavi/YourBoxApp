@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import images from '../../constants/images'
 import { props } from '../../interfaces/interfaces'
 import { isWorkoutLoading, loadWorkout } from '../../redux/actions/workoutActions'
-import { extractDataFromDate, extractDataFromTodayDate } from '../../utils/dateFunctions'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 
 const { height } = Dimensions.get('window')
 
@@ -57,12 +57,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 2,
     marginBottom: 10,
-    fontSize: 24,
-    borderBottomColor: '#ffffff',
-    borderTopColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderLeftColor: 'transparent',
-    borderWidth: 1
+    fontSize: 24
   },
   workoutText: {
     color: 'white',
@@ -116,19 +111,14 @@ const calendarTheme: CalendarTheme = {
 }
 
 function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
-  const { todayString } = extractDataFromTodayDate()
-  const [displayedDay, setDisplayedDay] = useState(todayString)
-  const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
+  const { dayString } = extractDataFromDate()
+  const [displayedDay, setDisplayedDay] = useState(dayString)
+  const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
   const noWorkout = 'There is no workout for the selected day'
   const scrollRef = useRef<ScrollView>(null)
 
   useEffect(() => {
-    dispatch(loadWorkout(todayString!))
-    dispatch(isWorkoutLoading())
-  }, [])
-
-  useEffect(() => {
-    dispatch(loadWorkout(todayString!))
+    dispatch(loadWorkout(dayString))
     dispatch(isWorkoutLoading())
   }, [])
 
@@ -139,19 +129,15 @@ function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
   }, [workout])
 
   useEffect(() => {
-    if (displayedDay) {
-      setFormattedDate(extractDataFromDate(displayedDay))
-    }
+    setFormattedDate(extractDataFromDate(displayedDay).formattedDate)
   }, [displayedDay])
 
   function scrollToStart () {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        x: 0,
-        y: 0,
-        animated: true
-      })
-    }
+    scrollRef.current!.scrollTo({
+      x: 0,
+      y: 0,
+      animated: true
+    })
   }
 
   function onDayPress (day: DateObject) {
@@ -168,12 +154,12 @@ function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
         scrollEnabled={true}
         ref={scrollRef}
       >
-      <Text style={styles.dayText} testID="workoutDate">{formattedDate && `${formattedDate.day}/${formattedDate.month}/${formattedDate.year}`}</Text>
+      <Text style={styles.dayText} testID="workoutDate">{formattedDate}</Text>
         <View style={styles.square}>
           <ImageBackground source={images.workoutbackground} style={styles.image} />
           {workoutLoading &&
           <View style={styles.workoutView}>
-            <ActivityIndicator size="large" color="#cb1313"/>
+            <ActivityIndicator size="large" color="#cb1313" testID="workoutActivity"/>
           </View>}
           {!workoutLoading &&
             <View style={styles.workoutView}>

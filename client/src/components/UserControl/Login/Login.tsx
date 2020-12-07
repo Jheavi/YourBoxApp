@@ -1,8 +1,11 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform, Alert } from 'react-native'
 import images from '../../../constants/images'
 import { login } from '../../../redux/actions/userActions'
 import { connect } from 'react-redux'
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
+import auth0data from '../../../constants/auth0data'
+import { props } from '../../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +39,38 @@ const styles = StyleSheet.create({
   }
 })
 
-function Login ({ dispatch }: any) {
+function Login ({ dispatch }: props) {
+  const useProxy = Platform.select({ web: false, default: true })
+  const redirectUri = makeRedirectUri({ useProxy })
+
+  const [, result, promptAsync] = useAuthRequest(
+    {
+      redirectUri,
+      clientId: auth0data.clientId,
+      responseType: 'id_token',
+      scopes: ['openid', 'profile', 'email'],
+      extraParams: {
+        nonce: 'nonce'
+      }
+    },
+    { authorizationEndpoint: `https://${auth0data.domain}/authorize` }
+  )
+
+  useEffect(() => {
+    if (result) {
+      if (result.type === 'error') {
+        Alert.alert(
+          'Authentication error',
+          result.params.error_description || 'something went wrong'
+        )
+        return
+      }
+      if (result.type === 'success') {
+        dispatch(login(result.params.id_token))
+      }
+    }
+  }, [result])
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -45,7 +79,7 @@ function Login ({ dispatch }: any) {
       />
       <TouchableOpacity
         style={styles.buttonView}
-        onPress={() => dispatch(login())}
+        onPress={() => promptAsync({ useProxy })}
       >
         <Text style={styles.buttonsText}>Login</Text>
       </TouchableOpacity>

@@ -4,7 +4,7 @@ import { StyleSheet, View, ScrollView, ImageBackground, Text, TouchableWithoutFe
 import Modal from 'react-native-modal'
 import { Calendar, DateObject } from 'react-native-calendars'
 import { isWorkoutLoading, loadWorkout } from '../../redux/actions/workoutActions'
-import { extractDataFromTodayDate, extractDataFromDate } from '../../utils/dateFunctions'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 import { props } from '../../interfaces/interfaces'
 import images from '../../constants/images'
 import FormModifyWorkout from './FormModifyWorkout/FormModifyWorkout'
@@ -13,15 +13,15 @@ import { workoutStyle, calendarTheme } from './workoutStyle'
 const styles = StyleSheet.create(workoutStyle)
 
 function Workout ({ workout, workoutLoading, dispatch }: props) {
-  const { todayString } = extractDataFromTodayDate()
-  const [displayedDay, setDisplayedDay] = useState(todayString)
-  const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay))
+  const { dayString } = extractDataFromDate()
+  const [displayedDay, setDisplayedDay] = useState(dayString)
+  const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
   const [modalVisible, setModalVisible] = useState(false)
   const noWorkout = 'There is no workout for the selected day'
   const scrollRef = useRef<ScrollView>(null)
 
   useEffect(() => {
-    dispatch(loadWorkout(todayString!))
+    dispatch(loadWorkout(dayString))
     dispatch(isWorkoutLoading())
   }, [])
 
@@ -32,7 +32,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
   }, [workout])
 
   useEffect(() => {
-    setFormattedDate(extractDataFromDate(displayedDay))
+    setFormattedDate(extractDataFromDate(displayedDay).formattedDate)
   }, [displayedDay])
 
   function scrollToStart () {
@@ -57,7 +57,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
         scrollEnabled={true}
         ref={scrollRef}
       >
-        <Text style={styles.dayText} testID="workoutDate">{formattedDate && `${formattedDate.day}/${formattedDate.month}/${formattedDate.year}`}</Text>
+        <Text style={styles.dayText} testID="workoutDate">{formattedDate}</Text>
         <View style={styles.square}>
           <ImageBackground source={images.workoutbackground} style={styles.image} />
           {workoutLoading &&
@@ -78,7 +78,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
                   onBackButtonPress={() => { setModalVisible(false) }}
                   onBackdropPress={() => { setModalVisible(false) }}
                   >
-                  <FormModifyWorkout todayString={todayString} displayedDay={displayedDay} setModalVisible={setModalVisible}/>
+                  <FormModifyWorkout dayString={dayString} displayedDay={displayedDay} setModalVisible={setModalVisible}/>
                 </Modal>
               </View>
             </TouchableWithoutFeedback>

@@ -3,16 +3,17 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { loadWorkout } from '../../redux/actions/workoutActions'
-import Workout from './Workout'
 import { extractDataFromDate } from '../../utils/dateFunctions'
 import { fireEvent, render } from '@testing-library/react-native'
-import { dateObject } from '../../interfaces/interfaces'
+import { dateObject, userInterface } from '../../interfaces/interfaces'
+import UserWorkout from './UserWorkout'
 
 jest.mock('../../redux/actions/workoutActions')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('UserWorkout', () => {
+  let fakeUser: userInterface
   let todayDate: dateObject
 
   const wrapperFactory = (wrapperInitialState: any) => {
@@ -28,12 +29,24 @@ describe('Workout', () => {
 
   beforeEach(() => {
     todayDate = extractDataFromDate()
+    fakeUser = {
+      active: false,
+      admin: false,
+      affiliatedProgram: 'a',
+      connection: 'a',
+      email: 'a',
+      name: 'a',
+      pastSessions: [],
+      reservedSessions: [],
+      signInDate: 'a',
+      userId: 'a'
+    }
   })
 
   it('renders correctly', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = { workoutReducer: {}, userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<Workout />, { wrapper })
+    const { getByTestId } = render(<UserWorkout />, { wrapper })
 
     const dateTitle = getByTestId('workoutDate')
 
@@ -41,18 +54,18 @@ describe('Workout', () => {
   })
 
   it('should call loadWorkout', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = { workoutReducer: {}, userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
 
-    render(<Workout />, { wrapper })
+    render(<UserWorkout />, { wrapper })
 
     expect(loadWorkout).toHaveBeenCalled()
   })
 
   it('should load the activityIndicator if workout is Loading', () => {
-    const initialState = { workoutReducer: { workoutLoading: true } }
+    const initialState = { workoutReducer: { workoutLoading: true }, userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<Workout />, { wrapper })
+    const { getByTestId } = render(<UserWorkout />, { wrapper })
 
     const activityIndicator = getByTestId('workoutActivity')
 
@@ -60,36 +73,25 @@ describe('Workout', () => {
   })
 
   it('should change the date of workoutDate with the day selected', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = { workoutReducer: {}, userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { queryByText, getByTestId } = render(<Workout />, { wrapper })
+    const { queryByText, getByTestId } = render(<UserWorkout />, { wrapper })
+
     const dateTitle = getByTestId('workoutDate')
-    const day20button = queryByText('20')
+    const day13button = queryByText('13')
 
-    fireEvent(day20button!, 'press')
+    fireEvent(day13button!, 'press')
 
-    expect(dateTitle.children[0]).toBe(`20/${todayDate.month}/${todayDate.year}`)
-  })
-
-  it('should change the modal to visible if touchableModal is touched', () => {
-    const initialState = { workoutReducer: {} }
-    const wrapper = wrapperFactory(initialState)
-    const { getAllByTestId } = render(<Workout />, { wrapper })
-
-    const [touchableModal, modal] = getAllByTestId(/Modal/)
-
-    fireEvent(touchableModal, 'press')
-
-    expect(modal.props.visible).toBe(true)
+    expect(dateTitle.children[0]).toBe(`13/${todayDate.month}/${todayDate.year}`)
   })
 
   it('should put the workout date int the title when the workout is loaded', () => {
-    const initialState = { workoutReducer: { workout: { date: '2020-11-20' } } }
+    const initialState = { workoutReducer: { workout: { date: '2020-08-13' } }, userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<Workout />, { wrapper })
+    const { getByTestId } = render(<UserWorkout />, { wrapper })
 
     const dateTitle = getByTestId('workoutDate')
 
-    expect(dateTitle.children[0]).toBe('20/11/2020')
+    expect(dateTitle.children[0]).toBe('13/08/2020')
   })
 })

@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { maybeCompleteAuthSession } from 'expo-web-browser'
 import jwtDecode from 'jwt-decode'
 import serverUrls from '../../constants/serverUrls'
 import { Auth0UserInterface } from '../../interfaces/interfaces'
-import { onLogin, onLogout } from '../../utils/authFunctions'
+import { onLogout } from '../../utils/authFunctions'
 import { AppDispatch } from '../configureStore'
 import actionTypes from './action-types'
 import { UserActionTypes } from './userActionsInterface'
@@ -22,30 +21,23 @@ function loginError (error: any): UserActionTypes {
   }
 }
 
-export function login (): any {
+export function login (idToken: string): any {
   return async (dispatch: AppDispatch) => {
     try {
-      const response = await onLogin()
+      const { email, nickname, sub }: any = jwtDecode(idToken)
 
-      if (response.type === 'success') {
-        const { email, nickname, sub }: any = jwtDecode(response.params.id_token)
+      const [connection, userId] = sub.split('|')
 
-        const [connection, userId] = sub.split('|')
+      const { data } = await axios.post(serverUrls.userUrl, {
+        user: {
+          email,
+          name: nickname,
+          connection,
+          userId
+        }
+      })
 
-        const { data } = await axios.post(serverUrls.userUrl, {
-          user: {
-            email,
-            name: nickname,
-            connection,
-            userId
-          }
-        })
-        maybeCompleteAuthSession()
-
-        dispatch(loginSuccess(data))
-      } else {
-        dispatch(loginError(response.type))
-      }
+      dispatch(loginSuccess(data))
     } catch (error) {
       dispatch(loginError(error))
     }
@@ -71,8 +63,6 @@ export function logout (): any {
       const response = await onLogout()
 
       if (response.type === 'success') {
-        maybeCompleteAuthSession()
-
         dispatch(logoutSuccess())
       } else {
         dispatch(logoutError(response.type))
