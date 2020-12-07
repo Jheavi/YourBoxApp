@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import serverUrls from '../../constants/serverUrls'
@@ -99,7 +100,6 @@ describe('Schedules actions', () => {
       })
 
       await store!.dispatch(login())
-      console.log(store!.getActions()[0])
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.USER_LOGIN_ERROR,
