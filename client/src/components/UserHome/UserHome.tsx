@@ -76,6 +76,7 @@ function UserHome ({ navigation, user }: props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
+            onPress={() => navigation!.navigate('UserSchedules')}
             >
             <IconFont5
             name="calendar"

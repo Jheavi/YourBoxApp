@@ -10,6 +10,7 @@ import Login from '../UserControl/Login/Login'
 import UserWorkout from '../UserWorkout/UserWorkout'
 import Logout from '../UserControl/Logout/Logout'
 import UserHome from '../UserHome/UserHome'
+import UserSchedules from '../UserSchedules/UserSchedules'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -63,6 +64,11 @@ function Navigation ({ user }: props) {
                 <Screen
                   name="UserWorkout"
                   component={UserWorkout}
+                  options={header}
+                />
+                <Screen
+                  name="UserSchedules"
+                  component={UserSchedules}
                   options={header}
                 />
                 <Screen
