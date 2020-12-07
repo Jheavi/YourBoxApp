@@ -27,6 +27,7 @@ export interface dateObject {
   year: number,
   dayString: string,
   formattedDate: string,
+  weekDay: string
 }
 
 type RootStackParamList = {
