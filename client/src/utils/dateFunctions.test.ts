@@ -1,4 +1,4 @@
-import { extractDataFromDate, extractDataFromTodayDate, sortByWeekDays } from './dateFunctions'
+import { extractDataFromDate, sortByWeekDays } from './dateFunctions'
 
 describe('Date Functions', () => {
   const RealDate = Date.now
@@ -11,41 +11,46 @@ describe('Date Functions', () => {
     Date.now = RealDate
   })
 
-  test('extractDataFromDate should return an object with date info splitted', () => {
-    const date = extractDataFromDate('2020-09-22')
-
-    expect(date).toEqual({
-      day: 22,
-      month: 9,
-      year: 2020
-    })
-  })
-
-  test('extractDataFromTodayDate should return an object with month and date > 9', () => {
+  test('extractDataFromDate should return an object with month and date > 9', () => {
     // Mocked Date-now to return always the date 25/November/2020
     const now = 1606296219142
     Date.now = jest.spyOn(Date, 'now').mockImplementation(() => now)
-    const date = extractDataFromTodayDate()
+    const date = extractDataFromDate()
 
     expect(date).toEqual({
       day: 25,
       month: 11,
       year: 2020,
-      todayString: '2020-11-25'
+      dayString: '2020-11-25',
+      formattedDate: '25/11/2020'
     })
   })
 
-  test('extractDataFromTodayDate should return an object with month and date < 10', () => {
+  test('extractDataFromDate should return an object with month and date < 10', () => {
     // Mocked Date-now to return always the date 02/September/2020
     const now = 1598999219142
     Date.now = jest.spyOn(Date, 'now').mockImplementation(() => now)
-    const date = extractDataFromTodayDate()
+    const date = extractDataFromDate()
 
     expect(date).toEqual({
       day: 2,
       month: 9,
       year: 2020,
-      todayString: '2020-09-02'
+      dayString: '2020-09-02',
+      formattedDate: '02/09/2020'
+    })
+  })
+
+  test('extractDataFromDate should return the date formatted if date provided', () => {
+    // Mocked Date-now to return always the date 02/September/2020
+    const date = extractDataFromDate('2020-09-02')
+
+    expect(date).toEqual({
+      day: 2,
+      month: 9,
+      year: 2020,
+      dayString: '2020-09-02',
+      formattedDate: '02/09/2020'
     })
   })
 
