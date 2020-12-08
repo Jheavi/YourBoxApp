@@ -3,24 +3,21 @@ import { extractDataFromDate, sortByWeekDays } from './dateFunctions'
 describe('Date Functions', () => {
   const RealDate = Date.now
 
-  beforeEach(() => {
-
-  })
-
   afterEach(() => {
     Date.now = RealDate
   })
 
   test('extractDataFromDate should return an object with month and date > 9', () => {
-    // Mocked Date-now to return always the date 25/November/2020
-    const now = 1606296219142
-    Date.now = jest.spyOn(Date, 'now').mockImplementation(() => now)
+    // Mocked Date-now to return always the date 25/November/2020 at 10:00
+    const mockedTime = 1606296219142
+    Date.now = jest.spyOn(Date, 'now').mockImplementation(() => mockedTime)
     const date = extractDataFromDate()
 
     expect(date).toEqual({
       day: 25,
       month: 11,
       year: 2020,
+      hour: '10:00',
       dayString: '2020-11-25',
       formattedDate: '25/11/2020',
       weekDay: 'wednesday'
@@ -28,15 +25,16 @@ describe('Date Functions', () => {
   })
 
   test('extractDataFromDate should return an object with month and date < 10', () => {
-    // Mocked Date-now to return always the date 02/September/2020
-    const now = 1598999219142
-    Date.now = jest.spyOn(Date, 'now').mockImplementation(() => now)
+    // Mocked Date-now to return always the date 02/September/2020 at 00:00
+    const mockedTime = 1598999219142
+    Date.now = jest.spyOn(Date, 'now').mockImplementation(() => mockedTime)
     const date = extractDataFromDate()
 
     expect(date).toEqual({
       day: 2,
       month: 9,
       year: 2020,
+      hour: '00:00',
       dayString: '2020-09-02',
       formattedDate: '02/09/2020',
       weekDay: 'wednesday'
@@ -51,6 +49,7 @@ describe('Date Functions', () => {
       day: 2,
       month: 9,
       year: 2020,
+      hour: '02:00',
       dayString: '2020-09-02',
       formattedDate: '02/09/2020',
       weekDay: 'wednesday'
