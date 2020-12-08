@@ -3,9 +3,9 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
-import UserHome from './UserHome'
 import { userInterface } from '../../interfaces/interfaces'
 import { extractDataFromDate } from '../../utils/dateFunctions'
+import UserHome from './UserHome'
 
 jest.mock('@react-navigation/native')
 
@@ -86,7 +86,7 @@ describe('UserHome', () => {
 
     const remainingText = getByTestId('remainingText')
 
-    expect(remainingText.children[0]).toBe('Remaining sessions: ')
+    expect(remainingText.children[0]).toBe('Remaining sessions: 0')
   })
 
   it('should render remaining sessions if user has reserved and past sessions in this month', () => {
@@ -109,6 +109,6 @@ describe('UserHome', () => {
 
     const remainingText = getByTestId('remainingText')
 
-    expect(remainingText.children[0]).toBe('Remaining sessions: ')
+    expect(remainingText.children[0]).toBe('Remaining sessions: 6')
   })
 })

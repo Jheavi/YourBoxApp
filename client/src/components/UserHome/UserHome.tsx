@@ -120,11 +120,9 @@ function UserHome ({ navigation, user }: props) {
         <View style={styles.remainingClassesView}>
           <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth.length}`}</Text>
           <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth.length}`}</Text>
-          <Text style={styles.lowerText} testID="remainingText">
-            Remaining sessions: {
-              typeof user!.affiliatedProgram === 'object' &&
-              user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth.length - reservedSessionsThisMonth.length
-            }
+          <Text style={styles.lowerText} testID="remainingText">{`Remaining sessions: ${typeof user!.affiliatedProgram === 'object'
+                ? user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth.length - reservedSessionsThisMonth.length
+                : '0'}`}
           </Text>
         </View>
       </View>
