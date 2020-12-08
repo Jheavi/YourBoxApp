@@ -67,8 +67,6 @@ function FormModifySession ({ day, dispatch, session }: any) {
   console.log(`Modifying: ${session?.startHour}-${session?.finishHour} type ${session?.type}`)
 
   function onSavePress (): void {
-    console.log('Session: ', session)
-
     if (session) {
       dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
     } else {
