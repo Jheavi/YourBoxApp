@@ -60,6 +60,15 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
   const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
   const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
 
+  function onPress () {
+    if (session) {
+      dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
+    } else {
+      dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
+    }
+    setModalVisible(false)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -123,14 +132,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
             title="Save changes"
             color="#14680c"
             testID="saveButton"
-            onPress={() => {
-              if (session) {
-                dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
-              } else {
-                dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
-              }
-              setModalVisible(false)
-            }}
+            onPress={onPress}
           />
         </View>
       </View>
