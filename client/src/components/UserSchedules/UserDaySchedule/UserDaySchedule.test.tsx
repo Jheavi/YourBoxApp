@@ -4,6 +4,8 @@ import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { render } from '@testing-library/react-native'
 import UserDaySchedule from './UserDaySchedule'
+import { scheduleInterface, userInterface } from '../../../interfaces/interfaces'
+import { extractDataFromDate } from '../../../utils/dateFunctions'
 
 jest.mock('../UserSessionItem/UserSessionItem')
 
@@ -11,7 +13,9 @@ const buildStore = configureStore([thunk])
 
 describe('Workout', () => {
   let fakeDay: string
-  let weekDay
+  let fakeSchedule: scheduleInterface
+  let fakeUser: userInterface
+  const { year, month } = extractDataFromDate()
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()
@@ -28,6 +32,31 @@ describe('Workout', () => {
   beforeEach(() => {
     fakeDay = '12'
     global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
+    fakeUser = {
+      active: false,
+      admin: false,
+      affiliatedProgram: {
+        name: 'a',
+        sessionsPerMonth: 8
+      },
+      connection: 'a',
+      email: 'fakeEmail',
+      name: 'a',
+      pastSessions: [{
+        day: `${year}-${month}-01`,
+        finishHour: '10:00',
+        startHour: '09:00',
+        type: 'WOD'
+      }],
+      reservedSessions: [{
+        day: `${year}-${month}-28`,
+        finishHour: '10:00',
+        startHour: '09:00',
+        type: 'WOD'
+      }],
+      signInDate: 'a',
+      userId: 'a'
+    }
   })
 
   afterEach(() => {
@@ -36,10 +65,10 @@ describe('Workout', () => {
   })
 
   it('renders correctly', () => {
-    weekDay = { day: 'Another Day', sessions: [] }
-    const initialState = {}
+    fakeSchedule = { day: 'Another Day', sessions: [] }
+    const initialState = { userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<UserDaySchedule weekDay={weekDay} day={fakeDay}/>, { wrapper })
+    const { getByTestId } = render(<UserDaySchedule weekDay={fakeSchedule} day={fakeDay}/>, { wrapper })
 
     const title = getByTestId('dayScheduleTitle')
 
@@ -47,10 +76,10 @@ describe('Workout', () => {
   })
 
   it('should render "no schedule" if there is no sessions', () => {
-    weekDay = { day: 'Another Day', sessions: [] }
-    const initialState = {}
+    fakeSchedule = { day: 'Another Day', sessions: [] }
+    const initialState = { userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<UserDaySchedule weekDay={weekDay} day={fakeDay}/>, { wrapper })
+    const { getByTestId } = render(<UserDaySchedule weekDay={fakeSchedule} day={fakeDay}/>, { wrapper })
 
     const noScheduleText = getByTestId('noScheduleText')
 
@@ -58,7 +87,7 @@ describe('Workout', () => {
   })
 
   it('should render three SessionItem components with a sessions array with length 3', () => {
-    weekDay = {
+    fakeSchedule = {
       day: 'Another Day',
       sessions: [
         { finishHour: '1', startHour: '1', type: '1' },
@@ -66,9 +95,9 @@ describe('Workout', () => {
         { finishHour: '3', startHour: '3', type: '3' }
       ]
     }
-    const initialState = {}
+    const initialState = { userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
-    const { getAllByText } = render(<UserDaySchedule weekDay={weekDay} day={fakeDay}/>, { wrapper })
+    const { getAllByText } = render(<UserDaySchedule weekDay={fakeSchedule} day={fakeDay}/>, { wrapper })
 
     const sessionsItems = getAllByText(/MockedSessionItem/)
 

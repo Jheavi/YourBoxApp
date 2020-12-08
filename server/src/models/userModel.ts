@@ -2,11 +2,11 @@ import { SessionInterface } from './scheduleModel'
 
 const { Schema, model } = require('mongoose')
 
-export interface reservedSession extends SessionInterface {
+export interface reservedSessionInterface extends SessionInterface {
   day: string
 }
 
-export interface pastSession extends reservedSession {
+export interface pastSession extends reservedSessionInterface {
   result?: string
 }
 
@@ -20,7 +20,7 @@ export interface userInterface {
   name: string,
   ownerOfGym?: string,
   pastSessions: pastSession[],
-  reservedSessions: reservedSession[],
+  reservedSessions: reservedSessionInterface[],
   signInDate: string,
   userId: string
 }
