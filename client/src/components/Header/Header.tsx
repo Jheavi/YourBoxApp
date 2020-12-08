@@ -43,7 +43,7 @@ function Header ({ user }: props) {
             ? navigation.navigate('Login')
             : user.admin
               ? navigation.navigate('Home')
-              : navigation.navigate('UserView')
+              : navigation.navigate('UserHome')
         }}
       >
         <Text style={styles.title}>GymApp</Text>
