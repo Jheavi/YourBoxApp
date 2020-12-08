@@ -9,7 +9,7 @@ export async function changeReservedSessionsToPastSessions () {
     const users = await userModel.find(query)
     const bulkOps = []
 
-    users.forEach(async (user) => {
+    users?.forEach(async (user) => {
       const alreadyPastSessions = user.reservedSessions.filter(
         (reservedSession: reservedSessionInterface) =>
           actualDay.dayString > reservedSession.day
@@ -18,7 +18,6 @@ export async function changeReservedSessionsToPastSessions () {
               ? false
               : +actualDay.hour.split(':')[0] + 1 > +reservedSession.startHour.split(':')[0]
       )
-      console.log(alreadyPastSessions)
       if (alreadyPastSessions.length) {
         bulkOps.push({
           updateOne: {
