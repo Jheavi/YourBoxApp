@@ -4,7 +4,7 @@ import serverUrls from '../../constants/serverUrls'
 import axios from 'axios'
 import { loadSchedules, updateSession, createSession, isSchedulesLoading, loadSchedule } from './schedulesActions'
 import actionTypes from './action-types'
-import { sessionInterface } from '../../interfaces/interfaces'
+import { SessionInterface } from '../../interfaces/interfaces'
 
 jest.mock('axios')
 
@@ -15,7 +15,7 @@ describe('Schedules actions', () => {
   let newDate: string
   let fakeError: string
   let store: MockStoreEnhanced<unknown, {}> | null
-  let fakeSession: sessionInterface
+  let fakeSession: SessionInterface
 
   beforeEach(() => {
     store = mockStore()

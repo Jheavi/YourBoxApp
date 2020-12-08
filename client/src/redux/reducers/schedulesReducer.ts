@@ -1,5 +1,5 @@
 import actionTypes from '../actions/action-types'
-import { scheduleInterface, sessionInterface } from '../../interfaces/interfaces'
+import { scheduleInterface, SessionInterface } from '../../interfaces/interfaces'
 import { AnyAction } from 'redux'
 import { sortByWeekDays } from '../../utils/dateFunctions'
 
@@ -31,7 +31,7 @@ export default function schedulesReducer (state = initialState, action: AnyActio
       scheduleWithOrderedHours = {
         ...action.schedule,
         sessions: action.schedule.sessions.sort(
-          (session1: sessionInterface, session2: sessionInterface) => (
+          (session1: SessionInterface, session2: SessionInterface) => (
             session1.startHour >= session2.startHour ? 1 : -1
           ))
       }

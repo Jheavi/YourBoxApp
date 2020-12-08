@@ -4,7 +4,6 @@ import { Picker } from '@react-native-picker/picker'
 import hourSelection from '../../../constants/hours'
 import { createSession, updateSession } from '../../../redux/actions/schedulesActions'
 import { connect } from 'react-redux'
-import { props } from '../../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -40,6 +39,11 @@ const styles = StyleSheet.create({
     width: 'auto',
     textTransform: 'uppercase'
   },
+  secondTitle: {
+    width: '90%',
+    color: 'white',
+    textAlign: 'center'
+  },
   picker: {
     height: 50,
     width: 85,
@@ -60,8 +64,11 @@ function FormModifySession ({ day, dispatch, session }: any) {
   const [finishHourValue, setFinishHourValue] = useState(session?.finishHour || '08:00')
   const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
   const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
+  console.log(`Modifying: ${session?.startHour}-${session?.finishHour} type ${session?.type}`)
 
-  function onPress (): void {
+  function onSavePress (): void {
+    console.log('Session: ', session)
+
     if (session) {
       dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
     } else {
@@ -88,6 +95,9 @@ function FormModifySession ({ day, dispatch, session }: any) {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text style={styles.titleText} testID="textTitle">{day}</Text>
+        <Text style={styles.secondTitle}>{session && 'Modifying session:'}</Text>
+        <Text style={styles.secondTitle}>{session && `${session.startHour}-${session.finishHour}`}</Text>
+        <Text style={{ ...styles.secondTitle, marginBottom: 20 }}>{session && `Type ${session.type}`}</Text>
         <View style={{ flexDirection: 'row' }}>
           <Picker
             style={styles.picker}
@@ -138,7 +148,7 @@ function FormModifySession ({ day, dispatch, session }: any) {
             title="Save changes"
             color="#14680c"
             testID="saveButton"
-            onPress={onPress}
+            onPress={onSavePress}
           />
         </View>
       </View>

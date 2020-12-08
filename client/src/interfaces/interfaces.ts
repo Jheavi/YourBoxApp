@@ -12,10 +12,10 @@ export interface workoutInterface {
 export interface scheduleInterface {
   day: string,
   gym?: string,
-  sessions: sessionInterface[]
+  sessions: SessionInterface[]
 }
 
-export interface sessionInterface {
+export interface SessionInterface {
   finishHour: string,
   startHour: string,
   type: string
@@ -52,7 +52,7 @@ export interface props {
   workoutLoading: boolean
   schedule: scheduleInterface
   schedulesLoading: boolean
-  session: sessionInterface
+  session: SessionInterface
 }
 
 export interface dayScheduleProps {
@@ -72,7 +72,7 @@ export interface Auth0UserInterface {
   userId: string
 }
 
-export interface ReservedSession extends sessionInterface {
+export interface ReservedSession extends SessionInterface {
   day: string
 }
 

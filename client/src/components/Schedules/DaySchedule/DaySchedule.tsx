@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
-import { dayScheduleProps, sessionInterface } from '../../../interfaces/interfaces'
+import { dayScheduleProps, SessionInterface } from '../../../interfaces/interfaces'
 import SessionItem from '../SessionItem/SessionItem'
 import FormModifySession from '../FormModifySession/FormModifySession'
 
@@ -84,7 +84,7 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
-          : (weekDay.sessions.map((session: sessionInterface) => {
+          : (weekDay.sessions.map((session: SessionInterface) => {
               return <SessionItem day={weekDay.day} session={session} key={performance.now() * Math.random()} />
             })
             ))

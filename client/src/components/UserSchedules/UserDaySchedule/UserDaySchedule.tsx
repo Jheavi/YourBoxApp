@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { dayScheduleProps, sessionInterface } from '../../../interfaces/interfaces'
+import { dayScheduleProps, SessionInterface } from '../../../interfaces/interfaces'
 import UserSessionItem from '../UserSessionItem/UserSessionItem'
 import { connect } from 'react-redux'
 
@@ -64,7 +64,7 @@ function UserDaySchedule ({ day, weekDay }: dayScheduleProps) {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length
           ? <Text style={styles.noScheduleText} testID="noScheduleText">There is no schedule for this day</Text>
-          : (weekDay.sessions.map((session: sessionInterface) => {
+          : (weekDay.sessions.map((session: SessionInterface) => {
               return <UserSessionItem day={day} session={session} key={performance.now() * Math.random()} />
             })
             ))
