@@ -99,11 +99,13 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
             ? '#016500'
             : '#a20000',
       opacity: !sessionHasPassed ? 1 : 0.5
-    }} >
+    }}
+    testID="sessionContainer"
+    >
       <View style={{ flex: 1 }}/>
       <Text style={styles.sessionText} testID="hourText">{`${session!.startHour} - ${session!.finishHour}`}</Text>
       <View style={{ flex: 2 }}/>
-      <Text style={styles.sessionText} testID="typeText">{session!.type}</Text>
+      <Text style={styles.sessionText}>{session!.type}</Text>
       <View style={{ flex: 2 }}/>
       {!userHasSession &&
         <TouchableOpacity
