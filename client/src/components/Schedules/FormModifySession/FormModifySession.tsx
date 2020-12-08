@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker'
 import hourSelection from '../../../constants/hours'
 import { createSession, updateSession } from '../../../redux/actions/schedulesActions'
 import { connect } from 'react-redux'
+import { props } from '../../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
+function FormModifySession ({ day, dispatch, session }: any) {
   const [finishHourValue, setFinishHourValue] = useState(session?.finishHour || '08:00')
   const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
   const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
@@ -66,7 +67,6 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
     } else {
       dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
     }
-    setModalVisible(false)
   }
 
   function onStartHourValueChange (itemValue: string | number): void {

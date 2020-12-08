@@ -72,11 +72,11 @@ function SessionItem ({ day, session }: any) {
         style={styles.modal}
         animationIn="bounceIn"
         isVisible={modalVisible}
-        onBackButtonPress={() => { setModalVisible(false) }}
-        onBackdropPress={() => { setModalVisible(false) }}
+        onBackButtonPress={() => setModalVisible(false) }
+        onBackdropPress={() => setModalVisible(false) }
         testID="sessionModal"
       >
-        <FormModifySession session={session} setModalVisible={setModalVisible} day={day}/>
+        <FormModifySession session={session} day={day}/>
       </Modal>
     </View>
   )

@@ -79,7 +79,7 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
         onBackdropPress={() => { setModalVisible(false) }}
         testID="sessionModal"
       >
-        <FormModifySession setModalVisible={setModalVisible} day={weekDay.day}/>
+        <FormModifySession day={weekDay.day}/>
       </Modal>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length
