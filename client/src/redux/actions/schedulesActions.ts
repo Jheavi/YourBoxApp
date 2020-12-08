@@ -2,7 +2,7 @@ import actionTypes from './action-types'
 import axios from 'axios'
 import serverUrls from '../../constants/serverUrls'
 import { SchedulesActionTypes } from './schedulesActionsInterface'
-import { scheduleInterface, sessionInterface } from '../../interfaces/interfaces'
+import { scheduleInterface, SessionInterface } from '../../interfaces/interfaces'
 import { AppDispatch } from '../configureStore'
 import { extractDataFromDate } from '../../utils/dateFunctions'
 
@@ -53,7 +53,7 @@ export function updateSessionError (error: any): SchedulesActionTypes {
 }
 export function updateSession (
   day: string,
-  session: sessionInterface,
+  session: SessionInterface,
   finishHourValue: string,
   startHourValue: string,
   typeValue: string

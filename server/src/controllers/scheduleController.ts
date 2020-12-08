@@ -30,11 +30,17 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
 
   async function patchSessionMethod ({ params: { day }, body: { session, finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
     try {
+      console.log('Session to change: ', session)
+
       const query = {
         day,
-        'sessions.finishHour': session.finishHour,
-        'sessions.startHour': session.startHour,
-        'sessions.type': session.type
+        sessions: {
+          $elemMatch: {
+            finishHour: session.finishHour,
+            startHour: session.startHour,
+            type: session.type
+          }
+        }
       }
       const update = {
         $set: {
@@ -44,7 +50,7 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
         }
       }
 
-      await scheduleModel.findOneAndUpdate(query, update)
+      await scheduleModel.findOneAndUpdate(query, update, { new: true })
 
       const schedules = await scheduleModel.find({})
       res.send(schedules)

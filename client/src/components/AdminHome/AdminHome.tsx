@@ -40,54 +40,56 @@ function AdminHome ({ navigation }: any) {
       source={images.homeScreen}
       />
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('AdminWorkout')}
-          style={styles.buttons}
-          testID="workoutBtn"
-        >
-          <Icon
-          name="dumbbell"
-          size={50}
-          color="white"
-          />
-          <Text style={styles.buttonsText} testID="workoutTextBtn">Your workouts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('AdminWorkout')}
-          style={styles.buttons}
-        >
-          <Icon
-          name="user"
-          size={50}
-          color="white"
-          />
-          <Text style={styles.buttonsText}>Your users</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('AdminSchedules')}
-          style={styles.buttons}
-          testID="schedulesBtn"
-        >
-          <Icon
-          name="calendar"
-          size={50}
-          color="white"
-          />
-          <Text style={styles.buttonsText}>Your schedules</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('AdminWorkout')}
-          style={styles.buttons}
-        >
-          <Icon
-          name="coins"
-          size={50}
-          color="white"
-          />
-          <Text style={styles.buttonsText}>Your programs</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'column' }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AdminWorkout')}
+            style={styles.buttons}
+            testID="workoutBtn"
+          >
+            <Icon
+            name="dumbbell"
+            size={50}
+            color="white"
+            />
+            <Text style={styles.buttonsText} testID="workoutTextBtn">Your workouts</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AdminWorkout')}
+            style={styles.buttons}
+          >
+            <Icon
+            name="user"
+            size={50}
+            color="white"
+            />
+            <Text style={styles.buttonsText}>Your users</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flexDirection: 'column' }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AdminSchedules')}
+            style={styles.buttons}
+            testID="schedulesBtn"
+          >
+            <Icon
+            name="calendar"
+            size={50}
+            color="white"
+            />
+            <Text style={styles.buttonsText}>Your schedules</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AdminWorkout')}
+            style={styles.buttons}
+          >
+            <Icon
+            name="coins"
+            size={50}
+            color="white"
+            />
+            <Text style={styles.buttonsText}>Your programs</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )

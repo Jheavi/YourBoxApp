@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
     width: 'auto',
     textTransform: 'uppercase'
   },
+  secondTitle: {
+    width: '90%',
+    color: 'white',
+    textAlign: 'center'
+  },
   picker: {
     height: 50,
     width: 85,
@@ -55,25 +60,47 @@ const styles = StyleSheet.create({
   }
 })
 
-function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
+function FormModifySession ({ day, dispatch, session }: any) {
   const [finishHourValue, setFinishHourValue] = useState(session?.finishHour || '08:00')
   const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
   const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
+  console.log(`Modifying: ${session?.startHour}-${session?.finishHour} type ${session?.type}`)
+
+  function onSavePress (): void {
+    if (session) {
+      dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
+    } else {
+      dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
+    }
+  }
+
+  function onStartHourValueChange (itemValue: string | number): void {
+    setStartHourValue(itemValue)
+    const itemInArray = itemValue.toString().split(':')
+    const finishHourModified = +itemInArray[0] + 1 < 10 ? `0${+itemInArray[0] + 1}:${itemInArray[1]}` : `${+itemInArray[0] + 1}:${itemInArray[1]}`
+    setFinishHourValue(finishHourModified)
+  }
+
+  function onFinishHourValueChange (itemValue: string | number): void {
+    setFinishHourValue(itemValue)
+  }
+
+  function onTypeValueChange (itemValue: string | number): void {
+    setTypeValue(itemValue)
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text style={styles.titleText} testID="textTitle">{day}</Text>
+        <Text style={styles.secondTitle}>{session && 'Modifying session:'}</Text>
+        <Text style={styles.secondTitle}>{session && `${session.startHour}-${session.finishHour}`}</Text>
+        <Text style={{ ...styles.secondTitle, marginBottom: 20 }}>{session && `Type ${session.type}`}</Text>
         <View style={{ flexDirection: 'row' }}>
           <Picker
             style={styles.picker}
             selectedValue={startHourValue}
-            onValueChange={(itemValue) => {
-              setStartHourValue(itemValue)
-              const itemInArray = itemValue.toString().split(':')
-              const finishHourModified = +itemInArray[0] + 1 < 10 ? `0${+itemInArray[0] + 1}:${itemInArray[1]}` : `${+itemInArray[0] + 1}:${itemInArray[1]}`
-              setFinishHourValue(finishHourModified)
-            }}
+            onValueChange={onStartHourValueChange}
             mode="dropdown"
             testID="startHourPicker"
           >
@@ -89,9 +116,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
           <Picker
             style={styles.picker}
             selectedValue={finishHourValue}
-            onValueChange={(itemValue) =>
-              setFinishHourValue(itemValue)
-            }
+            onValueChange={onFinishHourValueChange}
             mode="dropdown"
             testID="finishHourPicker"
             >
@@ -108,9 +133,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
         <Picker
           style={styles.picker}
           selectedValue={typeValue}
-          onValueChange={(itemValue) =>
-            setTypeValue(itemValue)
-          }
+          onValueChange={onTypeValueChange}
           mode="dropdown"
           testID="typePicker"
         >
@@ -123,14 +146,7 @@ function FormModifySession ({ day, dispatch, session, setModalVisible }: any) {
             title="Save changes"
             color="#14680c"
             testID="saveButton"
-            onPress={() => {
-              if (session) {
-                dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
-              } else {
-                dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
-              }
-              setModalVisible(false)
-            }}
+            onPress={onSavePress}
           />
         </View>
       </View>
