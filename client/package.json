@@ -14,6 +14,7 @@
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "@testing-library/dom": "^7.28.1",
+    "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react-native": "^7.1.0",
     "@types/jest": "^26.0.15",
     "@types/react-native-vector-icons": "^6.4.6",
@@ -78,9 +79,9 @@
       "node_modules/(?!(react-native|react-native-gesture-handler|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@expo/vector-icons|expo-font|expo-asset|expo-file-system|react-native-iphone-x-helper)/)"
     ],
     "moduleNameMapper": {
-         "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/__mocks__/fileMock.js",
-         "\\.(css|less)$": "<rootDir>/jest/__mocks__/fileMock.js"
-       }
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/jest/__mocks__/fileMock.js"
+    }
   },
   "private": true
 }
