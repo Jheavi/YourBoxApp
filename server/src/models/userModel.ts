@@ -1,8 +1,8 @@
-import { sessionInterface } from './scheduleModel'
+import { SessionInterface } from './scheduleModel'
 
 const { Schema, model } = require('mongoose')
 
-export interface reservedSession extends sessionInterface {
+export interface reservedSession extends SessionInterface {
   day: string
 }
 
