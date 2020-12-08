@@ -6,6 +6,7 @@ import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import images from '../../constants/images'
 import { props } from '../../interfaces/interfaces'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -53,6 +54,9 @@ const styles = StyleSheet.create({
 })
 
 function UserHome ({ navigation, user }: props) {
+  const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month)
+  const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month)
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -114,9 +118,14 @@ function UserHome ({ navigation, user }: props) {
       <View style={{ flex: 0.25 }}/>
       <View style={styles.lowerView}>
         <View style={styles.remainingClassesView}>
-          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${user!.pastSessions.length}`}</Text>
-          <Text style={styles.lowerText}>{`Sessions actually reserved: ${user!.reservedSessions.length}`}</Text>
-          <Text style={styles.lowerText} testID="remainingText">Remaining sessions: {typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - user!.pastSessions.length - user!.reservedSessions.length}</Text>
+          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth.length}`}</Text>
+          <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth.length}`}</Text>
+          <Text style={styles.lowerText} testID="remainingText">
+            Remaining sessions: {
+              typeof user!.affiliatedProgram === 'object' &&
+              user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth.length - reservedSessionsThisMonth.length
+            }
+          </Text>
         </View>
       </View>
       <View style={{ flex: 1 }}/>
