@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
 })
 
 function UserHome ({ navigation, user }: props) {
-  const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month)
-  const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month)
+  const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+  const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
 
   return (
     <View style={styles.container}>
@@ -118,10 +118,10 @@ function UserHome ({ navigation, user }: props) {
       <View style={{ flex: 0.25 }}/>
       <View style={styles.lowerView}>
         <View style={styles.remainingClassesView}>
-          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth.length}`}</Text>
-          <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth.length}`}</Text>
+          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth}`}</Text>
+          <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth}`}</Text>
           <Text style={styles.lowerText} testID="remainingText">{`Remaining sessions: ${typeof user!.affiliatedProgram === 'object'
-                ? user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth.length - reservedSessionsThisMonth.length
+                ? user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth
                 : '0'}`}
           </Text>
         </View>
