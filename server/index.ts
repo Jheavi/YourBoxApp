@@ -2,13 +2,13 @@ import scheduleModel from './src/models/scheduleModel'
 import workoutModel from './src/models/workoutModel'
 import userModel from './src/models/userModel'
 import programModel from './src/models/programModel'
+import { changeReservedSessionsToPastSessions } from './src/utils/userExtraFunctions'
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const chalk = require('chalk')
-const debug = require('debug')('server')
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
 const userRouter = require('./src/routes/userRouter')(userModel, programModel)
@@ -31,5 +31,9 @@ server.use('/schedules', scheduleRouter)
 server.use('/users', userRouter)
 
 server.listen(port, () => {
-  debug(`Server listening on port ${chalk.blueBright(port)}...`)
+  console.log(`Server listening on port ${chalk.blueBright(port)}...`)
+  changeReservedSessionsToPastSessions()
+  setInterval(() => {
+    changeReservedSessionsToPastSessions()
+  }, 3600000)
 })
