@@ -7,6 +7,8 @@ export function extractDataFromDate (date?: string): dateObject {
   const month: number = dayToFormat.getMonth() + 1
   const monthString: string = month > 9 ? `${month}` : `0${month}`
   const year: number = dayToFormat.getFullYear()
+  const hour: number = dayToFormat.getHours()
+  const hourString: string = hour > 9 ? `${hour}:00` : `0${hour}:00`
   const weekDayNumber: number = dayToFormat.getDay()
   let weekDay: string
   switch (weekDayNumber) {
@@ -40,6 +42,7 @@ export function extractDataFromDate (date?: string): dateObject {
     day,
     month,
     year,
+    hour: hourString,
     dayString: `${year}-${monthString}-${dayString}`,
     formattedDate: `${dayString}/${monthString}/${year}`,
     weekDay
