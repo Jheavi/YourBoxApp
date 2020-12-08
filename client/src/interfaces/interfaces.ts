@@ -16,17 +16,18 @@ export interface scheduleInterface {
 }
 
 export interface SessionInterface {
-  finishHour: string,
-  startHour: string,
+  finishHour: string
+  startHour: string
   type: string
 }
 
 export interface dateObject {
-  day: number,
-  month: number,
-  year: number,
-  dayString: string,
-  formattedDate: string,
+  day: number
+  month: number
+  year: number
+  hour: string
+  dayString: string
+  formattedDate: string
   weekDay: string
 }
 
