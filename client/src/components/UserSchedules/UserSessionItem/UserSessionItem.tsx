@@ -50,13 +50,11 @@ function UserSessionItem ({ day, dispatch, session, user }: props) {
   const actualDay = extractDataFromDate()
 
   function checkIfSessionHasPassed (): boolean {
-    if (actualDay.dayString > day) {
-      return true
-    } else if (actualDay.dayString < day) {
-      return false
-    } else {
-      return +actualDay.hour.split(':')[0] + 2 > +session.startHour.split(':')[0]
-    }
+    return actualDay.dayString > day
+      ? true
+      : actualDay.dayString < day
+        ? false
+        : +actualDay.hour.split(':')[0] + 2 > +session.startHour.split(':')[0]
   }
 
   const [sessionHasPassed] = useState(checkIfSessionHasPassed())
