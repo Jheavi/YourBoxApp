@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
 import UserHome from './UserHome'
 import { userInterface } from '../../interfaces/interfaces'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 
 jest.mock('@react-navigation/native')
 
@@ -34,7 +35,7 @@ describe('UserHome', () => {
       admin: false,
       affiliatedProgram: {
         name: 'a',
-        sessionsPerMonth: 0
+        sessionsPerMonth: 8
       },
       connection: 'a',
       email: 'fakeEmail',
@@ -80,6 +81,29 @@ describe('UserHome', () => {
 
   it('should not render remaining sessions if affiliatedProgram is not correct', () => {
     const initialState = { userReducer: { user: { ...fakeUser, affiliatedProgram: 'error' } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
+
+    const remainingText = getByTestId('remainingText')
+
+    expect(remainingText.children[0]).toBe('Remaining sessions: ')
+  })
+
+  it('should render remaining sessions if user has reserved and past sessions in this month', () => {
+    const { month } = extractDataFromDate()
+    const initialState = {
+      userReducer: {
+        user: {
+          ...fakeUser,
+          pastSessions: [
+            { day: `2020-${month}-01` }
+          ],
+          reservedSessions: [
+            { day: `2020-${month}-28` }
+          ]
+        }
+      }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
 
