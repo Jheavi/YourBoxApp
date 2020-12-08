@@ -64,7 +64,6 @@ function FormModifySession ({ day, dispatch, session }: any) {
   const [finishHourValue, setFinishHourValue] = useState(session?.finishHour || '08:00')
   const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
   const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
-  console.log(`Modifying: ${session?.startHour}-${session?.finishHour} type ${session?.type}`)
 
   function onSavePress (): void {
     if (session) {
