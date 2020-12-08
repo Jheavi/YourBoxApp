@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function UserSessionItem ({ day, dispatch, session, user }: props) {
+function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) {
   const actualDay = extractDataFromDate()
 
   function checkIfSessionHasPassed (): boolean {
@@ -65,6 +65,11 @@ function UserSessionItem ({ day, dispatch, session, user }: props) {
       reservedSession.startHour === session.startHour &&
       reservedSession.finishHour === session.finishHour &&
       reservedSession.type === session.type
+    )) || user.pastSessions.some((pastSession) => (
+      pastSession.day === day &&
+      pastSession.startHour === session.startHour &&
+      pastSession.finishHour === session.finishHour &&
+      pastSession.type === session.type
     ))
   }
 
@@ -102,10 +107,10 @@ function UserSessionItem ({ day, dispatch, session, user }: props) {
       <View style={{ flex: 2 }}/>
       {!userHasSession &&
         <TouchableOpacity
-          style={styles.enrollButton}
+          style={{ ...styles.enrollButton, opacity: userCanBook ? 1 : 0.5 }}
           onPress={OnEnrollPress}
           testID="enrollBtn"
-          disabled={sessionHasPassed}
+          disabled={!userCanBook || sessionHasPassed}
         >
           <Text style={styles.enrollButtonText}>Enroll</Text>
         </TouchableOpacity>

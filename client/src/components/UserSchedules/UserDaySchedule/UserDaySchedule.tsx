@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { dayScheduleProps, SessionInterface } from '../../../interfaces/interfaces'
 import UserSessionItem from '../UserSessionItem/UserSessionItem'
 import { connect } from 'react-redux'
+import { extractDataFromDate } from '../../../utils/dateFunctions'
 
 const { width } = Dimensions.get('window')
 
@@ -57,7 +58,15 @@ const styles = StyleSheet.create({
   }
 })
 
-function UserDaySchedule ({ day, weekDay }: dayScheduleProps) {
+function UserDaySchedule ({ day, user, weekDay }: dayScheduleProps) {
+  const [userCanBook, setUserCanBook] = useState(true)
+
+  useEffect(() => {
+    const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+    const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+    setUserCanBook(typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth > 0)
+  }, [user])
+
   return (
     <View style={styles.dayView}>
       <Text style={styles.dayText} testID={'dayScheduleTitle'}>{weekDay.day}</Text>
@@ -65,7 +74,7 @@ function UserDaySchedule ({ day, weekDay }: dayScheduleProps) {
         {weekDay && (!weekDay.sessions.length
           ? <Text style={styles.noScheduleText} testID="noScheduleText">There is no schedule for this day</Text>
           : (weekDay.sessions.map((session: SessionInterface) => {
-              return <UserSessionItem day={day} session={session} key={performance.now() * Math.random()} />
+              return <UserSessionItem day={day} session={session} userCanBook={userCanBook} key={performance.now() * Math.random()} />
             })
             ))
           }
@@ -74,4 +83,10 @@ function UserDaySchedule ({ day, weekDay }: dayScheduleProps) {
   )
 }
 
-export default connect(null)(UserDaySchedule)
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(UserDaySchedule)

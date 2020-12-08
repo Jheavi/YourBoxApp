@@ -46,14 +46,15 @@ type RootStackParamList = {
 export interface props {
   day: string
   dispatch: AppDispatch
-  user: userInterface
   navigation: StackNavigationProp< RootStackParamList>
-  weekDay: string
-  workout: workoutInterface
-  workoutLoading: boolean
   schedule: scheduleInterface
   schedulesLoading: boolean
   session: SessionInterface
+  user: userInterface
+  userCanBook: boolean
+  weekDay: string
+  workout: workoutInterface
+  workoutLoading: boolean
 }
 
 export interface dayScheduleProps {
