@@ -35,6 +35,7 @@
     "react-native-calendars": "^1.489.0",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^11.5.6",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
@@ -45,7 +46,8 @@
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-mock-store": "^1.5.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "expo-linear-gradient": "~8.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
