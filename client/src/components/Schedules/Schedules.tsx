@@ -34,7 +34,7 @@ function Schedules ({ dispatch, schedules, schedulesLoading, user }: props) {
     <>
       {schedulesLoading &&
       <View style={{ ...styles.container, justifyContent: 'center' }}>
-        <ActivityIndicator size="large" color="#cb1313"/>
+        <ActivityIndicator size="large" color="#cb1313" testID="activityIndicator"/>
       </View>
       }
       {!schedulesLoading &&

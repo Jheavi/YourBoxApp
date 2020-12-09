@@ -34,8 +34,8 @@ describe('Workout', () => {
     jest.resetAllMocks()
   })
 
-  it('renders correctly', () => {
-    const initialState = { schedulesReducer: {} }
+  it('renders correctly if user is admin', () => {
+    const initialState = { schedulesReducer: {}, userReducer: { user: { admin: true } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Schedules />, { wrapper })
 
@@ -44,22 +44,42 @@ describe('Workout', () => {
     expect(dateTitle.children[0]).toBe('Your Schedules')
   })
 
+  it('renders correctly if there is no user', () => {
+    const initialState = { schedulesReducer: {}, userReducer: { user: null } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Schedules />, { wrapper })
+
+    const dateTitle = getByTestId('schedulesTitle')
+
+    expect(dateTitle.children[0]).toBe('Schedules')
+  })
+
+  it('should render activityIndicator if schedules is loading', () => {
+    const initialState = { schedulesReducer: { schedulesLoading: true }, userReducer: { user: { admin: true } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Schedules />, { wrapper })
+
+    const activityIndicator = getByTestId('activityIndicator')
+
+    expect(activityIndicator).toBeDefined()
+  })
+
   it('should call loadSchedules', () => {
-    const initialState = { schedulesReducer: {} }
+    const initialState = { schedulesReducer: {}, userReducer: { user: { admin: true } } }
     const wrapper = wrapperFactory(initialState)
     render(<Schedules />, { wrapper })
     expect(loadSchedules).toHaveBeenCalled()
   })
 
   it('should call loadSchedules if schedules array is empty', () => {
-    const initialState = { schedulesReducer: { schedules: [] } }
+    const initialState = { schedulesReducer: { schedules: [] }, userReducer: { user: { admin: true } } }
     const wrapper = wrapperFactory(initialState)
     render(<Schedules />, { wrapper })
     expect(loadSchedules).toHaveBeenCalled()
   })
 
   it('should not call loadSchedules if schedules array have something', () => {
-    const initialState = { schedulesReducer: { schedules: [{}] } }
+    const initialState = { schedulesReducer: { schedules: [{}] }, userReducer: { user: { admin: true } } }
     const wrapper = wrapperFactory(initialState)
     render(<Schedules />, { wrapper })
     expect(loadSchedules).not.toHaveBeenCalled()
