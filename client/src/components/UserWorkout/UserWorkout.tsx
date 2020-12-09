@@ -110,7 +110,7 @@ const calendarTheme: CalendarTheme = {
   }
 }
 
-function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
+function UserWorkout ({ dispatch, workoutLoading, workout }: props) {
   const { dayString } = extractDataFromDate()
   const [displayedDay, setDisplayedDay] = useState(dayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
@@ -184,9 +184,8 @@ function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
   )
 }
 
-function mapStateToProps ({ userReducer, workoutReducer }: any) {
+function mapStateToProps ({ workoutReducer }: any) {
   return {
-    user: userReducer.user,
     workout: workoutReducer.workout,
     workoutLoading: workoutReducer.workoutLoading
   }
