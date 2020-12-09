@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Modal from 'react-native-modal'
 import { dayScheduleProps, SessionInterface } from '../../../interfaces/interfaces'
 import SessionItem from '../SessionItem/SessionItem'
 import FormModifySession from '../FormModifySession/FormModifySession'
 import { connect } from 'react-redux'
+import { Overlay } from 'react-native-elements'
 
 const { width } = Dimensions.get('window')
 
@@ -52,10 +52,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     color: 'white'
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })
 
@@ -74,16 +70,14 @@ function DaySchedule ({ weekDay, user }: dayScheduleProps) {
         >
           <Text style={styles.createButtonText}>+</Text>
         </TouchableOpacity>
-        <Modal
-          style={styles.modal}
-          animationIn="bounceIn"
+        <Overlay
+          animationType="fade"
           isVisible={modalVisible}
-          onBackButtonPress={() => { setModalVisible(false) }}
           onBackdropPress={() => { setModalVisible(false) }}
           testID="sessionModal"
         >
           <FormModifySession day={weekDay.day}/>
-        </Modal>
+        </Overlay>
       </>}
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length

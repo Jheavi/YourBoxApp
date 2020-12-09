@@ -36,26 +36,13 @@ describe('Workout', () => {
 
   it('renders correctly', () => {
     weekDay = { day: 'New Day', sessions: [] }
-    const initialState = {}
+    const initialState = { userReducer: { user: { admin: true } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<DaySchedule weekDay={weekDay}/>, { wrapper })
 
     const title = getByTestId('dayScheduleTitle')
 
     expect(title.children[0]).toBe('New Day')
-  })
-
-  it('should change the modal to visible if touchableModal is touched', () => {
-    weekDay = { day: 'New Day', sessions: [] }
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
-    const { getAllByTestId } = render(<DaySchedule weekDay={weekDay}/>, { wrapper })
-
-    const [touchableModal, modal] = getAllByTestId(/Modal/)
-
-    fireEvent(touchableModal, 'press')
-
-    expect(modal.props.visible).toBe(true)
   })
 
   it('should render three SessionItem components with a sessions array with length 3', () => {
@@ -67,12 +54,39 @@ describe('Workout', () => {
         { finishHour: '3', startHour: '3', type: '3' }
       ]
     }
-    const initialState = {}
+    const initialState = { userReducer: { user: { admin: true } } }
     const wrapper = wrapperFactory(initialState)
     const { getAllByText } = render(<DaySchedule weekDay={weekDay}/>, { wrapper })
 
     const sessionsItems = getAllByText(/MockedSessionItem/)
 
     expect(sessionsItems.length).toBe(3)
+  })
+
+  it('should change the modal to visible if touchableModal is touched', () => {
+    weekDay = { day: 'New Day', sessions: [] }
+    const initialState = { userReducer: { user: { admin: true } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getAllByTestId } = render(<DaySchedule weekDay={weekDay}/>, { wrapper })
+
+    const [touchableModal, modal] = getAllByTestId(/Modal/)
+
+    fireEvent.press(touchableModal)
+
+    expect(modal.props.visible).toBe(true)
+  })
+
+  it('should change the modal to no-visible if backDropPress', () => {
+    weekDay = { day: 'New Day', sessions: [] }
+    const initialState = { userReducer: { user: { admin: true } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getAllByTestId } = render(<DaySchedule weekDay={weekDay}/>, { wrapper })
+
+    const [touchableModal, modal] = getAllByTestId(/Modal/)
+
+    fireEvent.press(touchableModal)
+    fireEvent(modal, 'backdropPress')
+
+    expect(modal.props.visible).toBe(false)
   })
 })

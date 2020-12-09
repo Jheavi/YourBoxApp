@@ -93,8 +93,8 @@ describe('Workout', () => {
     const [touchableModal, modal] = getAllByTestId(/Modal/)
 
     fireEvent.press(touchableModal)
-
     fireEvent(modal, 'backdropPress')
+
     expect(modal.props.visible).toBe(false)
   })
 })
