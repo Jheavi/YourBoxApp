@@ -164,7 +164,6 @@ function Login ({ dispatch, navigation }: props) {
           'Authentication error',
           result.params.error_description || 'something went wrong'
         )
-        return
       }
       if (result.type === 'success') {
         dispatch(login(result.params.id_token))
@@ -179,17 +178,14 @@ function Login ({ dispatch, navigation }: props) {
         contentContainerStyle={styles.scrollContent}
         scrollEnabled={true}
       >
-        {/* <ImageBackground
-          style={styles.backImage}
-          source={images.homeScreen}
-        /> */}
         <TouchableOpacity
           style={styles.loginButton}
           onPress={() => promptAsync({ useProxy })}
+          testID="loginButton"
         >
           <Text style={styles.buttonsText}>Login</Text>
         </TouchableOpacity>
-        <Text style={styles.secondaryTitles}>See gyms around you</Text>
+        <Text style={styles.secondaryTitles} testID="title">See gyms around you</Text>
         <View style={styles.gymView}>
           <ImageBackground
             style={styles.gymBackImage}

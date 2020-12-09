@@ -92,9 +92,14 @@ function FormModifySession ({ day, dispatch, session }: any) {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text style={styles.titleText} testID="textTitle">{day}</Text>
-        <Text style={styles.secondTitle}>{session && 'Modifying session:'}</Text>
-        <Text style={styles.secondTitle}>{session && `${session.startHour}-${session.finishHour}`}</Text>
-        <Text style={{ ...styles.secondTitle, marginBottom: 20 }}>{session && `Type ${session.type}`}</Text>
+        {session && <>
+          <Text style={styles.secondTitle}>Modifying session:</Text>
+          <Text style={styles.secondTitle}>{`${session.startHour}-${session.finishHour}`}</Text>
+          <Text style={{ ...styles.secondTitle, marginBottom: 20 }}>{`Type ${session.type}`}</Text>
+        </>}
+        {!session && <>
+          <Text style={styles.secondTitle}>Creating new session</Text>
+        </>}
         <View style={{ flexDirection: 'row' }}>
           <Picker
             style={styles.picker}
