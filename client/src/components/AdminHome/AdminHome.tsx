@@ -2,6 +2,7 @@ import React from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import images from '../../constants/images'
+import { props } from '../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function AdminHome ({ navigation }: any) {
+function AdminHome ({ navigation }: props) {
   return (
     <View style={styles.container}>
       <ImageBackground
