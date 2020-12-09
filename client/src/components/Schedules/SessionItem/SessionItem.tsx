@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Modal from 'react-native-modal'
+import { Overlay } from 'react-native-elements'
 import { connect } from 'react-redux'
 import FormModifySession from '../FormModifySession/FormModifySession'
 
@@ -36,10 +36,6 @@ const styles = StyleSheet.create({
   modifyButtonText: {
     color: 'white',
     fontSize: 18
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })
 
@@ -55,11 +51,13 @@ function SessionItem ({ day, session, user }: any) {
         : session.type === 'Open Box'
           ? '#016500'
           : '#a20000'
-    }} >
+    }}
+      testID="sessionContainer"
+    >
       <View style={{ flex: 1 }}/>
       <Text style={styles.sessionText} testID="hourText">{`${session.startHour} - ${session.finishHour}`}</Text>
       <View style={{ flex: 2 }}/>
-      <Text style={styles.sessionText} testID="typeText">{session.type}</Text>
+      <Text style={styles.sessionText}>{session.type}</Text>
       <View style={{ flex: 2 }}/>
       {user?.admin &&
       <>
@@ -71,16 +69,14 @@ function SessionItem ({ day, session, user }: any) {
           <Text style={styles.modifyButtonText}>Modify</Text>
         </TouchableOpacity>
         <View style={{ flex: 1 }}/>
-        <Modal
-          style={styles.modal}
-          animationIn="bounceIn"
+        <Overlay
+          animationType="fade"
           isVisible={modalVisible}
-          onBackButtonPress={() => setModalVisible(false) }
           onBackdropPress={() => setModalVisible(false) }
           testID="sessionModal"
         >
           <FormModifySession session={session} day={day}/>
-        </Modal>
+        </Overlay>
       </>}
     </View>
   )
