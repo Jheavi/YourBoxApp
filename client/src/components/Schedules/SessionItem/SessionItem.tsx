@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
+import { connect } from 'react-redux'
 import FormModifySession from '../FormModifySession/FormModifySession'
 
 const styles = StyleSheet.create({
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function SessionItem ({ day, session }: any) {
+function SessionItem ({ day, session, user }: any) {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
@@ -60,26 +61,35 @@ function SessionItem ({ day, session }: any) {
       <View style={{ flex: 2 }}/>
       <Text style={styles.sessionText} testID="typeText">{session.type}</Text>
       <View style={{ flex: 2 }}/>
-      <TouchableOpacity
-        style={styles.modifyButton}
-        onPress={() => setModalVisible(true)}
-        testID="touchableModal"
-      >
-        <Text style={styles.modifyButtonText}>Modify</Text>
-      </TouchableOpacity>
-      <View style={{ flex: 1 }}/>
-      <Modal
-        style={styles.modal}
-        animationIn="bounceIn"
-        isVisible={modalVisible}
-        onBackButtonPress={() => setModalVisible(false) }
-        onBackdropPress={() => setModalVisible(false) }
-        testID="sessionModal"
-      >
-        <FormModifySession session={session} day={day}/>
-      </Modal>
+      {user?.admin &&
+      <>
+        <TouchableOpacity
+          style={styles.modifyButton}
+          onPress={() => setModalVisible(true)}
+          testID="touchableModal"
+        >
+          <Text style={styles.modifyButtonText}>Modify</Text>
+        </TouchableOpacity>
+        <View style={{ flex: 1 }}/>
+        <Modal
+          style={styles.modal}
+          animationIn="bounceIn"
+          isVisible={modalVisible}
+          onBackButtonPress={() => setModalVisible(false) }
+          onBackdropPress={() => setModalVisible(false) }
+          testID="sessionModal"
+        >
+          <FormModifySession session={session} day={day}/>
+        </Modal>
+      </>}
     </View>
   )
 }
 
-export default SessionItem
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(SessionItem)

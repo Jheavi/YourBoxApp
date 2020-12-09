@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
-import { scheduleInterface } from '../../interfaces/interfaces'
+import { props, scheduleInterface } from '../../interfaces/interfaces'
 import { loadSchedules, isSchedulesLoading } from '../../redux/actions/schedulesActions'
 import DaySchedule from './DaySchedule/DaySchedule'
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function Schedules ({ schedules, schedulesLoading, dispatch }: any) {
+function Schedules ({ dispatch, schedules, schedulesLoading, user }: props) {
   useEffect(() => {
     if (!schedules || !schedules.length) {
       dispatch(loadSchedules())
@@ -39,10 +39,13 @@ function Schedules ({ schedules, schedulesLoading, dispatch }: any) {
       }
       {!schedulesLoading &&
       <View style={styles.container}>
-      <Text style={styles.titleText} testID="schedulesTitle">Your Schedules</Text>
+      <Text style={styles.titleText} testID="schedulesTitle">
+        {user?.admin && 'Your Schedules'}
+        {!user && 'Schedules'}
+      </Text>
       <ScrollView
-      horizontal={true}
-      pagingEnabled={true}
+        horizontal={true}
+        pagingEnabled={true}
       >
       {schedules && schedules.length && schedules.map((weekDay: scheduleInterface) => {
         return <DaySchedule weekDay={weekDay} key={performance.now() * Math.random()} />
@@ -54,10 +57,11 @@ function Schedules ({ schedules, schedulesLoading, dispatch }: any) {
   )
 }
 
-function mapStateToProps ({ schedulesReducer }: any) {
+function mapStateToProps ({ schedulesReducer, userReducer }: any) {
   return {
     schedules: schedulesReducer.schedules,
-    schedulesLoading: schedulesReducer.schedulesLoading
+    schedulesLoading: schedulesReducer.schedulesLoading,
+    user: userReducer.user
   }
 }
 
