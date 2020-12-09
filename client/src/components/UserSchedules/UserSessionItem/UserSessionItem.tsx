@@ -80,6 +80,8 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
   }, [user])
 
   function OnEnrollPress (): void {
+    console.log('call')
+
     dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'add'))
   }
 
@@ -98,7 +100,7 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
           : session.type === 'Open Box'
             ? '#016500'
             : '#a20000',
-      opacity: sessionHasPassed ? 1 : 0.5
+      opacity: !sessionHasPassed ? 1 : 0.5
     }}
     testID="sessionContainer"
     >
@@ -107,12 +109,12 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
       <View style={{ flex: 2 }}/>
       <Text style={styles.sessionText}>{session.type}</Text>
       <View style={{ flex: 2 }}/>
-      {userHasSession &&
+      {!userHasSession &&
         <TouchableOpacity
           style={{ ...styles.enrollButton, opacity: userCanBook ? 1 : 0.5 }}
           onPress={OnEnrollPress}
           testID="enrollBtn"
-          disabled={userCanBook || sessionHasPassed}
+          disabled={!userCanBook || sessionHasPassed}
         >
           <Text style={styles.enrollButtonText}>Enroll</Text>
         </TouchableOpacity>

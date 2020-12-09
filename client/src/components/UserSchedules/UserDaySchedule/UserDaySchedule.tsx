@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
 
 function UserDaySchedule ({ day, user, weekDay }: dayScheduleProps) {
   const [userCanBook, setUserCanBook] = useState(true)
+  console.log(userCanBook)
 
   useEffect(() => {
     const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
