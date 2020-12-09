@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Button, StyleSheet, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
-import hourSelection from '../../../constants/hours'
+import hourSelection from '../../../constants/hourSelection'
 import { createSession, updateSession } from '../../../redux/actions/schedulesActions'
 import { connect } from 'react-redux'
 

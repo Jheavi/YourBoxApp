@@ -8,7 +8,7 @@ export function toQueryString (params: StringMap) {
       `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
   ).join('&')
   return `?${paramsJoined}`
-};
+}
 
 export async function onLogout () {
   const useProxy = Platform.select({ web: false, default: true })
