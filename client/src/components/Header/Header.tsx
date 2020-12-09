@@ -49,7 +49,7 @@ function Header ({ user }: props) {
         <Text style={styles.title}>GymApp</Text>
       </TouchableWithoutFeedback>
       <View style={{ flex: 8 }} />
-      <UserButton />
+      {user && <UserButton />}
       <View style={{ flex: 1 }} />
     </View>
   )
