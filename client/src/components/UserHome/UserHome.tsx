@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
 })
 
 function UserHome ({ navigation, user }: props) {
-  const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
-  const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+  const pastSessionsThisMonth = user.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+  const reservedSessionsThisMonth = user.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
 
   return (
     <View style={styles.container}>
@@ -68,7 +68,7 @@ function UserHome ({ navigation, user }: props) {
         <View style={{ flex: 1 }}/>
         <View style={{ flexDirection: 'column' }}>
           <TouchableOpacity
-            onPress={() => navigation!.navigate('UserWorkout')}
+            onPress={() => navigation.navigate('UserWorkout')}
             style={styles.buttons}
             >
             <IconFont5
@@ -81,7 +81,7 @@ function UserHome ({ navigation, user }: props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
-            onPress={() => navigation!.navigate('UserSchedules')}
+            onPress={() => navigation.navigate('UserSchedules')}
             >
             <IconFont5
             name="calendar"
@@ -120,8 +120,8 @@ function UserHome ({ navigation, user }: props) {
         <View style={styles.remainingClassesView}>
           <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth}`}</Text>
           <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth}`}</Text>
-          <Text style={styles.lowerText} testID="remainingText">{`Remaining sessions: ${typeof user!.affiliatedProgram === 'object'
-                ? user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth
+          <Text style={styles.lowerText} testID="remainingText">{`Remaining sessions: ${typeof user.affiliatedProgram === 'object'
+                ? user.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth
                 : '0'}`}
           </Text>
         </View>
