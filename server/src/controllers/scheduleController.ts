@@ -30,8 +30,6 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
 
   async function patchSessionMethod ({ params: { day }, body: { session, finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
     try {
-      console.log('Session to change: ', session)
-
       const query = {
         day,
         sessions: {
