@@ -80,8 +80,6 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
   }, [user])
 
   function OnEnrollPress (): void {
-    console.log('call')
-
     dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'add'))
   }
 
