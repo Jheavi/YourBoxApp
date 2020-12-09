@@ -71,6 +71,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
                 <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
                 <Text style={styles.workoutText}>{workout && workout.description}</Text>
                 <Overlay
+                  overlayStyle={styles.overlayModal}
                   testID="workoutModal"
                   animationType="fade"
                   isVisible={modalVisible}

@@ -10,12 +10,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
-    height: 500,
-    borderColor: 'white',
-    borderWidth: 2
+    height: 500
   },
   innerContainer: {
-    backgroundColor: 'black',
+    backgroundColor: '#0d0d0d',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',

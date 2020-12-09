@@ -11,7 +11,7 @@ interface workoutStyleInterface {
   workoutTitle: object
   workoutType: object
   workoutText: object
-  modal: object
+  overlayModal: object
   image: object
   dayText: object
 }
@@ -84,6 +84,11 @@ const workoutStyle: workoutStyleInterface = {
     marginTop: 20,
     marginBottom: 10,
     fontSize: 20
+  },
+  overlayModal: {
+    backgroundColor: '#0d0d0d',
+    borderColor: '#ffffff',
+    borderWidth: 2
   }
 }
 

@@ -36,6 +36,11 @@ const styles = StyleSheet.create({
   modifyButtonText: {
     color: 'white',
     fontSize: 18
+  },
+  overlayModal: {
+    backgroundColor: '#0d0d0d',
+    borderColor: '#ffffff',
+    borderWidth: 2
   }
 })
 
@@ -70,6 +75,7 @@ function SessionItem ({ day, session, user }: any) {
         </TouchableOpacity>
         <View style={{ flex: 1 }}/>
         <Overlay
+          overlayStyle={styles.overlayModal}
           animationType="fade"
           isVisible={modalVisible}
           onBackdropPress={() => setModalVisible(false) }
