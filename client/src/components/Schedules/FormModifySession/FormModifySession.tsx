@@ -120,10 +120,9 @@ function FormModifySession ({ day, dispatch, session }: any) {
             style={pickerSelectStyles}
             value={startHourValue}
             onValueChange={onStartHourValueChange}
-            // testID="startHourPicker"
             items={hourSelection.slice(0, hourSelection.length - 2).map((hour) => ({ label: hour, value: hour }))}
             useNativeAndroidPickerStyle={false}
-            pickerProps={{ mode: 'dropdown' }}
+            pickerProps={{ mode: 'dropdown', testID: 'startHourPicker' }}
           />
           <View style={{ flex: 1 }}/>
           <RNPickerSelect
@@ -131,10 +130,9 @@ function FormModifySession ({ day, dispatch, session }: any) {
             style={pickerSelectStyles}
             value={finishHourValue}
             onValueChange={onFinishHourValueChange}
-            // testID="finishHourPicker"
             items={hourSelection.slice(2).map((hour) => ({ label: hour, value: hour }))}
             useNativeAndroidPickerStyle={false}
-            pickerProps={{ mode: 'dropdown' }}
+            pickerProps={{ mode: 'dropdown', testID: 'finishHourPicker' }}
           />
           <View style={{ flex: 1 }}/>
         </View>
@@ -144,8 +142,7 @@ function FormModifySession ({ day, dispatch, session }: any) {
             style={pickerSelectStyles}
             value={typeValue}
             onValueChange={onTypeValueChange}
-            // testID="typePicker"
-            pickerProps={{ mode: 'dropdown' }}
+            pickerProps={{ mode: 'dropdown', testID: 'typePicker' }}
             items={[
               { label: 'WOD', value: 'WOD' },
               { label: 'Open Box', value: 'Open Box' },
