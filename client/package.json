@@ -77,7 +77,7 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|react-native-gesture-handler|react-native-swipe-gestures|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@expo/vector-icons|expo-font|expo-asset|expo-file-system|react-native-iphone-x-helper)/)"
+      "node_modules/(?!(react-native|react-native-gesture-handler|react-native-ratings|react-native-size-matters|react-native-swipe-gestures|react-native-status-bar-height|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@expo/vector-icons|expo-font|expo-asset|expo-file-system|react-native-iphone-x-helper|react-native-elements)/)"
     ],
     "moduleNameMapper": {
       "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/__mocks__/fileMock.js",
