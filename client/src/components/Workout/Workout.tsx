@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, View, ScrollView, ImageBackground, Text, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
-import Modal from 'react-native-modal'
 import { Calendar, DateObject } from 'react-native-calendars'
 import { isWorkoutLoading, loadWorkout } from '../../redux/actions/workoutActions'
 import { extractDataFromDate } from '../../utils/dateFunctions'
@@ -9,6 +8,7 @@ import { props } from '../../interfaces/interfaces'
 import images from '../../constants/images'
 import FormModifyWorkout from './FormModifyWorkout/FormModifyWorkout'
 import { workoutStyle, calendarTheme } from './workoutStyle'
+import { Overlay } from 'react-native-elements'
 
 const styles = StyleSheet.create(workoutStyle)
 
@@ -70,16 +70,14 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
                 <Text style={styles.workoutTitle}>{workout && workout.title}</Text>
                 <Text style={styles.workoutType}>{workout ? workout.type : noWorkout}</Text>
                 <Text style={styles.workoutText}>{workout && workout.description}</Text>
-                <Modal
+                <Overlay
                   testID="workoutModal"
-                  style={styles.modal}
-                  animationIn="bounceIn"
+                  animationType="fade"
                   isVisible={modalVisible}
-                  onBackButtonPress={() => { setModalVisible(false) }}
                   onBackdropPress={() => { setModalVisible(false) }}
-                  >
+                >
                   <FormModifyWorkout dayString={dayString} displayedDay={displayedDay} setModalVisible={setModalVisible}/>
-                </Modal>
+                </Overlay>
               </View>
             </TouchableWithoutFeedback>
           }

@@ -69,10 +69,6 @@ const workoutStyle: workoutStyleInterface = {
     marginHorizontal: 30,
     fontSize: 22
   },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   image: {
     resizeMode: 'cover',
     opacity: 0.4,
