@@ -43,7 +43,7 @@ describe('Schedules actions', () => {
       pastSessions: [],
       reservedSessions: [],
       signInDate: 'a',
-      userId: 'a'
+      userId: 'fakeId'
     }
     fakeSession = {
       finishHour: '1',
@@ -144,7 +144,7 @@ describe('Schedules actions', () => {
 
       await store!.dispatch(addOrRemoveReservedSession(fakeSession, fakeUser, 'add'))
 
-      expect(axios.patch).toHaveBeenCalledWith(`${serverUrls.userUrl}/fakeEmail`, {
+      expect(axios.patch).toHaveBeenCalledWith(`${serverUrls.userUrl}/fakeId`, {
         reservedSession: fakeSession,
         option: 'add'
       })
