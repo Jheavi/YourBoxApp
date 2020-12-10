@@ -13,6 +13,7 @@ const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
 const userRouter = require('./src/routes/userRouter')(userModel, programModel)
 
+const oneHourTime = 3600000
 const server = express()
 const port = process.env.PORT || 2130
 const dbUrl = process.env.DBURL || 'mongodb+srv://Jheavi:GymAppSkylab@gymapp.yu4va.mongodb.net/gymappdb?retryWrites=true&w=majority'
@@ -35,5 +36,5 @@ server.listen(port, () => {
   changeReservedSessionsToPastSessions()
   setInterval(() => {
     changeReservedSessionsToPastSessions()
-  }, 3600000)
+  }, oneHourTime)
 })
