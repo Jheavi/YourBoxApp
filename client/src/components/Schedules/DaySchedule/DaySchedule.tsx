@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Modal from 'react-native-modal'
 import { dayScheduleProps, SessionInterface } from '../../../interfaces/interfaces'
 import SessionItem from '../SessionItem/SessionItem'
 import FormModifySession from '../FormModifySession/FormModifySession'
+import { connect } from 'react-redux'
+import { Overlay } from 'react-native-elements'
 
 const { width } = Dimensions.get('window')
 
@@ -51,36 +52,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     color: 'white'
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })
 
-function DaySchedule ({ weekDay }: dayScheduleProps) {
+function DaySchedule ({ weekDay, user }: dayScheduleProps) {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <View style={styles.dayView}>
       <Text style={styles.dayText} testID={'dayScheduleTitle'}>{weekDay.day}</Text>
-      <TouchableOpacity
-        style={styles.createButton}
-        onPress={() => { setModalVisible(true) }}
-        testID="touchableModal"
-      >
-        <Text style={styles.createButtonText}>+</Text>
-      </TouchableOpacity>
-      <Modal
-        style={styles.modal}
-        animationIn="bounceIn"
-        isVisible={modalVisible}
-        onBackButtonPress={() => { setModalVisible(false) }}
-        onBackdropPress={() => { setModalVisible(false) }}
-        testID="sessionModal"
-      >
-        <FormModifySession day={weekDay.day}/>
-      </Modal>
+      {user?.admin &&
+      <>
+        <TouchableOpacity
+          style={styles.createButton}
+          onPress={() => { setModalVisible(true) }}
+          testID="touchableModal"
+        >
+          <Text style={styles.createButtonText}>+</Text>
+        </TouchableOpacity>
+        <Overlay
+          animationType="fade"
+          isVisible={modalVisible}
+          onBackdropPress={() => { setModalVisible(false) }}
+          testID="sessionModal"
+        >
+          <FormModifySession day={weekDay.day}/>
+        </Overlay>
+      </>}
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {weekDay && (!weekDay.sessions.length
           ? <Text style={styles.noScheduleText}>There is no schedule for this day</Text>
@@ -94,4 +92,10 @@ function DaySchedule ({ weekDay }: dayScheduleProps) {
   )
 }
 
-export default DaySchedule
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(DaySchedule)

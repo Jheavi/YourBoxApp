@@ -48,6 +48,7 @@ export interface props {
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
   schedule: scheduleInterface
+  schedules: scheduleInterface[]
   schedulesLoading: boolean
   session: SessionInterface
   user: userInterface

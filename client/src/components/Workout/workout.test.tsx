@@ -71,18 +71,6 @@ describe('Workout', () => {
     expect(dateTitle.children[0]).toBe(`20/${todayDate.month}/${todayDate.year}`)
   })
 
-  it('should change the modal to visible if touchableModal is touched', () => {
-    const initialState = { workoutReducer: {} }
-    const wrapper = wrapperFactory(initialState)
-    const { getAllByTestId } = render(<Workout />, { wrapper })
-
-    const [touchableModal, modal] = getAllByTestId(/Modal/)
-
-    fireEvent(touchableModal, 'press')
-
-    expect(modal.props.visible).toBe(true)
-  })
-
   it('should put the workout date int the title when the workout is loaded', () => {
     const initialState = { workoutReducer: { workout: { date: '2020-11-20' } } }
     const wrapper = wrapperFactory(initialState)
@@ -91,5 +79,30 @@ describe('Workout', () => {
     const dateTitle = getByTestId('workoutDate')
 
     expect(dateTitle.children[0]).toBe('20/11/2020')
+  })
+
+  it('should change the modal to visible if touchableModal is touched', () => {
+    const initialState = { workoutReducer: {} }
+    const wrapper = wrapperFactory(initialState)
+    const { getAllByTestId } = render(<Workout />, { wrapper })
+
+    const [touchableModal, modal] = getAllByTestId(/Modal/)
+
+    fireEvent.press(touchableModal)
+
+    expect(modal.props.visible).toBe(true)
+  })
+
+  it('should change the modal to no-visible if backDropPress', () => {
+    const initialState = { workoutReducer: {} }
+    const wrapper = wrapperFactory(initialState)
+    const { getAllByTestId } = render(<Workout />, { wrapper })
+
+    const [touchableModal, modal] = getAllByTestId(/Modal/)
+
+    fireEvent.press(touchableModal)
+    fireEvent(modal, 'backdropPress')
+
+    expect(modal.props.visible).toBe(false)
   })
 })

@@ -27,11 +27,18 @@ function Navigation ({ user }: props) {
             ? 'Home'
             : 'UserView'}>
         {!user
-          ? <Screen
-              name="Login"
-              component={Login}
-              options={header}
-            />
+          ? <>
+              <Screen
+                name="Login"
+                component={Login}
+                options={header}
+              />
+              <Screen
+                name="AdminSchedules"
+                component={Schedules}
+                options={header}
+              />
+            </>
           : user.admin
             ? <>
                 <Screen

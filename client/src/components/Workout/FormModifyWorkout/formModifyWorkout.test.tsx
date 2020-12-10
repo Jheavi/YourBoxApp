@@ -70,8 +70,8 @@ describe('Workout', () => {
       />, { wrapper })
 
     const typePicker = getByTestId('typePicker')
-    fireEvent(typePicker, 'ValueChange', changedType)
-    const selectedIndex = typePicker.props.selectedIndex
+    fireEvent(typePicker, 'ValueChange', changedType, 0)
+    const selectedIndex = typePicker.props.selected
 
     expect(typePicker.props.items[selectedIndex].value).toBe(changedType)
   })

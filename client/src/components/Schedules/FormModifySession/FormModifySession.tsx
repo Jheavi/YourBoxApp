@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Button, StyleSheet, Text } from 'react-native'
-import { Picker } from '@react-native-picker/picker'
+import RNPickerSelect from 'react-native-picker-select'
 import hourSelection from '../../../constants/hourSelection'
 import { createSession, updateSession } from '../../../redux/actions/schedulesActions'
 import { connect } from 'react-redux'
@@ -10,12 +10,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
-    height: 500,
-    borderColor: 'white',
-    borderWidth: 2
+    height: 500
   },
   innerContainer: {
-    backgroundColor: 'black',
+    backgroundColor: '#0d0d0d',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
@@ -54,9 +52,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center'
-  },
-  pickerItem: {
-    textAlign: 'right'
+  }
+})
+
+const pickerSelectStyles = StyleSheet.create({
+  inputAndroid: {
+    fontSize: 22,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderColor: '#ffffff',
+    borderWidth: 1,
+    textAlign: 'center',
+    width: '100%',
+    borderRadius: 8,
+    color: '#ffffff'
   }
 })
 
@@ -73,73 +82,78 @@ function FormModifySession ({ day, dispatch, session }: any) {
     }
   }
 
-  function onStartHourValueChange (itemValue: string | number): void {
-    setStartHourValue(itemValue)
-    const itemInArray = itemValue.toString().split(':')
-    const finishHourModified = +itemInArray[0] + 1 < 10 ? `0${+itemInArray[0] + 1}:${itemInArray[1]}` : `${+itemInArray[0] + 1}:${itemInArray[1]}`
+  function onStartHourValueChange (value: string): void {
+    setStartHourValue(value)
+    const [hour, minutes] = value.split(':')
+    const finishHourModified = +hour + 1 < 10 ? `0${+hour + 1}:${minutes}` : `${+hour + 1}:${minutes}`
     setFinishHourValue(finishHourModified)
   }
 
-  function onFinishHourValueChange (itemValue: string | number): void {
-    setFinishHourValue(itemValue)
+  function onFinishHourValueChange (value: string): void {
+    setFinishHourValue(value)
+    if (value <= startHourValue) {
+      const [hour, minutes] = value.split(':')
+      const startHourModified = +hour - 1 < 10 ? `0${+hour - 1}:${minutes}` : `${+hour - 1}:${minutes}`
+      setStartHourValue(startHourModified)
+    }
   }
 
-  function onTypeValueChange (itemValue: string | number): void {
-    setTypeValue(itemValue)
+  function onTypeValueChange (value: string): void {
+    setTypeValue(value)
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text style={styles.titleText} testID="textTitle">{day}</Text>
-        <Text style={styles.secondTitle}>{session && 'Modifying session:'}</Text>
-        <Text style={styles.secondTitle}>{session && `${session.startHour}-${session.finishHour}`}</Text>
-        <Text style={{ ...styles.secondTitle, marginBottom: 20 }}>{session && `Type ${session.type}`}</Text>
-        <View style={{ flexDirection: 'row' }}>
-          <Picker
-            style={styles.picker}
-            selectedValue={startHourValue}
+        {session && <>
+          <Text style={styles.secondTitle}>Modifying session:</Text>
+          <Text style={styles.secondTitle}>{`${session.type}   ${session.startHour}-${session.finishHour}`}</Text>
+        </>}
+        {!session && <>
+          <Text style={styles.secondTitle}>Creating new session</Text>
+        </>}
+        <View style={{ flexDirection: 'row', marginTop: 30 }}>
+          <View style={{ flex: 1 }}/>
+          <RNPickerSelect
+            useNativeAndroidPickerStyle={false}
+            placeholder={{}}
+            style={pickerSelectStyles}
+            value={startHourValue}
             onValueChange={onStartHourValueChange}
-            mode="dropdown"
-            testID="startHourPicker"
-          >
-          {hourSelection.map((hour) => {
-            return (
-            <Picker.Item
-              key={performance.now() * Math.random()}
-              label={hour}
-              value={hour}
-            />)
-          })}
-          </Picker>
-          <Picker
-            style={styles.picker}
-            selectedValue={finishHourValue}
+            items={hourSelection.slice(0, hourSelection.length - 2).map((hour) => ({
+              label: hour,
+              value: hour
+            }))}
+            pickerProps={{ mode: 'dropdown', testID: 'startHourPicker' }}
+          />
+          <View style={{ flex: 1 }}/>
+          <RNPickerSelect
+            placeholder={{}}
+            style={pickerSelectStyles}
+            value={finishHourValue}
             onValueChange={onFinishHourValueChange}
-            mode="dropdown"
-            testID="finishHourPicker"
-            >
-          {hourSelection.map((hour) => {
-            return (
-              <Picker.Item
-              key={performance.now() * Math.random()}
-              label={hour}
-              value={hour}
-              />)
-          })}
-          </Picker>
+            items={hourSelection.slice(2).map((hour) => ({ label: hour, value: hour }))}
+            useNativeAndroidPickerStyle={false}
+            pickerProps={{ mode: 'dropdown', testID: 'finishHourPicker' }}
+          />
+          <View style={{ flex: 1 }}/>
         </View>
-        <Picker
-          style={styles.picker}
-          selectedValue={typeValue}
-          onValueChange={onTypeValueChange}
-          mode="dropdown"
-          testID="typePicker"
-        >
-          <Picker.Item color="#0d0d0d" label="WOD" value="WOD" />
-          <Picker.Item color="#0d0d0d" label="Open Box" value="Open Box" />
-          <Picker.Item color="#0d0d0d" label="Olympics" value="Olympics" />
-        </Picker>
+        <View style={{ marginVertical: 30 }}>
+          <RNPickerSelect
+            placeholder={{}}
+            style={pickerSelectStyles}
+            value={typeValue}
+            onValueChange={onTypeValueChange}
+            pickerProps={{ mode: 'dropdown', testID: 'typePicker' }}
+            items={[
+              { label: 'WOD', value: 'WOD' },
+              { label: 'Open Box', value: 'Open Box' },
+              { label: 'Olympics', value: 'Olympics' }
+            ]}
+            useNativeAndroidPickerStyle={false}
+          />
+        </View>
         <View style={{ marginBottom: 30, width: 'auto' }}>
           <Button
             title="Save changes"

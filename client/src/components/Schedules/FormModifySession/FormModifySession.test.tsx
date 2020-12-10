@@ -11,7 +11,6 @@ jest.mock('../../../redux/actions/schedulesActions')
 const buildStore = configureStore([thunk])
 
 describe('Workout', () => {
-  let setModalVisible: Function
   let fakeSession
   const day = 'New day'
   const wrapperFactory = (wrapperInitialState: any) => {
@@ -28,7 +27,6 @@ describe('Workout', () => {
 
   beforeEach(() => {
     global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
-    setModalVisible = jest.fn()
   })
 
   afterEach(() => {
@@ -39,7 +37,7 @@ describe('Workout', () => {
   it('renders correctly', () => {
     const initialState = { }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day}/>, { wrapper })
+    const { getByTestId } = render(<FormModifySession day={day}/>, { wrapper })
 
     const title = getByTestId('textTitle')
 
@@ -49,7 +47,7 @@ describe('Workout', () => {
   it('Save button should call createSession if there is not session', () => {
     const initialState = { }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day}/>, { wrapper })
+    const { getByTestId } = render(<FormModifySession day={day} session={null}/>, { wrapper })
 
     const saveButton = getByTestId('saveButton')
     fireEvent(saveButton, 'press')
@@ -65,7 +63,7 @@ describe('Workout', () => {
     }
     const initialState = {}
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day} session={fakeSession}/>, { wrapper })
+    const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const saveButton = getByTestId('saveButton')
     fireEvent(saveButton, 'press')
@@ -79,15 +77,15 @@ describe('Workout', () => {
       startHour: '09:00',
       type: 'WOD'
     }
-    const newHour = '10:00'
+    const newHour = '12:00'
     const initialState = {}
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day} session={fakeSession}/>, { wrapper })
+    const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const startHourPicker = getByTestId('startHourPicker')
 
-    fireEvent(startHourPicker, 'ValueChange', newHour)
-    const selectedIndex = startHourPicker.props.selectedIndex
+    fireEvent(startHourPicker, 'ValueChange', newHour, 0)
+    const selectedIndex = startHourPicker.props.selected
 
     expect(startHourPicker.props.items[selectedIndex].value).toBe(newHour)
   })
@@ -101,12 +99,12 @@ describe('Workout', () => {
     const newHour = '07:00'
     const initialState = {}
     const wrapper = wrapperFactory(initialState)
-    const { getAllByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day} session={fakeSession}/>, { wrapper })
+    const { getAllByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const [startHourPicker, finishHourPicker] = getAllByTestId(/hourPicker/i)
 
-    fireEvent(startHourPicker, 'ValueChange', newHour)
-    const selectedIndex = finishHourPicker.props.selectedIndex
+    fireEvent(startHourPicker, 'ValueChange', newHour, 0)
+    const selectedIndex = finishHourPicker.props.selected
 
     expect(finishHourPicker.props.items[selectedIndex].value).toBe('08:00')
   })
@@ -120,14 +118,52 @@ describe('Workout', () => {
     const newHour = '11:00'
     const initialState = {}
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day} session={fakeSession}/>, { wrapper })
+    const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const finishHourPicker = getByTestId('finishHourPicker')
 
-    fireEvent(finishHourPicker, 'ValueChange', newHour)
-    const selectedIndex = finishHourPicker.props.selectedIndex
+    fireEvent(finishHourPicker, 'ValueChange', newHour, 0)
+    const selectedIndex = finishHourPicker.props.selected
 
     expect(finishHourPicker.props.items[selectedIndex].value).toBe(newHour)
+  })
+
+  it('should change the start hour if the finish hour selected is before the start hour and before "10:00"', () => {
+    fakeSession = {
+      finishHour: '10:00',
+      startHour: '09:00',
+      type: 'WOD'
+    }
+    const newHour = '08:00'
+    const initialState = {}
+    const wrapper = wrapperFactory(initialState)
+    const { getAllByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
+
+    const [startHourPicker, finishHourPicker] = getAllByTestId(/hourPicker/i)
+
+    fireEvent(finishHourPicker, 'ValueChange', newHour, 0)
+    const selectedIndex = startHourPicker.props.selected
+
+    expect(startHourPicker.props.items[selectedIndex].value).toBe('07:00')
+  })
+
+  it('should change the start hour if the finish hour selected is before the start hour and after "10:00"', () => {
+    fakeSession = {
+      finishHour: '15:00',
+      startHour: '14:00',
+      type: 'WOD'
+    }
+    const newHour = '13:00'
+    const initialState = {}
+    const wrapper = wrapperFactory(initialState)
+    const { getAllByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
+
+    const [startHourPicker, finishHourPicker] = getAllByTestId(/hourPicker/i)
+
+    fireEvent(finishHourPicker, 'ValueChange', newHour, 0)
+    const selectedIndex = startHourPicker.props.selected
+
+    expect(startHourPicker.props.items[selectedIndex].value).toBe('12:00')
   })
 
   it('should change the session type', () => {
@@ -139,12 +175,12 @@ describe('Workout', () => {
     const newType = 'Open Box'
     const initialState = {}
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<FormModifySession setModalVisible={setModalVisible} day={day} session={fakeSession}/>, { wrapper })
+    const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const typePicker = getByTestId('typePicker')
 
-    fireEvent(typePicker, 'ValueChange', newType)
-    const selectedIndex = typePicker.props.selectedIndex
+    fireEvent(typePicker, 'ValueChange', newType, 0)
+    const selectedIndex = typePicker.props.selected
 
     expect(typePicker.props.items[selectedIndex].value).toBe(newType)
   })
