@@ -2,13 +2,13 @@ const { Schema, model } = require('mongoose')
 
 export interface programInterface {
   name: string
-  gym?: string
+  box: string
   sessionsPerMonth: number
 }
 
 const programSchema: programInterface = new Schema({
   name: String,
-  gym: { type: Schema.Types.ObjectId, ref: 'Gym' },
+  box: { type: Schema.Types.ObjectId, ref: 'Box' },
   sessionsPerMonth: Number
 })
 

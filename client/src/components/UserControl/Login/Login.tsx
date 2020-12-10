@@ -11,7 +11,7 @@ import { props } from '../../../interfaces/interfaces'
 import UpperSawToothBorder from './SawToothBorders/UpperSawToothBorder'
 import LowerSawToothBorder from './SawToothBorders/LowerSawToothBorder'
 
-const { height } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
@@ -171,6 +171,11 @@ function Login ({ dispatch, navigation }: props) {
     }
   }, [result])
 
+  // function onPress(boxName: string) {
+  //   navigation.navigate('AdminSchedules')
+  //   loadBox(boxName)
+  // }
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -216,7 +221,7 @@ function Login ({ dispatch, navigation }: props) {
             style={{ ...styles.gymBackImage, opacity: 0.5 }}
             source={images.homeScreen}
           />
-          <UpperSawToothBorder />
+          <UpperSawToothBorder width={width}/>
           <View style={{ marginTop: 50 }}/>
           <IconFont5
             name="calendar"
@@ -231,7 +236,7 @@ function Login ({ dispatch, navigation }: props) {
           />
           <Text style={styles.offersText}>You can see your trainings an upload your result to compare yourself with previous marks</Text>
           <View style={{ marginBottom: 20 }}/>
-          <LowerSawToothBorder />
+          <LowerSawToothBorder width={width}/>
         </View>
         <Text style={{ ...styles.tertiaryTitles }}>As a gym owner</Text>
         <View style={styles.offersView}>
@@ -239,7 +244,7 @@ function Login ({ dispatch, navigation }: props) {
             style={{ ...styles.gymBackImage, opacity: 0.5 }}
             source={images.workoutbackground}
           />
-          <UpperSawToothBorder />
+          <UpperSawToothBorder width={width}/>
           <View style={{ marginTop: 50 }}/>
           <IconFont5
             name="user"
@@ -266,7 +271,7 @@ function Login ({ dispatch, navigation }: props) {
           />
           <Text style={styles.offersText}>You can manage the available programs for your users to set the number of sessions per month</Text>
           <View style={{ marginBottom: 20 }}/>
-          <LowerSawToothBorder />
+          <LowerSawToothBorder width={width}/>
         </View>
       </ScrollView>
     </View>

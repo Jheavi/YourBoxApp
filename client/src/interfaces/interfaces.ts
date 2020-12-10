@@ -92,13 +92,22 @@ export interface affiliatedProgram {
 export interface userInterface {
   active: boolean
   readonly admin: boolean,
-  affiliatedGym?: string,
+  affiliatedBox?: BoxInterface,
   affiliatedProgram: affiliatedProgram | string,
   connection: string,
   email: string,
   name: string,
+  ownerOfBox?: BoxInterface,
   pastSessions: PastSession[],
   reservedSessions: ReservedSession[],
   signInDate: string,
   userId: string
+}
+
+export interface BoxInterface {
+  _id: string,
+  name: string,
+  owner: string,
+  direction: string,
+  affiliates: string[]
 }

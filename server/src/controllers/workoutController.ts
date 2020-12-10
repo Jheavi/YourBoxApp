@@ -1,3 +1,5 @@
+import { Request, Response } from 'express'
+
 interface workoutControllerInterface {
   getAllMethod: Function
   getWorkoutMethod: Function
@@ -5,9 +7,9 @@ interface workoutControllerInterface {
 }
 
 function workoutController (workoutModel): workoutControllerInterface {
-  async function getAllMethod (req, res) {
+  async function getAllMethod ({ query: { boxId } }: Request, res: Response) {
     try {
-      const query = {}
+      const query = { box: boxId }
       const workouts = await workoutModel.find(query)
       res.send(workouts)
     } catch (error) {
@@ -15,9 +17,10 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  async function getWorkoutMethod ({ params: { date } }, res) {
+  async function getWorkoutMethod ({ params: { date }, query: { boxId } }: Request, res: Response) {
     try {
-      const queryToFind = { date }
+      const queryToFind = { date, box: boxId }
+
       const workout = await workoutModel.findOne(queryToFind)
       res.send(workout)
     } catch (error) {
@@ -25,12 +28,13 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  async function patchWorkoutMethod ({ params: { date }, body: { updatedDescription, updatedTitle, updatedType } }, res) {
+  async function patchWorkoutMethod ({ params: { date }, body: { boxId, updatedDescription, updatedTitle, updatedType } }: Request, res: Response) {
     try {
       const queryToFind = { date }
       const workout = await workoutModel.findOneAndUpdate(
         queryToFind,
         {
+          box: boxId,
           description: updatedDescription,
           title: updatedTitle,
           type: updatedType

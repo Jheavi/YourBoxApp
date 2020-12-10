@@ -94,7 +94,7 @@ export function addOrRemoveReservedSession (
 ): any {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.patch(`${serverUrls.userUrl}/${user.email}`, {
+      const { data } = await axios.patch(`${serverUrls.userUrl}/${user.userId}`, {
         reservedSession,
         option
       })

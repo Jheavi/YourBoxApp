@@ -19,10 +19,10 @@ export function loadWorkoutError (error: any): WorkoutActionTypes {
   }
 }
 
-export function loadWorkout (date: string): any {
+export function loadWorkout (date: string, boxId: string): any {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.get(`${serverUrls.workoutUrl}/${date}`)
+      const { data } = await axios.get(`${serverUrls.workoutUrl}/${date}`, { params: { boxId } })
 
       dispatch(loadWorkoutSuccess(data))
     } catch (error) {
@@ -53,6 +53,7 @@ export function updateWorkoutError (error: any): WorkoutActionTypes {
 
 export function updateWorkout (
   date: string,
+  boxId: string,
   updatedDescription?: string,
   updatedTitle?: string,
   updatedType?: string
@@ -62,6 +63,7 @@ export function updateWorkout (
       const { data } = await axios.patch(
         `${serverUrls.workoutUrl}/${date}`,
         {
+          boxId,
           updatedDescription,
           updatedTitle,
           updatedType

@@ -12,6 +12,8 @@ const buildStore = configureStore([thunk])
 
 describe('Workout', () => {
   let fakeSession
+  let initialState: any
+  let wrapper: any
   const day = 'New day'
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
@@ -27,16 +29,18 @@ describe('Workout', () => {
 
   beforeEach(() => {
     global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
+    initialState = { userReducer: { user: { ownerOfBox: {} } } }
+    wrapper = wrapperFactory(initialState)
   })
 
   afterEach(() => {
     global.performance = performance
+    initialState = null
+    wrapper = null
     jest.resetAllMocks()
   })
 
   it('renders correctly', () => {
-    const initialState = { }
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifySession day={day}/>, { wrapper })
 
     const title = getByTestId('textTitle')
@@ -45,8 +49,6 @@ describe('Workout', () => {
   })
 
   it('Save button should call createSession if there is not session', () => {
-    const initialState = { }
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifySession day={day} session={null}/>, { wrapper })
 
     const saveButton = getByTestId('saveButton')
@@ -61,8 +63,6 @@ describe('Workout', () => {
       startHour: '09:00',
       type: 'WOD'
     }
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const saveButton = getByTestId('saveButton')
@@ -78,8 +78,6 @@ describe('Workout', () => {
       type: 'WOD'
     }
     const newHour = '12:00'
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const startHourPicker = getByTestId('startHourPicker')
@@ -97,8 +95,6 @@ describe('Workout', () => {
       type: 'WOD'
     }
     const newHour = '07:00'
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const [startHourPicker, finishHourPicker] = getAllByTestId(/hourPicker/i)
@@ -116,8 +112,6 @@ describe('Workout', () => {
       type: 'WOD'
     }
     const newHour = '11:00'
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const finishHourPicker = getByTestId('finishHourPicker')
@@ -135,8 +129,6 @@ describe('Workout', () => {
       type: 'WOD'
     }
     const newHour = '08:00'
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const [startHourPicker, finishHourPicker] = getAllByTestId(/hourPicker/i)
@@ -154,8 +146,6 @@ describe('Workout', () => {
       type: 'WOD'
     }
     const newHour = '13:00'
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const [startHourPicker, finishHourPicker] = getAllByTestId(/hourPicker/i)
@@ -173,8 +163,6 @@ describe('Workout', () => {
       type: 'WOD'
     }
     const newType = 'Open Box'
-    const initialState = {}
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
 
     const typePicker = getByTestId('typePicker')

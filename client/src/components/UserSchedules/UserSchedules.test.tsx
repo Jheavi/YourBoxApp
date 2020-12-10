@@ -36,7 +36,7 @@ describe('Workout', () => {
   })
 
   it('renders correctly', () => {
-    const initialState = { schedulesReducer: {} }
+    const initialState = { schedulesReducer: {}, userReducer: { user: { affiliatedBox: {} } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserSchedules />, { wrapper })
 
@@ -46,14 +46,14 @@ describe('Workout', () => {
   })
 
   it('should call loadSchedule', () => {
-    const initialState = { schedulesReducer: {} }
+    const initialState = { schedulesReducer: {}, userReducer: { user: { affiliatedBox: {} } } }
     const wrapper = wrapperFactory(initialState)
     render(<UserSchedules />, { wrapper })
     expect(loadSchedule).toHaveBeenCalled()
   })
 
   it('should load the activityIndicator if schedule is Loading', () => {
-    const initialState = { schedulesReducer: { schedulesLoading: true } }
+    const initialState = { schedulesReducer: { schedulesLoading: true }, userReducer: { user: { affiliatedBox: {} } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserSchedules />, { wrapper })
 
@@ -63,7 +63,7 @@ describe('Workout', () => {
   })
 
   it('should call loadSchedule if a day is pressed', () => {
-    const initialState = { schedulesReducer: { } }
+    const initialState = { schedulesReducer: {}, userReducer: { user: { affiliatedBox: {} } } }
     const wrapper = wrapperFactory(initialState)
     const { queryByText } = render(<UserSchedules />, { wrapper })
 
@@ -74,7 +74,7 @@ describe('Workout', () => {
   })
 
   it('should render loadSchedule if a day is pressed', () => {
-    const initialState = { schedulesReducer: { schedule: {} } }
+    const initialState = { schedulesReducer: { schedule: {} }, userReducer: { user: { affiliatedBox: {} } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserSchedules />, { wrapper })
 

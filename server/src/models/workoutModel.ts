@@ -5,7 +5,7 @@ const { Schema, model } = mongoose
 export interface workout {
   description?: string,
   title?: string,
-  gym?: string,
+  box: string,
   date: string,
   type?: string
 }
@@ -13,7 +13,7 @@ export interface workout {
 const workoutSchema: workout = new Schema({
   description: String,
   title: String,
-  gym: { type: Schema.Types.ObjectId, ref: 'Gym' },
+  box: { type: Schema.Types.ObjectId, ref: 'Box' },
   date: String,
   type: String
 })

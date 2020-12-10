@@ -11,7 +11,7 @@ jest.mock('./DaySchedule/DaySchedule')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('Schedules', () => {
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()
@@ -35,7 +35,10 @@ describe('Workout', () => {
   })
 
   it('renders correctly if user is admin', () => {
-    const initialState = { schedulesReducer: {}, userReducer: { user: { admin: true } } }
+    const initialState = {
+      schedulesReducer: {},
+      userReducer: { user: { admin: true, ownerOfBox: {} } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Schedules />, { wrapper })
 
@@ -45,7 +48,10 @@ describe('Workout', () => {
   })
 
   it('renders correctly if there is no user', () => {
-    const initialState = { schedulesReducer: {}, userReducer: { user: null } }
+    const initialState = {
+      schedulesReducer: {},
+      userReducer: { user: null }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Schedules />, { wrapper })
 
@@ -55,7 +61,10 @@ describe('Workout', () => {
   })
 
   it('should render activityIndicator if schedules is loading', () => {
-    const initialState = { schedulesReducer: { schedulesLoading: true }, userReducer: { user: { admin: true } } }
+    const initialState = {
+      schedulesReducer: { schedulesLoading: true },
+      userReducer: { user: { admin: true, ownerOfBox: {} } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Schedules />, { wrapper })
 
@@ -65,21 +74,30 @@ describe('Workout', () => {
   })
 
   it('should call loadSchedules', () => {
-    const initialState = { schedulesReducer: {}, userReducer: { user: { admin: true } } }
+    const initialState = {
+      schedulesReducer: {},
+      userReducer: { user: { admin: true, ownerOfBox: {} } }
+    }
     const wrapper = wrapperFactory(initialState)
     render(<Schedules />, { wrapper })
     expect(loadSchedules).toHaveBeenCalled()
   })
 
   it('should call loadSchedules if schedules array is empty', () => {
-    const initialState = { schedulesReducer: { schedules: [] }, userReducer: { user: { admin: true } } }
+    const initialState = {
+      schedulesReducer: { schedules: [] },
+      userReducer: { user: { admin: true, ownerOfBox: {} } }
+    }
     const wrapper = wrapperFactory(initialState)
     render(<Schedules />, { wrapper })
     expect(loadSchedules).toHaveBeenCalled()
   })
 
   it('should not call loadSchedules if schedules array have something', () => {
-    const initialState = { schedulesReducer: { schedules: [{}] }, userReducer: { user: { admin: true } } }
+    const initialState = {
+      schedulesReducer: { schedules: [{}] },
+      userReducer: { user: { admin: true, ownerOfBox: {} } }
+    }
     const wrapper = wrapperFactory(initialState)
     render(<Schedules />, { wrapper })
     expect(loadSchedules).not.toHaveBeenCalled()

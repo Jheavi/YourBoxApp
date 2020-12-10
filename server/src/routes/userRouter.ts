@@ -10,7 +10,7 @@ function userRouter (userModel) {
     .get(users.getUsers)
     .post(users.postUser)
 
-  router.route('/:email')
+  router.route('/:userId')
     .get(users.getUser)
     .patch(users.updateUser)
   //   .delete(users.deleteUser)

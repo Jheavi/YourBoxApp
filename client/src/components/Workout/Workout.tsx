@@ -12,7 +12,7 @@ import { Overlay } from 'react-native-elements'
 
 const styles = StyleSheet.create(workoutStyle)
 
-function Workout ({ workout, workoutLoading, dispatch }: props) {
+function Workout ({ user, workout, workoutLoading, dispatch }: props) {
   const { dayString } = extractDataFromDate()
   const [displayedDay, setDisplayedDay] = useState(dayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
@@ -21,7 +21,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
   const scrollRef = useRef<ScrollView>(null)
 
   useEffect(() => {
-    dispatch(loadWorkout(dayString))
+    dispatch(loadWorkout(dayString, user.ownerOfBox!._id))
     dispatch(isWorkoutLoading())
   }, [])
 
@@ -45,7 +45,7 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
 
   function onDayPress (day: DateObject) {
     dispatch(isWorkoutLoading())
-    dispatch(loadWorkout(day.dateString))
+    dispatch(loadWorkout(day.dateString, user.ownerOfBox!._id))
     setDisplayedDay(day.dateString)
     scrollToStart()
   }
@@ -95,8 +95,9 @@ function Workout ({ workout, workoutLoading, dispatch }: props) {
   )
 }
 
-function mapStateToProps ({ workoutReducer }: any) {
+function mapStateToProps ({ userReducer, workoutReducer }: any) {
   return {
+    user: userReducer.user,
     workout: workoutReducer.workout,
     workoutLoading: workoutReducer.workoutLoading
   }

@@ -59,13 +59,13 @@ const calendarTheme: CalendarTheme = {
   }
 }
 
-function UserSchedules ({ dispatch, schedule, schedulesLoading }: props) {
+function UserSchedules ({ dispatch, schedule, schedulesLoading, user }: props) {
   const { dayString } = extractDataFromDate()
   const [displayedDay, setDisplayedDay] = useState(dayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
 
   useEffect(() => {
-    dispatch(loadSchedule(dayString))
+    dispatch(loadSchedule(dayString, user.affiliatedBox!._id))
     dispatch(isSchedulesLoading())
   }, [])
 
@@ -76,7 +76,7 @@ function UserSchedules ({ dispatch, schedule, schedulesLoading }: props) {
   function onDayPress ({ dateString }: DateObject) {
     setDisplayedDay(dateString)
     dispatch(isSchedulesLoading())
-    dispatch(loadSchedule(dateString))
+    dispatch(loadSchedule(dateString, user.affiliatedBox!._id))
   }
 
   return (
@@ -107,10 +107,11 @@ function UserSchedules ({ dispatch, schedule, schedulesLoading }: props) {
   )
 }
 
-function mapStateToProps ({ schedulesReducer }: any) {
+function mapStateToProps ({ schedulesReducer, userReducer }: any) {
   return {
     schedule: schedulesReducer.schedule,
-    schedulesLoading: schedulesReducer.schedulesLoading
+    schedulesLoading: schedulesReducer.schedulesLoading,
+    user: userReducer.user
   }
 }
 

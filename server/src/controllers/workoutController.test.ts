@@ -11,7 +11,7 @@ describe('workoutController', () => {
 
   beforeEach(() => {
     res = { send: jest.fn() }
-    req = { body: {}, params: { date: '123' } }
+    req = { body: {}, params: { date: '123' }, query: { boxId: '456' } }
     fakeWorkout = { date: 'today' }
     fakeError = 'error'
   })
@@ -19,7 +19,7 @@ describe('workoutController', () => {
   test('getAllMethod should call res.send with the workout', async () => {
     workoutModel.find = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-    await workoutControllerTest.getAllMethod(null, res)
+    await workoutControllerTest.getAllMethod(req, res)
 
     expect(res.send).toHaveBeenCalledWith(fakeWorkout)
   })
@@ -27,7 +27,7 @@ describe('workoutController', () => {
   test('getAllMethod should call res.send with the error if promise rejected', async () => {
     workoutModel.find = jest.fn().mockRejectedValueOnce(fakeError)
 
-    await workoutControllerTest.getAllMethod(null, res)
+    await workoutControllerTest.getAllMethod(req, res)
 
     expect(res.send).toHaveBeenCalledWith(fakeError)
   })
