@@ -47,6 +47,7 @@ export interface props {
   day: string
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
+  programs: ProgramInterface[]
   schedule: scheduleInterface
   schedules: scheduleInterface[]
   schedulesLoading: boolean
