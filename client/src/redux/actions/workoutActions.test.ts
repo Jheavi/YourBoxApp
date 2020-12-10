@@ -10,6 +10,7 @@ jest.mock('axios')
 const mockStore = configureMockStore([thunk])
 
 describe('Workout actions', () => {
+  let fakeBoxId: string
   let fakeData: {data: {}}
   let newDate: string
   let fakeError: string
@@ -17,6 +18,7 @@ describe('Workout actions', () => {
   let store: MockStoreEnhanced<unknown, {}> | null
   beforeEach(() => {
     store = mockStore()
+    fakeBoxId = '456'
     fakeData = { data: { id: 1 } }
     newDate = 'today'
     fakeError = 'error'
@@ -28,16 +30,24 @@ describe('Workout actions', () => {
   })
 
   describe('loadWorkout', () => {
-    test('should call axios.get with the url and the newDate', async () => {
+    test('should call axios.get with the url, the newDate and the box id', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
-      await store!.dispatch(actions.loadWorkout(newDate))
 
-      expect(axios.get).toHaveBeenCalledWith(`${serverUrls.workoutUrl}/${newDate}`)
+      await store!.dispatch(actions.loadWorkout(newDate, fakeBoxId))
+
+      const args = [
+        `${serverUrls.workoutUrl}/${newDate}`,
+        { params: { boxId: fakeBoxId } }
+      ]
+
+      expect(axios.get).toHaveBeenCalledWith(...args)
     })
 
     test('the store should have an action with type LOAD_WORKOUT', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
-      await store!.dispatch(actions.loadWorkout(newDate))
+
+      await store!.dispatch(actions.loadWorkout(newDate, fakeBoxId))
+
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_WORKOUT,
         workout: fakeData.data
@@ -46,7 +56,9 @@ describe('Workout actions', () => {
 
     test('the store should have an action with type LOAD_WORKOUT_ERROR if promise rejected', async () => {
       axios.get = jest.fn().mockRejectedValueOnce(fakeError)
-      await store!.dispatch(actions.loadWorkout(newDate))
+
+      await store!.dispatch(actions.loadWorkout(newDate, fakeBoxId))
+
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_WORKOUT_ERROR,
         error: fakeError
@@ -55,13 +67,20 @@ describe('Workout actions', () => {
   })
 
   describe('updateWorkout', () => {
-    test('should call axios.get with the url and the newDate', async () => {
+    test('should call axios.get with the url, the newDate and the box id', async () => {
       axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
-      if (store) {
-        await store.dispatch(actions.updateWorkout(newDate, newDescription))
-      }
 
-      expect(axios.patch).toHaveBeenCalledWith(`${serverUrls.workoutUrl}/${newDate}`, { updatedDescription: newDescription })
+      await store!.dispatch(actions.updateWorkout(newDate, fakeBoxId, newDescription))
+
+      const args = [
+        `${serverUrls.workoutUrl}/${newDate}`,
+        {
+          boxId: fakeBoxId,
+          updatedDescription: newDescription
+        }
+      ]
+
+      expect(axios.patch).toHaveBeenCalledWith(...args)
     })
 
     test('the store should have an action with type UPDATE_WORKOUT', async () => {
