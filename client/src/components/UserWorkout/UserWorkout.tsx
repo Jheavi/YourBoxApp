@@ -110,7 +110,7 @@ const calendarTheme: CalendarTheme = {
   }
 }
 
-function UserWorkout ({ dispatch, workoutLoading, workout }: props) {
+function UserWorkout ({ dispatch, user, workoutLoading, workout }: props) {
   const { dayString } = extractDataFromDate()
   const [displayedDay, setDisplayedDay] = useState(dayString)
   const [formattedDate, setFormattedDate] = useState(extractDataFromDate(displayedDay).formattedDate)
@@ -118,7 +118,7 @@ function UserWorkout ({ dispatch, workoutLoading, workout }: props) {
   const scrollRef = useRef<ScrollView>(null)
 
   useEffect(() => {
-    dispatch(loadWorkout(dayString))
+    dispatch(loadWorkout(dayString, user.affiliatedBox!._id))
     dispatch(isWorkoutLoading())
   }, [])
 
@@ -142,7 +142,7 @@ function UserWorkout ({ dispatch, workoutLoading, workout }: props) {
 
   function onDayPress (day: DateObject) {
     dispatch(isWorkoutLoading())
-    dispatch(loadWorkout(day.dateString))
+    dispatch(loadWorkout(day.dateString, user.affiliatedBox!._id))
     setDisplayedDay(day.dateString)
     scrollToStart()
   }
@@ -184,8 +184,9 @@ function UserWorkout ({ dispatch, workoutLoading, workout }: props) {
   )
 }
 
-function mapStateToProps ({ workoutReducer }: any) {
+function mapStateToProps ({ userReducer, workoutReducer }: any) {
   return {
+    user: userReducer.user,
     workout: workoutReducer.workout,
     workoutLoading: workoutReducer.workoutLoading
   }

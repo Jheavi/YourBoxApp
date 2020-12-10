@@ -57,7 +57,7 @@ const pickerSelectStyles = StyleSheet.create({
   }
 })
 
-function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setModalVisible }: any) {
+function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setModalVisible, user }: any) {
   const [titleValue, setTitleValue] = useState(workout?.title)
   const [typeValue, setTypeValue] = useState(workout?.type || 'For Time')
   const [descriptionValue, setDescriptionValue] = useState(workout?.description)
@@ -117,6 +117,7 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
             onPress={() => {
               dispatch(updateWorkout(
                 displayedDay || dayString,
+                user.ownerOfBox._id,
                 descriptionValue,
                 titleValue,
                 typeValue))
@@ -129,9 +130,10 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
   )
 }
 
-function mapStateToProps (state: any) {
+function mapStateToProps ({ userReducer, workoutReducer }: any) {
   return {
-    workout: state.workoutReducer.workout
+    user: userReducer.user,
+    workout: workoutReducer.workout
   }
 }
 
