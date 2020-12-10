@@ -32,7 +32,14 @@ describe('UserWorkout', () => {
     fakeUser = {
       active: false,
       admin: false,
-      affiliatedProgram: 'a',
+      affiliatedBox: {
+        _id: '1',
+        name: 'a',
+        affiliates: [],
+        owner: 'b',
+        direction: 'a'
+      },
+      affiliatedProgram: { name: '1', sessionsPerMonth: 8 },
       connection: 'a',
       email: 'a',
       name: 'a',
