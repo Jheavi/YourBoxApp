@@ -69,16 +69,16 @@ const pickerSelectStyles = StyleSheet.create({
   }
 })
 
-function FormModifySession ({ day, dispatch, session }: any) {
+function FormModifySession ({ day, dispatch, session, user }: any) {
   const [finishHourValue, setFinishHourValue] = useState(session?.finishHour || '08:00')
   const [startHourValue, setStartHourValue] = useState(session?.startHour || '07:00')
   const [typeValue, setTypeValue] = useState(session?.type || 'WOD')
 
   function onSavePress (): void {
     if (session) {
-      dispatch(updateSession(day, session, finishHourValue, startHourValue, typeValue))
+      dispatch(updateSession(user.ownerOfBox._id, day, session, finishHourValue, startHourValue, typeValue))
     } else {
-      dispatch(createSession(day, finishHourValue, startHourValue, typeValue))
+      dispatch(createSession(user.ownerOfBox._id, day, finishHourValue, startHourValue, typeValue))
     }
   }
 
@@ -167,4 +167,10 @@ function FormModifySession ({ day, dispatch, session }: any) {
   )
 }
 
-export default connect(null)(FormModifySession)
+function mapStateToProps ({ userReducer }: any) {
+  return {
+    user: userReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(FormModifySession)

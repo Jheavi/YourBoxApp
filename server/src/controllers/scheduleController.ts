@@ -8,29 +8,34 @@ interface scheduleControllerInterface {
 }
 
 function scheduleController (scheduleModel): scheduleControllerInterface {
-  async function getAllMethod (req: Request, res: Response) {
+  async function getAllMethod ({ query: { boxId } }: Request, res: Response) {
     try {
-      const query = { }
+      const query = { box: boxId }
       const schedules = await scheduleModel.find(query)
+
       res.send(schedules)
     } catch (error) {
       res.send(error)
     }
   }
 
-  async function getMethod ({ params: { day } }: Request, res: Response) {
+  async function getMethod ({ params: { day }, query: { boxId } }: Request, res: Response) {
     try {
-      const query = { day }
+      const query = { day, box: boxId }
+      console.log(query)
+
       const schedule = await scheduleModel.findOne(query)
+      console.log(schedule)
       res.send(schedule)
     } catch (error) {
       res.send(error)
     }
   }
 
-  async function patchSessionMethod ({ params: { day }, body: { session, finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
+  async function patchSessionMethod ({ params: { day }, body: { boxId, session, finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
     try {
       const query = {
+        box: boxId,
         day,
         sessions: {
           $elemMatch: {
@@ -40,6 +45,9 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
           }
         }
       }
+
+      console.log(query)
+
       const update = {
         $set: {
           'sessions.$.finishHour': finishHourValue,
@@ -48,23 +56,24 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
         }
       }
 
-      await scheduleModel.findOneAndUpdate(query, update, { new: true })
+      const scheduleNew = await scheduleModel.findOneAndUpdate(query, update, { new: true })
+      console.log(scheduleNew)
 
-      const schedules = await scheduleModel.find({})
+      const schedules = await scheduleModel.find({ box: boxId })
       res.send(schedules)
     } catch (error) {
       res.send(error)
     }
   }
 
-  async function postMethod ({ params: { day }, body: { finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
+  async function postMethod ({ params: { day }, body: { boxId, finishHourValue, startHourValue, typeValue } }: Request, res: Response) {
     try {
-      const query = { day }
+      const query = { box: boxId, day }
       const update = { $addToSet: { sessions: { finishHour: finishHourValue, startHour: startHourValue, type: typeValue } } }
 
       await scheduleModel.findOneAndUpdate(query, update)
 
-      const schedules = await scheduleModel.find({})
+      const schedules = await scheduleModel.find({ box: boxId })
       res.send(schedules)
     } catch (error) {
       res.send(error)

@@ -20,10 +20,10 @@ export function loadSchedulesError (error: any): SchedulesActionTypes {
   }
 }
 
-export function loadSchedules (): any {
+export function loadSchedules (boxId: string): any {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.get(serverUrls.scheduleUrl)
+      const { data } = await axios.get(serverUrls.scheduleUrl, { params: { boxId } })
 
       dispatch(loadSchedulesSuccess(data))
     } catch (error) {
@@ -52,6 +52,7 @@ export function updateSessionError (error: any): SchedulesActionTypes {
   }
 }
 export function updateSession (
+  boxId: string,
   day: string,
   session: SessionInterface,
   finishHourValue: string,
@@ -59,8 +60,16 @@ export function updateSession (
   typeValue: string
 ): any {
   return async (dispatch: AppDispatch) => {
+    console.log('boxId: ', boxId)
+    console.log('day: ', day)
+    console.log('session: ', session)
+    console.log('finishHourValue: ', finishHourValue)
+    console.log('startHourValue: ', startHourValue)
+    console.log('typeValue: ', typeValue)
+
     try {
       const body = {
+        boxId,
         session,
         finishHourValue,
         startHourValue,
@@ -90,6 +99,7 @@ export function createSessionError (error: any): SchedulesActionTypes {
   }
 }
 export function createSession (
+  boxId: string,
   day: string,
   finishHourValue: string,
   startHourValue: string,
@@ -98,6 +108,7 @@ export function createSession (
   return async (dispatch: AppDispatch) => {
     try {
       const body = {
+        boxId,
         finishHourValue,
         startHourValue,
         typeValue
@@ -125,12 +136,12 @@ export function loadScheduleError (error: any): SchedulesActionTypes {
     error
   }
 }
-export function loadSchedule (date: string): any {
+export function loadSchedule (date: string, boxId: string): any {
   return async (dispatch: AppDispatch) => {
     try {
       const { weekDay } = extractDataFromDate(date)
 
-      const { data } = await axios.get(`${serverUrls.scheduleUrl}/${weekDay}`)
+      const { data } = await axios.get(`${serverUrls.scheduleUrl}/${weekDay}`, { params: { boxId } })
 
       dispatch(loadScheduleSuccess(data))
     } catch (error) {

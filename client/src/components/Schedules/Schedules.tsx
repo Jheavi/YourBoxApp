@@ -25,8 +25,14 @@ const styles = StyleSheet.create({
 function Schedules ({ dispatch, schedules, schedulesLoading, user }: props) {
   useEffect(() => {
     if (!schedules || !schedules.length) {
-      dispatch(loadSchedules())
-      dispatch(isSchedulesLoading())
+      if (user) {
+        dispatch(isSchedulesLoading())
+        dispatch(loadSchedules(user.ownerOfBox!._id))
+      }
+      // else {
+      //   dispatch(isSchedulesLoading())
+      //   dispatch(loadSchedules(box))
+      // }
     }
   }, [])
 
