@@ -1,4 +1,4 @@
-import { Auth0UserInterface } from '../../interfaces/interfaces'
+import { Auth0UserInterface, userInterface } from '../../interfaces/interfaces'
 import actionTypes from './action-types'
 
 type loginUserAction = {
@@ -30,10 +30,22 @@ type addOrRemoveSessionErrorAction = {
   error: any
 }
 
+type loadUsersAction = {
+  type: typeof actionTypes.LOAD_USERS
+  users: userInterface[]
+}
+
+type loadUsersErrorAction = {
+  type: typeof actionTypes.LOAD_USERS_ERROR
+  error: any
+}
+
 export type UserActionTypes =
 loginUserAction |
 loginUserErrorAction |
 logoutUserAction |
 logoutUserErrorAction |
 addOrRemoveSessionAction |
-addOrRemoveSessionErrorAction
+addOrRemoveSessionErrorAction |
+loadUsersAction |
+loadUsersErrorAction
