@@ -1,8 +1,6 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-// import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
+import { Image, StyleSheet, TouchableOpacity } from 'react-native'
+import images from '../../../constants/images'
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -26,11 +24,7 @@ function BurgerButton () {
       style={styles.buttonContainer}
       hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
     >
-      <Icon
-        name="bars"
-        size={30}
-        color="white"
-      />
+      <Image source={images.logo} style={{ height: 40, width: 40, resizeMode: 'contain' }}/>
     </TouchableOpacity>
   )
 }
