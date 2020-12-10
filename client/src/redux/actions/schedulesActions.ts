@@ -60,13 +60,6 @@ export function updateSession (
   typeValue: string
 ): any {
   return async (dispatch: AppDispatch) => {
-    console.log('boxId: ', boxId)
-    console.log('day: ', day)
-    console.log('session: ', session)
-    console.log('finishHourValue: ', finishHourValue)
-    console.log('startHourValue: ', startHourValue)
-    console.log('typeValue: ', typeValue)
-
     try {
       const body = {
         boxId,

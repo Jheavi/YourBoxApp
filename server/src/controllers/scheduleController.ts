@@ -22,10 +22,8 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
   async function getMethod ({ params: { day }, query: { boxId } }: Request, res: Response) {
     try {
       const query = { day, box: boxId }
-      console.log(query)
 
       const schedule = await scheduleModel.findOne(query)
-      console.log(schedule)
       res.send(schedule)
     } catch (error) {
       res.send(error)
@@ -45,8 +43,6 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
           }
         }
       }
-
-      console.log(query)
 
       const update = {
         $set: {
