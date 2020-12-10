@@ -80,7 +80,7 @@ function AdminHome ({ navigation }: props) {
             <Text style={styles.buttonsText}>Your schedules</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('AdminWorkout')}
+            onPress={() => navigation.navigate('AdminPrograms')}
             style={styles.buttons}
           >
             <Icon

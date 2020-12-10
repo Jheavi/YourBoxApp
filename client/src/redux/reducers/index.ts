@@ -2,11 +2,13 @@ import { combineReducers } from 'redux'
 import workoutReducer from './workoutReducer'
 import schedulesReducer from './schedulesReducer'
 import userReducer from './userReducer'
+import programReducer from './programReducer'
 
 const rootReducer = combineReducers({
-  workoutReducer,
+  programReducer,
   schedulesReducer,
-  userReducer
+  userReducer,
+  workoutReducer
 })
 
 export default rootReducer

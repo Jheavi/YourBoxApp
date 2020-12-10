@@ -11,6 +11,7 @@ import UserWorkout from '../UserWorkout/UserWorkout'
 import Logout from '../UserControl/Logout/Logout'
 import UserHome from '../UserHome/UserHome'
 import UserSchedules from '../UserSchedules/UserSchedules'
+import Programs from '../Programs/Programs'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -54,6 +55,11 @@ function Navigation ({ user }: props) {
                 <Screen
                   name="AdminSchedules"
                   component={Schedules}
+                  options={header}
+                />
+                <Screen
+                  name="AdminPrograms"
+                  component={Programs}
                   options={header}
                 />
                 <Screen

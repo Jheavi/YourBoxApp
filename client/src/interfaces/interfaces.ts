@@ -32,21 +32,23 @@ export interface dateObject {
 }
 
 type RootStackParamList = {
-  UserView: undefined
-  Home: undefined
-  AdminWorkout: undefined
+  AdminPrograms: undefined
   AdminSchedules: undefined
+  AdminWorkout: undefined
+  Home: undefined
   Login: undefined
   Logout: undefined
   UserHome: undefined
-  UserWorkout: undefined
   UserSchedules: undefined
+  UserView: undefined
+  UserWorkout: undefined
 };
 
 export interface props {
   day: string
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
+  programs: ProgramInterface[]
   schedule: scheduleInterface
   schedules: scheduleInterface[]
   schedulesLoading: boolean
@@ -83,9 +85,9 @@ export interface PastSession extends ReservedSession {
   result?: string
 }
 
-export interface affiliatedProgram {
+export interface ProgramInterface {
   name: string
-  gym?: string
+  gym: string
   sessionsPerMonth: number
 }
 
@@ -93,7 +95,7 @@ export interface userInterface {
   active: boolean
   readonly admin: boolean,
   affiliatedBox?: BoxInterface,
-  affiliatedProgram: affiliatedProgram | string,
+  affiliatedProgram: ProgramInterface | string,
   connection: string,
   email: string,
   name: string,
