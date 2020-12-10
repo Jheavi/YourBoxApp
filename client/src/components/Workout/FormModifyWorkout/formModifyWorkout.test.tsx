@@ -33,7 +33,10 @@ describe('Workout', () => {
   })
 
   it('renders correctly', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: {}
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
       todayString={todayDate.dayString}
@@ -47,7 +50,10 @@ describe('Workout', () => {
 
   it('should change the title', () => {
     const changedTitle = 'Changed Title'
-    const initialState = { workoutReducer: { workout: { title: 'aa' } } }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workout: { title: 'aa' } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
       todayString={todayDate.dayString}
@@ -62,7 +68,10 @@ describe('Workout', () => {
 
   it('should change the type', () => {
     const changedType = 'AMRAP'
-    const initialState = { workoutReducer: { workout: { description: 'aa' } } }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workout: { description: 'aa' } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
       todayString={todayDate.dayString}
@@ -78,7 +87,10 @@ describe('Workout', () => {
 
   it('should change the description', () => {
     const changedDescription = 'Changed description'
-    const initialState = { workoutReducer: { workout: { description: 'aa' } } }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workout: { description: 'aa' } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
       todayString={todayDate.dayString}
@@ -92,7 +104,10 @@ describe('Workout', () => {
   })
 
   it('Save button should call updateWorkout', () => {
-    const initialState = { workoutReducer: { workout: { description: 'aa' } } }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workout: { description: 'aa' } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
       todayString={todayDate.dayString}
