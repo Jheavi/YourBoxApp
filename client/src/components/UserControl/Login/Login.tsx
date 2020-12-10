@@ -171,6 +171,11 @@ function Login ({ dispatch, navigation }: props) {
     }
   }, [result])
 
+  // function onPress(boxName: string) {
+  //   navigation.navigate('AdminSchedules')
+  //   loadBox(boxName)
+  // }
+
   return (
     <View style={styles.container}>
       <ScrollView
