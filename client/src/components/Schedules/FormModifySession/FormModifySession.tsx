@@ -82,24 +82,24 @@ function FormModifySession ({ day, dispatch, session }: any) {
     }
   }
 
-  function onStartHourValueChange (itemValue: string | number): void {
-    setStartHourValue(itemValue)
-    const [hour, minutes] = itemValue.toString().split(':')
+  function onStartHourValueChange (value: string): void {
+    setStartHourValue(value)
+    const [hour, minutes] = value.split(':')
     const finishHourModified = +hour + 1 < 10 ? `0${+hour + 1}:${minutes}` : `${+hour + 1}:${minutes}`
     setFinishHourValue(finishHourModified)
   }
 
-  function onFinishHourValueChange (itemValue: string | number): void {
-    setFinishHourValue(itemValue)
-    if (itemValue <= startHourValue) {
-      const [hour, minutes] = itemValue.toString().split(':')
+  function onFinishHourValueChange (value: string): void {
+    setFinishHourValue(value)
+    if (value <= startHourValue) {
+      const [hour, minutes] = value.split(':')
       const startHourModified = +hour - 1 < 10 ? `0${+hour - 1}:${minutes}` : `${+hour - 1}:${minutes}`
       setStartHourValue(startHourModified)
     }
   }
 
-  function onTypeValueChange (itemValue: string | number): void {
-    setTypeValue(itemValue)
+  function onTypeValueChange (value: string): void {
+    setTypeValue(value)
   }
 
   return (
@@ -116,12 +116,15 @@ function FormModifySession ({ day, dispatch, session }: any) {
         <View style={{ flexDirection: 'row', marginTop: 30 }}>
           <View style={{ flex: 1 }}/>
           <RNPickerSelect
+            useNativeAndroidPickerStyle={false}
             placeholder={{}}
             style={pickerSelectStyles}
             value={startHourValue}
             onValueChange={onStartHourValueChange}
-            items={hourSelection.slice(0, hourSelection.length - 2).map((hour) => ({ label: hour, value: hour }))}
-            useNativeAndroidPickerStyle={false}
+            items={hourSelection.slice(0, hourSelection.length - 2).map((hour) => ({
+              label: hour,
+              value: hour
+            }))}
             pickerProps={{ mode: 'dropdown', testID: 'startHourPicker' }}
           />
           <View style={{ flex: 1 }}/>
