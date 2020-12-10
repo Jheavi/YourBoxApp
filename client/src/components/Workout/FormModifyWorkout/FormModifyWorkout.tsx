@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { View, Button, TextInput, StyleSheet } from 'react-native'
-import { Picker } from '@react-native-picker/picker'
+import RNPickerSelect from 'react-native-picker-select'
 import { updateWorkout } from '../../../redux/actions/workoutActions'
 
 const styles = StyleSheet.create({
@@ -33,13 +33,27 @@ const styles = StyleSheet.create({
     borderColor: '#cb1313',
     borderWidth: 2,
     padding: 30,
-    margin: 30
+    margin: 30,
+    fontSize: 20
   },
   picker: {
     height: 50,
     width: 200,
     backgroundColor: '#0d0d0d',
     color: 'white'
+  }
+})
+
+const pickerSelectStyles = StyleSheet.create({
+  inputAndroid: {
+    fontSize: 22,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderColor: '#cb1313',
+    borderBottomWidth: 1,
+    textAlign: 'center',
+    width: '100%',
+    color: '#ffffff'
   }
 })
 
@@ -58,6 +72,10 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
     }
   }, [workout])
 
+  function onTypeChange (value: string) {
+    setTypeValue(value)
+  }
+
   return (
     <View style={styles.container} testID="container">
       <View style={styles.innerContainer}>
@@ -70,18 +88,19 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
           autoCorrect={false}
           multiline={true}
         />
-        <Picker
-          style={styles.picker}
-          selectedValue={typeValue}
-          onValueChange={(itemValue) =>
-            setTypeValue(itemValue)
-          }
-          testID="typePicker"
-        >
-          <Picker.Item color="#0d0d0d" label="For Time" value="For Time" />
-          <Picker.Item color="#0d0d0d" label="AMRAP" value="AMRAP" />
-          <Picker.Item color="#0d0d0d" label="EMOM" value="EMOM" />
-        </Picker>
+        <RNPickerSelect
+          useNativeAndroidPickerStyle={false}
+          placeholder={{}}
+          style={pickerSelectStyles}
+          value={typeValue}
+          onValueChange={onTypeChange}
+          items={[
+            { label: 'For Time', value: 'For Time' },
+            { label: 'AMRAP', value: 'AMRAP' },
+            { label: 'EMOM', value: 'EMOM' }
+          ]}
+          pickerProps={{ testID: 'typePicker' }}
+        />
         <TextInput
           style={styles.descriptionText}
           value={descriptionValue}
