@@ -86,7 +86,7 @@ export interface PastSession extends ReservedSession {
 
 export interface ProgramInterface {
   name: string
-  gym?: string
+  gym: string
   sessionsPerMonth: number
 }
 
