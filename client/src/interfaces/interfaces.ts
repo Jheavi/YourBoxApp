@@ -32,15 +32,16 @@ export interface dateObject {
 }
 
 type RootStackParamList = {
-  UserView: undefined
-  Home: undefined
-  AdminWorkout: undefined
+  AdminPrograms: undefined
   AdminSchedules: undefined
+  AdminWorkout: undefined
+  Home: undefined
   Login: undefined
   Logout: undefined
   UserHome: undefined
-  UserWorkout: undefined
   UserSchedules: undefined
+  UserView: undefined
+  UserWorkout: undefined
 };
 
 export interface props {
