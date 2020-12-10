@@ -31,7 +31,11 @@ describe('Workout', () => {
   })
 
   it('renders correctly', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: {}
+
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Workout />, { wrapper })
 
@@ -41,7 +45,10 @@ describe('Workout', () => {
   })
 
   it('should call loadWorkout', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: {}
+    }
     const wrapper = wrapperFactory(initialState)
 
     render(<Workout />, { wrapper })
@@ -50,7 +57,10 @@ describe('Workout', () => {
   })
 
   it('should load the activityIndicator if workout is Loading', () => {
-    const initialState = { workoutReducer: { workoutLoading: true } }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workoutLoading: true }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Workout />, { wrapper })
 
@@ -60,7 +70,10 @@ describe('Workout', () => {
   })
 
   it('should change the date of workoutDate with the day selected', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: {}
+    }
     const wrapper = wrapperFactory(initialState)
     const { queryByText, getByTestId } = render(<Workout />, { wrapper })
     const dateTitle = getByTestId('workoutDate')
@@ -72,7 +85,10 @@ describe('Workout', () => {
   })
 
   it('should put the workout date int the title when the workout is loaded', () => {
-    const initialState = { workoutReducer: { workout: { date: '2020-11-20' } } }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workout: { date: '2020-11-20' } }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Workout />, { wrapper })
 
@@ -82,7 +98,10 @@ describe('Workout', () => {
   })
 
   it('should change the modal to visible if touchableModal is touched', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: {}
+    }
     const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<Workout />, { wrapper })
 
@@ -94,7 +113,10 @@ describe('Workout', () => {
   })
 
   it('should change the modal to no-visible if backDropPress', () => {
-    const initialState = { workoutReducer: {} }
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: {}
+    }
     const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<Workout />, { wrapper })
 
