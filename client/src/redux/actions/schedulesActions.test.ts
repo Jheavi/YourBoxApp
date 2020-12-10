@@ -12,6 +12,7 @@ const mockStore = configureMockStore([thunk])
 
 describe('Schedules actions', () => {
   let fakeData: {data: {}}
+  let fakeBoxId: string
   let newDate: string
   let fakeError: string
   let store: MockStoreEnhanced<unknown, {}> | null
@@ -20,6 +21,7 @@ describe('Schedules actions', () => {
   beforeEach(() => {
     store = mockStore()
     fakeData = { data: { id: 1 } }
+    fakeBoxId = '456'
     newDate = 'today'
     fakeError = 'error'
     fakeSession = {
@@ -35,17 +37,20 @@ describe('Schedules actions', () => {
 
   describe('loadSchedules', () => {
     test('should call axios.get with the url', async () => {
-      axios.get = jest.fn()
+      await store!.dispatch(loadSchedules(fakeBoxId))
 
-      await store!.dispatch(loadSchedules())
+      const args = [
+        serverUrls.scheduleUrl,
+        { params: { boxId: fakeBoxId } }
+      ]
 
-      expect(axios.get).toHaveBeenCalledWith(serverUrls.scheduleUrl)
+      expect(axios.get).toHaveBeenCalledWith(...args)
     })
 
     test('the store should have an action with type LOAD_SCHEDULES', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
 
-      await store!.dispatch(loadSchedules())
+      await store!.dispatch(loadSchedules(fakeBoxId))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_SCHEDULES,
@@ -56,7 +61,7 @@ describe('Schedules actions', () => {
     test('the store should have an action with type LOAD_SCHEDULES_ERROR if promise rejected', async () => {
       axios.get = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await store!.dispatch(loadSchedules())
+      await store!.dispatch(loadSchedules(fakeBoxId))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_SCHEDULES_ERROR,
@@ -67,13 +72,17 @@ describe('Schedules actions', () => {
 
   describe('updateSession', () => {
     test('should call axios.patch with the url', async () => {
-      axios.patch = jest.fn()
-
-      await store!.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
+      await store!.dispatch(updateSession(fakeBoxId, newDate, fakeSession, '2', '2', '2'))
 
       const args = [
         `${serverUrls.scheduleUrl}/${newDate}`,
-        { session: fakeSession, finishHourValue: '2', startHourValue: '2', typeValue: '2' }
+        {
+          boxId: fakeBoxId,
+          session: fakeSession,
+          finishHourValue: '2',
+          startHourValue: '2',
+          typeValue: '2'
+        }
       ]
 
       expect(axios.patch).toHaveBeenCalledWith(...args)
@@ -82,7 +91,7 @@ describe('Schedules actions', () => {
     test('the store should have an action with type UPDATE_SESSION', async () => {
       axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
 
-      await store!.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
+      await store!.dispatch(updateSession(fakeBoxId, newDate, fakeSession, '2', '2', '2'))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.UPDATE_SESSION,
@@ -93,7 +102,7 @@ describe('Schedules actions', () => {
     test('the store should have an action with type UPDATE_SESSION_ERROR if promise rejected', async () => {
       axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await store!.dispatch(updateSession(newDate, fakeSession, '2', '2', '2'))
+      await store!.dispatch(updateSession(fakeBoxId, newDate, fakeSession, '2', '2', '2'))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.UPDATE_SESSION_ERROR,
@@ -104,13 +113,11 @@ describe('Schedules actions', () => {
 
   describe('createSession', () => {
     test('should call axios.post with the url', async () => {
-      axios.post = jest.fn()
-
-      await store!.dispatch(createSession(newDate, '2', '2', '2'))
+      await store!.dispatch(createSession(fakeBoxId, newDate, '2', '2', '2'))
 
       const args = [
         `${serverUrls.scheduleUrl}/${newDate}`,
-        { finishHourValue: '2', startHourValue: '2', typeValue: '2' }
+        { boxId: fakeBoxId, finishHourValue: '2', startHourValue: '2', typeValue: '2' }
       ]
 
       expect(axios.post).toHaveBeenCalledWith(...args)
@@ -119,7 +126,7 @@ describe('Schedules actions', () => {
     test('the store should have an action with type CREATE_SESSION', async () => {
       axios.post = jest.fn().mockResolvedValueOnce(fakeData)
 
-      await store!.dispatch(createSession(newDate, '2', '2', '2'))
+      await store!.dispatch(createSession(fakeBoxId, newDate, '2', '2', '2'))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.CREATE_SESSION,
@@ -130,7 +137,7 @@ describe('Schedules actions', () => {
     test('the store should have an action with type CREATE_SESSION_ERROR if promise rejected', async () => {
       axios.post = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await store!.dispatch(createSession(newDate, '2', '2', '2'))
+      await store!.dispatch(createSession(fakeBoxId, newDate, '2', '2', '2'))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.CREATE_SESSION_ERROR,
@@ -149,17 +156,20 @@ describe('Schedules actions', () => {
 
   describe('loadSchedule', () => {
     test('should call axios.get with the url', async () => {
-      axios.get = jest.fn()
+      await store!.dispatch(loadSchedule('2020-12-07', fakeBoxId))
 
-      await store!.dispatch(loadSchedule('2020-12-07'))
+      const args = [
+        `${serverUrls.scheduleUrl}/monday`,
+        { params: { boxId: fakeBoxId } }
+      ]
 
-      expect(axios.get).toHaveBeenCalledWith(`${serverUrls.scheduleUrl}/monday`)
+      expect(axios.get).toHaveBeenCalledWith(...args)
     })
 
     test('the store should have an action with type LOAD_SCHEDULE', async () => {
       axios.get = jest.fn().mockResolvedValueOnce(fakeData)
 
-      await store!.dispatch(loadSchedule('2020-12-07'))
+      await store!.dispatch(loadSchedule('2020-12-07', fakeBoxId))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_SCHEDULE,
@@ -170,7 +180,7 @@ describe('Schedules actions', () => {
     test('the store should have an action with type LOAD_SCHEDULE_ERROR if promise rejected', async () => {
       axios.get = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await store!.dispatch(loadSchedule('2020-12-07'))
+      await store!.dispatch(loadSchedule('2020-12-07', fakeBoxId))
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_SCHEDULE_ERROR,
