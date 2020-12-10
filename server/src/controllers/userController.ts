@@ -38,9 +38,9 @@ function userController (userModel): userControllerInterface {
         const userToCreate = { ...user, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: dayString }
         const userCreated = await userModel.create(userToCreate)
 
-        await userExists.populate('ownerOfBox').execPopulate()
-        await userExists.populate('affiliatedProgram').execPopulate()
-        await userExists.populate('affiliatedBox').execPopulate()
+        await userCreated.populate('ownerOfBox').execPopulate()
+        await userCreated.populate('affiliatedProgram').execPopulate()
+        await userCreated.populate('affiliatedBox').execPopulate()
 
         res.send(userCreated)
       }

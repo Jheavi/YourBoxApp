@@ -12,7 +12,7 @@ describe('scheduleController', () => {
 
   beforeEach(() => {
     res = { send: jest.fn() }
-    req = { body: { session: {} }, params: { date: '123' } }
+    req = { body: { session: {} }, params: { date: '123' }, query: { boxId: '456' } }
     fakeSchedule = { sessions: ['today'] }
     fakeSchedules = [{ sessions: ['today'] }, { sessions: ['tomorrow'] }]
     fakeError = 'error'
@@ -21,7 +21,7 @@ describe('scheduleController', () => {
   test('getAllMethod should call res.send with the schedule', async () => {
     scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedule)
 
-    await scheduleControllerTest.getAllMethod(null, res)
+    await scheduleControllerTest.getAllMethod(req, res)
 
     expect(res.send).toHaveBeenCalledWith(fakeSchedule)
   })
@@ -29,7 +29,7 @@ describe('scheduleController', () => {
   test('getAllMethod should call res.send with the error if promise rejected', async () => {
     scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
 
-    await scheduleControllerTest.getAllMethod(null, res)
+    await scheduleControllerTest.getAllMethod(req, res)
 
     expect(res.send).toHaveBeenCalledWith(fakeError)
   })
