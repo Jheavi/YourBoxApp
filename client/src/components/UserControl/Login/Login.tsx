@@ -162,7 +162,7 @@ function Login ({ dispatch, navigation }: props) {
       if (result.type === 'error') {
         Alert.alert(
           'Authentication error',
-          result.params.error_description || 'something went wrong'
+          result.params.error_description
         )
       }
       if (result.type === 'success') {
@@ -196,6 +196,7 @@ function Login ({ dispatch, navigation }: props) {
             style={styles.schedulesButton}
             activeOpacity={0.4}
             onPress={() => navigation.navigate('AdminSchedules')}
+            testID="seeSchedulesBtn"
           >
             <Text style={styles.schedulesButtonText}>See schedules</Text>
           </TouchableOpacity>

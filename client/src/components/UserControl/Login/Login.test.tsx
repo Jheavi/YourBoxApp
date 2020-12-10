@@ -18,7 +18,6 @@ describe('UserHome', () => {
   let request: AuthSession.AuthRequest | null
   let result: any
   let promptAsync: jest.Mock<any, any>
-  let spyUseAuth: any
 
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
@@ -31,6 +30,14 @@ describe('UserHome', () => {
     )
   }
 
+  const mockUseAuthRequest = (defineResult: any) => {
+    return jest.spyOn(AuthSession, 'useAuthRequest').mockReturnValueOnce([
+      request,
+      defineResult,
+      promptAsync
+    ])
+  }
+
   beforeEach(() => {
     navigation = { navigate: jest.fn() }
     promptAsync = jest.fn()
@@ -38,15 +45,11 @@ describe('UserHome', () => {
   })
 
   afterEach(() => {
-    spyUseAuth.mockRestore()
+    jest.resetAllMocks()
   })
 
   it('renders correctly', () => {
-    spyUseAuth = jest.spyOn(AuthSession, 'useAuthRequest').mockReturnValueOnce([
-      request,
-      result,
-      promptAsync
-    ])
+    mockUseAuthRequest(null)
     const initialState = { }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Login navigation={navigation}/>, { wrapper })
@@ -64,13 +67,7 @@ describe('UserHome', () => {
       authentication: null,
       url: 'a'
     }
-    promptAsync = jest.fn()
-    spyUseAuth = jest.spyOn(AuthSession, 'useAuthRequest').mockReturnValueOnce([
-      request,
-      result,
-      promptAsync
-    ])
-
+    mockUseAuthRequest(result)
     const initialState = { }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<Login navigation={navigation}/>, { wrapper })
@@ -79,5 +76,36 @@ describe('UserHome', () => {
     fireEvent.press(loginButton)
 
     expect(login).toHaveBeenCalledWith('id_token')
+  })
+
+  it('should not call login action if result type is error', async () => {
+    result = {
+      type: 'error',
+      params: { error_description: 'error' },
+      errorCode: null,
+      authentication: null,
+      url: 'a'
+    }
+    mockUseAuthRequest(result)
+    const initialState = { }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Login navigation={navigation}/>, { wrapper })
+
+    const loginButton = getByTestId('loginButton')
+    fireEvent.press(loginButton)
+
+    expect(login).not.toHaveBeenCalled()
+  })
+
+  it('should call navigate to AdminSchedules if "See Schedules" button is pressed', async () => {
+    mockUseAuthRequest(null)
+    const initialState = { }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Login navigation={navigation}/>, { wrapper })
+
+    const seeSchedulesButton = getByTestId('seeSchedulesBtn')
+    fireEvent.press(seeSchedulesButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('AdminSchedules')
   })
 })
