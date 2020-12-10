@@ -10,13 +10,13 @@ export interface SessionInterface {
 
 export interface schedule {
   day: string,
-  gym?: string,
+  box: string,
   sessions: SessionInterface[]
 }
 
 const scheduleSchema: schedule = new Schema({
   day: String,
-  gym: { type: Schema.Types.ObjectId, ref: 'Gym' },
+  box: { type: Schema.Types.ObjectId, ref: 'Box' },
   sessions: [Object]
 })
 
