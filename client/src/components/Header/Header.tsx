@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, Text, StatusBar, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, View, Text, StatusBar, TouchableOpacity, Image } from 'react-native'
 import BurgerButton from './BurgerButton/BurgerButton'
 import UserButton from './UserButton/UserButton'
 import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
+import images from '../../constants/images'
 
 const styles = StyleSheet.create({
   container: {
@@ -17,14 +18,16 @@ const styles = StyleSheet.create({
     height: 80,
     position: 'relative'
   },
-
+  titleTouchable: {
+    flex: 1,
+    flexDirection: 'row',
+    minWidth: '60%',
+    justifyContent: 'center',
+    maxHeight: 60
+  },
   title: {
     color: 'white',
-    fontSize: 35,
-    position: 'absolute',
-    top: 20,
-    left: 0,
-    right: 0,
+    fontSize: 34,
     textAlign: 'center'
   }
 })
@@ -34,10 +37,11 @@ function Header ({ user }: props) {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true}/>
-      <View style={{ flex: 1 }} />
+      <View style={{ flex: 2 }} />
       <BurgerButton />
-      <TouchableWithoutFeedback
-        style={{ flex: 1 }}
+      <View style={{ flex: 1 }} />
+      <TouchableOpacity
+        style={styles.titleTouchable}
         onPress={() => {
           !user
             ? navigation.navigate('Login')
@@ -46,11 +50,11 @@ function Header ({ user }: props) {
               : navigation.navigate('UserHome')
         }}
       >
-        <Text style={styles.title}>GymApp</Text>
-      </TouchableWithoutFeedback>
-      <View style={{ flex: 8 }} />
-      {user && <UserButton />}
+        <Text style={styles.title}>YourBoxApp</Text>
+      </TouchableOpacity>
       <View style={{ flex: 1 }} />
+      {user && <UserButton />}
+      <View style={{ flex: 2 }} />
     </View>
   )
 }
