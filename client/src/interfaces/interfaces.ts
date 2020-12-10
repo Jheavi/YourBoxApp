@@ -83,7 +83,7 @@ export interface PastSession extends ReservedSession {
   result?: string
 }
 
-export interface affiliatedProgram {
+export interface ProgramInterface {
   name: string
   gym?: string
   sessionsPerMonth: number
@@ -93,7 +93,7 @@ export interface userInterface {
   active: boolean
   readonly admin: boolean,
   affiliatedBox?: BoxInterface,
-  affiliatedProgram: affiliatedProgram | string,
+  affiliatedProgram: ProgramInterface | string,
   connection: string,
   email: string,
   name: string,
