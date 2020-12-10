@@ -23,18 +23,16 @@ const styles = StyleSheet.create({
   }
 })
 
-function UpperSawToothBorder () {
+function UpperSawToothBorder ({ width }: any) {
+  const firstTriangle = 30
+  const triangles = Array.from({ length: Math.ceil(width / 50) }, (v, i) => firstTriangle + i * 50)
+
   return (
     <View style={styles.container}>
           <View style={styles.toothShape}/>
-          <View style={{ ...styles.toothShape, left: 30 }}/>
-          <View style={{ ...styles.toothShape, left: 80 }}/>
-          <View style={{ ...styles.toothShape, left: 130 }}/>
-          <View style={{ ...styles.toothShape, left: 180 }}/>
-          <View style={{ ...styles.toothShape, left: 230 }}/>
-          <View style={{ ...styles.toothShape, left: 280 }}/>
-          <View style={{ ...styles.toothShape, left: 330 }}/>
-          <View style={{ ...styles.toothShape, left: 380 }}/>
+          {triangles.map((left) => {
+            return <View style={{ ...styles.toothShape, left }} key={Math.random() * Math.random()} />
+          }) }
     </View>
   )
 }
