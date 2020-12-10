@@ -2,6 +2,7 @@ import scheduleModel from './src/models/scheduleModel'
 import workoutModel from './src/models/workoutModel'
 import userModel from './src/models/userModel'
 import programModel from './src/models/programModel'
+import boxModel from './src/models/boxModel'
 import { changeReservedSessionsToPastSessions } from './src/utils/userExtraFunctions'
 const express = require('express')
 const morgan = require('morgan')
@@ -11,7 +12,7 @@ const mongoose = require('mongoose')
 const chalk = require('chalk')
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
-const userRouter = require('./src/routes/userRouter')(userModel, programModel)
+const userRouter = require('./src/routes/userRouter')(userModel, programModel, boxModel)
 
 const oneHourTime = 3600000
 const server = express()
