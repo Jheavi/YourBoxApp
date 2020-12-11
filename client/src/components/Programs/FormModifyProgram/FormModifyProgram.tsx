@@ -64,8 +64,9 @@ function FormModifyProgram ({ dispatch, program, user }: props) {
         sessionsPerMonth: sessionsPerMonthValue
       }))
     } else {
+      setNameValue(nameValue?.trim())
       dispatch(createProgram(
-        nameValue.trim(),
+        nameValue,
         sessionsPerMonthValue,
         user.ownerOfBox!._id))
     }
@@ -94,9 +95,12 @@ function FormModifyProgram ({ dispatch, program, user }: props) {
       <TouchableOpacity
         style={styles.saveButton}
         onPress={onPress}
+        testID="saveButton"
       >
-        {program && <Text style={styles.buttonText}>Save changes</Text>}
-        {!program && <Text style={styles.buttonText}>Create program</Text>}
+        <Text style={styles.buttonText} testID="buttonText">
+          {program && 'Save changes'}
+          {!program && 'Create program'}
+        </Text>
       </TouchableOpacity>
     </View>
   )

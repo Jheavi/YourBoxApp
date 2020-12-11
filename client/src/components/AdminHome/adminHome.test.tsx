@@ -10,7 +10,7 @@ jest.mock('@react-navigation/native')
 const buildStore = configureStore([thunk])
 
 describe('AdminHome', () => {
-  let navigation: {navigate: jest.Mock<any, any>}
+  let navigation: any
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()
@@ -31,7 +31,7 @@ describe('AdminHome', () => {
   it('renders correctly', () => {
     const initialState = { }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<AdminHome />, { wrapper })
+    const { getByTestId } = render(<AdminHome navigation={navigation}/>, { wrapper })
 
     const workoutButton = getByTestId('workoutTextBtn')
 
@@ -58,5 +58,16 @@ describe('AdminHome', () => {
     fireEvent.press(schedulesButton)
 
     expect(navigation.navigate).toHaveBeenCalledWith('AdminSchedules')
+  })
+
+  it('should call navigation.navigate with argument "AdminPrograms" with "Your programs" button', () => {
+    const initialState = { workoutReducer: {} }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<AdminHome navigation={navigation}/>, { wrapper })
+
+    const programsButton = getByTestId('programsBtn')
+    fireEvent.press(programsButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('AdminPrograms')
   })
 })

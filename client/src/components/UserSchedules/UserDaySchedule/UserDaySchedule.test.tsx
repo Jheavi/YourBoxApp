@@ -11,7 +11,7 @@ jest.mock('../UserSessionItem/UserSessionItem')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('UserDaySchedule', () => {
   let fakeDay: string
   let fakeSchedule: scheduleInterface
   let fakeUser: userInterface

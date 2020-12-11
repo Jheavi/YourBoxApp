@@ -67,16 +67,16 @@ function ProgramDetail ({ program }: props) {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
-    <View style={styles.programView} key={performance.now() * Math.random()}>
+    <View style={styles.programView}>
           <ImageBackground
             source={randomImage()}
             style= {styles.backgroundImg}
           />
           <View style={{ flex: 3 }}/>
           <View style={styles.programViewColumn}>
-            <Text style={styles.text}>{program.name}</Text>
+            <Text style={styles.text} testID="programName">{program.name}</Text>
             <Text style={styles.text}>Sessions</Text>
-            <Text style={styles.text}>{`per month: ${program.sessionsPerMonth}`}</Text>
+            <Text style={styles.text} testID="programSessions">{`per month: ${program.sessionsPerMonth}`}</Text>
           </View>
           <View style={{ flex: 4 }}/>
           <View style={styles.programViewColumn}>
@@ -84,6 +84,7 @@ function ProgramDetail ({ program }: props) {
             <TouchableOpacity
               style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}
               onPress={() => { setModalVisible(true) }}
+              testID="touchableModal"
             >
               <Text style={styles.buttonText}>Update</Text>
               <Overlay

@@ -6,7 +6,7 @@ interface programControllerInterface {
   createProgram: Function
 }
 
-function workoutController (programModel): programControllerInterface {
+function programController (programModel): programControllerInterface {
   async function getAllPrograms ({ query: { boxId } }: Request, res: Response) {
     try {
       const query = { box: boxId }
@@ -47,4 +47,4 @@ function workoutController (programModel): programControllerInterface {
   return { getAllPrograms, patchProgram, createProgram }
 }
 
-module.exports = workoutController
+module.exports = programController

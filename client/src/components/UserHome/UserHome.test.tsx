@@ -34,6 +34,8 @@ describe('UserHome', () => {
       active: false,
       admin: false,
       affiliatedProgram: {
+        _id: '12345',
+        box: '456',
         name: 'a',
         sessionsPerMonth: 8
       },
