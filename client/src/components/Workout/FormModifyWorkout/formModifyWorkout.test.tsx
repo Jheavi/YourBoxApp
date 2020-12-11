@@ -106,7 +106,7 @@ describe('Workout', () => {
   it('Save button should call updateWorkout', () => {
     const initialState = {
       userReducer: { user: { ownerOfBox: {} } },
-      workoutReducer: { workout: { description: 'aa' } }
+      workoutReducer: { workout: { title: 'A', description: 'aa' } }
     }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<FormModifyWorkout
