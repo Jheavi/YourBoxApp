@@ -45,6 +45,15 @@ interface LoadScheduleErrorAction {
   error: any
 }
 
+interface DeleteSessionAction {
+  type: typeof actionTypes.CREATE_SESSION,
+  schedules: scheduleInterface[]
+}
+
+interface DeleteSessionErrorAction {
+  type: typeof actionTypes.CREATE_SESSION_ERROR,
+  error: any
+}
 export type SchedulesActionTypes =
 LoadSchedulesAction |
 LoadSchedulesErrorAction |
@@ -54,4 +63,6 @@ UpdateSessionErrorAction |
 CreateSessionAction |
 CreateSessionErrorAction |
 LoadScheduleAction |
-LoadScheduleErrorAction
+LoadScheduleErrorAction |
+DeleteSessionAction |
+DeleteSessionErrorAction

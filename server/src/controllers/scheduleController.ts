@@ -3,8 +3,9 @@ import { Request, Response } from 'express'
 interface scheduleControllerInterface {
   getAllMethod: Function
   getMethod: Function
-  patchSessionMethod: Function,
+  patchSessionMethod: Function
   postMethod: Function
+  deleteMethod: Function
 }
 
 function scheduleController (scheduleModel): scheduleControllerInterface {
@@ -52,7 +53,7 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
         }
       }
 
-      await scheduleModel.findOneAndUpdate(query, update, { new: true })
+      await scheduleModel.findOneAndUpdate(query, update)
 
       const schedules = await scheduleModel.find({ box: boxId })
       res.send(schedules)
@@ -75,7 +76,34 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
     }
   }
 
-  return { getMethod, patchSessionMethod, postMethod, getAllMethod }
+  async function deleteMethod ({ body: { session, boxId }, params: { day } }: Request, res: Response) {
+    try {
+      const query = {
+        box: boxId,
+        day,
+        sessions: {
+          $elemMatch: {
+            finishHour: session.finishHour,
+            startHour: session.startHour,
+            type: session.type
+          }
+        }
+      }
+
+      const update = {
+        $pull: { sessions: session }
+      }
+
+      await scheduleModel.findOneAndUpdate(query, update)
+
+      const schedules = await scheduleModel.find({ box: boxId })
+      res.send(schedules)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  return { getMethod, patchSessionMethod, postMethod, getAllMethod, deleteMethod }
 }
 
 module.exports = scheduleController

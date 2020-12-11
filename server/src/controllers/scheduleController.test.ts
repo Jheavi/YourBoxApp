@@ -18,83 +18,117 @@ describe('scheduleController', () => {
     fakeError = 'error'
   })
 
-  test('getAllMethod should call res.send with the schedule', async () => {
-    scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedule)
+  describe('getAllMethod', () => {
+    test('should call res.send with the schedule', async () => {
+      scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedule)
 
-    await scheduleControllerTest.getAllMethod(req, res)
+      await scheduleControllerTest.getAllMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeSchedule)
+      expect(res.send).toHaveBeenCalledWith(fakeSchedule)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await scheduleControllerTest.getAllMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getAllMethod should call res.send with the error if promise rejected', async () => {
-    scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+  describe('getMethod', () => {
+    test('should call res.send with the schedule', async () => {
+      scheduleModel.findOne = jest.fn().mockResolvedValueOnce(fakeSchedule)
 
-    await scheduleControllerTest.getAllMethod(req, res)
+      await scheduleControllerTest.getMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(res.send).toHaveBeenCalledWith(fakeSchedule)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      scheduleModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await scheduleControllerTest.getMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getMethod should call res.send with the schedule', async () => {
-    scheduleModel.findOne = jest.fn().mockResolvedValueOnce(fakeSchedule)
+  describe('patchSessionMethod', () => {
+    test('should call findOneAndUpdate', async () => {
+      scheduleModel.findOneAndUpdate = jest.fn()
 
-    await scheduleControllerTest.getMethod(req, res)
+      await scheduleControllerTest.patchSessionMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeSchedule)
+      expect(scheduleModel.findOneAndUpdate).toHaveBeenCalled()
+    })
+
+    test('should call res.send with the schedules', async () => {
+      scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedules)
+
+      await scheduleControllerTest.patchSessionMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeSchedules)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await scheduleControllerTest.patchSessionMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getMethod should call res.send with the error if promise rejected', async () => {
-    scheduleModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+  describe('postMethod', () => {
+    test('should call findOneAndUpdate', async () => {
+      scheduleModel.findOneAndUpdate = jest.fn()
 
-    await scheduleControllerTest.getMethod(req, res)
+      await scheduleControllerTest.postMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(scheduleModel.findOneAndUpdate).toHaveBeenCalled()
+    })
+
+    test('should call res.send with the schedules', async () => {
+      scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedules)
+
+      await scheduleControllerTest.postMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeSchedules)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await scheduleControllerTest.postMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('patchSessionMethod should call findOneAndUpdate', async () => {
-    scheduleModel.findOneAndUpdate = jest.fn()
+  describe('deleteMethod', () => {
+    test('should call findOneAndUpdate', async () => {
+      scheduleModel.findOneAndUpdate = jest.fn()
 
-    await scheduleControllerTest.patchSessionMethod(req, res)
+      await scheduleControllerTest.deleteMethod(req, res)
 
-    expect(scheduleModel.findOneAndUpdate).toHaveBeenCalled()
-  })
+      expect(scheduleModel.findOneAndUpdate).toHaveBeenCalled()
+    })
 
-  test('patchSessionMethod should call res.send with the schedules', async () => {
-    scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedules)
+    test('should call res.send with the schedules', async () => {
+      scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedules)
 
-    await scheduleControllerTest.patchSessionMethod(req, res)
+      await scheduleControllerTest.deleteMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeSchedules)
-  })
+      expect(res.send).toHaveBeenCalledWith(fakeSchedules)
+    })
 
-  test('patchSessionMethod should call res.send with the error if promise rejected', async () => {
-    scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+    test('should call res.send with the error if promise rejected', async () => {
+      scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
 
-    await scheduleControllerTest.patchSessionMethod(req, res)
+      await scheduleControllerTest.deleteMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
-  })
-
-  test('postMethod should call findOneAndUpdate', async () => {
-    scheduleModel.findOneAndUpdate = jest.fn()
-
-    await scheduleControllerTest.postMethod(req, res)
-
-    expect(scheduleModel.findOneAndUpdate).toHaveBeenCalled()
-  })
-
-  test('postMethod should call res.send with the schedules', async () => {
-    scheduleModel.find = jest.fn().mockResolvedValueOnce(fakeSchedules)
-
-    await scheduleControllerTest.postMethod(req, res)
-
-    expect(res.send).toHaveBeenCalledWith(fakeSchedules)
-  })
-
-  test('postMethod should call res.send with the error if promise rejected', async () => {
-    scheduleModel.find = jest.fn().mockRejectedValueOnce(fakeError)
-
-    await scheduleControllerTest.postMethod(req, res)
-
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 })

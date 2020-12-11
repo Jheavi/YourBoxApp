@@ -13,6 +13,7 @@ function scheduleRouter (scheduleModel) {
     .get(schedules.getMethod)
     .patch(schedules.patchSessionMethod)
     .post(schedules.postMethod)
+    .delete(schedules.deleteMethod)
 
   return router
 }

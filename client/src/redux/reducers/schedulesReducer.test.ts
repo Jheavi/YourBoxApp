@@ -75,7 +75,7 @@ describe('schedulesReducer', () => {
     expect(state).toEqual({ schedulesLoading: true })
   })
 
-  it('should return the schedules in a property called schedules if action type is LOAD_SCHEDULE', () => {
+  it('should return the schedule in a property called schedule if action type is LOAD_SCHEDULE', () => {
     const fakeAction = {
       type: actionTypes.LOAD_SCHEDULE,
       schedule: fakeSchedule
@@ -84,5 +84,16 @@ describe('schedulesReducer', () => {
     const state = schedulesReducer(undefined, fakeAction)
 
     expect(state).toEqual({ schedule: fakeSchedule, schedulesLoading: false })
+  })
+
+  it('should return the schedules in a property called schedules if action type is DELETE_SESSION', () => {
+    const fakeAction = {
+      type: actionTypes.DELETE_SESSION,
+      schedules: fakeSchedules
+    }
+
+    const state = schedulesReducer(undefined, fakeAction)
+
+    expect(state).toEqual({ schedules: fakeSchedules, schedulesLoading: false })
   })
 })
