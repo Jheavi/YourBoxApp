@@ -76,3 +76,34 @@ export function updateWorkout (
     }
   }
 }
+
+export function deleteWorkoutSuccess (): WorkoutActionTypes {
+  return {
+    type: actionTypes.DELETE_WORKOUT
+  }
+}
+
+export function deleteWorkoutError (error: any): WorkoutActionTypes {
+  return {
+    type: actionTypes.DELETE_WORKOUT_ERROR,
+    error
+  }
+}
+
+export function deleteWorkout (
+  date: string,
+  boxId: string
+): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const config = { data: { boxId } }
+
+      await axios.delete(
+        `${serverUrls.workoutUrl}/${date}`, config)
+
+      dispatch(deleteWorkoutSuccess())
+    } catch (error) {
+      dispatch(deleteWorkoutError(error))
+    }
+  }
+}
