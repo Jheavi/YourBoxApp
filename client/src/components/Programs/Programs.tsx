@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { images } from '../../constants/images'
 import { ProgramInterface, props } from '../../interfaces/interfaces'
 import { loadPrograms } from '../../redux/actions/programActions'
+import { randomImage } from '../../utils/randomImageFunction'
 
 const { height, width } = Dimensions.get('window')
 
@@ -92,7 +93,7 @@ function Programs ({ dispatch, programs, user }: props) {
         {programs?.map((program: ProgramInterface) => (
         <View style={styles.programView} key={performance.now() * Math.random()}>
           <ImageBackground
-            source={images.haltero1}
+            source={randomImage()}
             style= {styles.backgroundImg}
           />
           <View style={{ flex: 1 }}/>
