@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { ProgramInterface, props } from '../../interfaces/interfaces'
-import { loadPrograms } from '../../redux/actions/programActions'
+import { loadPrograms, updateProgram } from '../../redux/actions/programActions'
 import { randomImage } from '../../utils/randomImageFunction'
 
 const { height, width } = Dimensions.get('window')
@@ -82,6 +82,10 @@ function Programs ({ dispatch, programs, user }: props) {
     dispatch(loadPrograms(user.ownerOfBox!._id))
   }, [])
 
+  function onPressUpdate (program: ProgramInterface) {
+    dispatch(updateProgram(program))
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -104,7 +108,10 @@ function Programs ({ dispatch, programs, user }: props) {
           <View style={{ flex: 2 }}/>
           <View style={styles.programViewColumn}>
             <View style={{ flex: 5 }}/>
-            <TouchableOpacity style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}>
+            <TouchableOpacity
+              style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}
+              onPress={() => { onPressUpdate(program) }}
+            >
               <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
             <View style={{ flex: 1 }}/>

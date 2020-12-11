@@ -30,3 +30,31 @@ export function loadPrograms (boxId: string): any {
     }
   }
 }
+
+function updateProgramSuccess (program: ProgramInterface): ProgramActionTypes {
+  return {
+    type: actionTypes.UPDATE_PROGRAMS,
+    program
+  }
+}
+
+function updateProgramError (error: any): ProgramActionTypes {
+  return {
+    type: actionTypes.UPDATE_PROGRAMS_ERROR,
+    error
+  }
+}
+
+export function updateProgram (program: ProgramInterface): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { program }
+
+      const { data } = await axios.patch(`${serverUrls.programURL}/${program.name}`, body)
+
+      dispatch(updateProgramSuccess(data))
+    } catch (error) {
+      dispatch(updateProgramError(error))
+    }
+  }
+}

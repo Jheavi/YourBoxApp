@@ -11,6 +11,18 @@ type loadProgramsErrorAction = {
   error: any
 }
 
+type UpdateProgramsAction = {
+  type: typeof actionTypes.UPDATE_PROGRAMS
+  program: ProgramInterface
+}
+
+type UpdateProgramsErrorAction = {
+  type: typeof actionTypes.UPDATE_PROGRAMS_ERROR
+  error: any
+}
+
 export type ProgramActionTypes =
 loadProgramsAction |
-loadProgramsErrorAction
+loadProgramsErrorAction |
+UpdateProgramsAction |
+UpdateProgramsErrorAction
