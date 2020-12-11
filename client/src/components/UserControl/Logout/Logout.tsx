@@ -46,8 +46,9 @@ function Logout ({ dispatch }: any) {
       <TouchableOpacity
         style={styles.buttonView}
         onPress={() => dispatch(logout())}
+        testID="logoutBtn"
       >
-        <Text style={styles.buttonsText}>Logout</Text>
+        <Text style={styles.buttonsText} testID="logoutBtnText">Logout</Text>
       </TouchableOpacity>
     </View>
   )
