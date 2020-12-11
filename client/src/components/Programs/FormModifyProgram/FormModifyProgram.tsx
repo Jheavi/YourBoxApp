@@ -58,9 +58,16 @@ function FormModifyProgram ({ dispatch, program, user }: props) {
 
   function onPress () {
     if (program) {
-      dispatch(updateProgram({ ...program, name: nameValue, sessionsPerMonth: sessionsPerMonthValue }))
+      dispatch(updateProgram({
+        ...program,
+        name: nameValue.trim(),
+        sessionsPerMonth: sessionsPerMonthValue
+      }))
     } else {
-      dispatch(createProgram(nameValue, sessionsPerMonthValue, user.ownerOfBox!._id))
+      dispatch(createProgram(
+        nameValue.trim(),
+        sessionsPerMonthValue,
+        user.ownerOfBox!._id))
     }
   }
 
@@ -80,8 +87,9 @@ function FormModifyProgram ({ dispatch, program, user }: props) {
         value={sessionsPerMonthValue.toString()}
         placeholder="Enter the number of sessions"
         placeholderTextColor="#ffffff88"
+        keyboardType="numeric"
         testID="inputSessions"
-        onChangeText={value => setSessionsPerMonthValue(+value)}
+        onChangeText={value => setSessionsPerMonthValue(+(value.trim()))}
       />
       <TouchableOpacity
         style={styles.saveButton}

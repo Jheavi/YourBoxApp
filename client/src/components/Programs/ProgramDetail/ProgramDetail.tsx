@@ -72,13 +72,13 @@ function ProgramDetail ({ program }: props) {
             source={randomImage()}
             style= {styles.backgroundImg}
           />
-          <View style={{ flex: 1 }}/>
+          <View style={{ flex: 3 }}/>
           <View style={styles.programViewColumn}>
             <Text style={styles.text}>{program.name}</Text>
             <Text style={styles.text}>Sessions</Text>
             <Text style={styles.text}>{`per month: ${program.sessionsPerMonth}`}</Text>
           </View>
-          <View style={{ flex: 2 }}/>
+          <View style={{ flex: 4 }}/>
           <View style={styles.programViewColumn}>
             <View style={{ flex: 5 }}/>
             <TouchableOpacity
