@@ -45,7 +45,6 @@ function userController (userModel): userControllerInterface {
         res.send(userCreated)
       }
     } catch (error) {
-      console.log(error)
       res.send(error)
     }
   }
