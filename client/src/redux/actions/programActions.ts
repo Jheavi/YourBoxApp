@@ -33,14 +33,14 @@ export function loadPrograms (boxId: string): any {
 
 function updateProgramSuccess (program: ProgramInterface): ProgramActionTypes {
   return {
-    type: actionTypes.UPDATE_PROGRAMS,
+    type: actionTypes.UPDATE_PROGRAM,
     program
   }
 }
 
 function updateProgramError (error: any): ProgramActionTypes {
   return {
-    type: actionTypes.UPDATE_PROGRAMS_ERROR,
+    type: actionTypes.UPDATE_PROGRAM_ERROR,
     error
   }
 }
@@ -55,6 +55,34 @@ export function updateProgram (program: ProgramInterface): any {
       dispatch(updateProgramSuccess(data))
     } catch (error) {
       dispatch(updateProgramError(error))
+    }
+  }
+}
+
+function createProgramSuccess (newProgram: ProgramInterface): ProgramActionTypes {
+  return {
+    type: actionTypes.CREATE_PROGRAM,
+    newProgram
+  }
+}
+
+function createProgramError (error: any): ProgramActionTypes {
+  return {
+    type: actionTypes.CREATE_PROGRAM_ERROR,
+    error
+  }
+}
+
+export function createProgram (name: string, sessions: number, boxId: string): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { name, sessions, boxId }
+
+      const { data } = await axios.post(serverUrls.programURL, body)
+
+      dispatch(createProgramSuccess(data))
+    } catch (error) {
+      dispatch(createProgramError(error))
     }
   }
 }

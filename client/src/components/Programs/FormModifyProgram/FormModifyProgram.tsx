@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
-import { updateProgram } from '../../../redux/actions/programActions'
+import { createProgram, updateProgram } from '../../../redux/actions/programActions'
 import { props } from '../../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     paddingBottom: 5,
     width: 'auto',
-    textTransform: 'uppercase',
     textAlign: 'center'
   },
   sessionsText: {
@@ -52,13 +51,15 @@ const styles = StyleSheet.create({
   }
 })
 
-function FormModifyProgram ({ dispatch, program }: props) {
+function FormModifyProgram ({ dispatch, program, user }: props) {
   const [nameValue, setNameValue] = useState(program?.name)
   const [sessionsPerMonthValue, setSessionsPerMonthValue] = useState(program?.sessionsPerMonth || 0)
 
   function onPress () {
     if (program) {
       dispatch(updateProgram({ ...program, name: nameValue, sessionsPerMonth: sessionsPerMonthValue }))
+    } else {
+      dispatch(createProgram(nameValue, sessionsPerMonthValue, user.ownerOfBox!._id))
     }
   }
 
@@ -92,4 +93,10 @@ function FormModifyProgram ({ dispatch, program }: props) {
   )
 }
 
-export default connect(null)(FormModifyProgram)
+function mapStateToProps ({ userReducer: { user } }: any) {
+  return {
+    user
+  }
+}
+
+export default connect(mapStateToProps)(FormModifyProgram)

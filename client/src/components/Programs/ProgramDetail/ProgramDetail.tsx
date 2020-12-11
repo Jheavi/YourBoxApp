@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   backgroundImg: {
     flex: 1,
     resizeMode: 'contain',
-    opacity: 0.4,
+    opacity: 0.5,
     height: '100%',
     width: '100%',
     position: 'absolute',
