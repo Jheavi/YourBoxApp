@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import { images } from '../../constants/images'
 import { ProgramInterface, props } from '../../interfaces/interfaces'
 import { loadPrograms } from '../../redux/actions/programActions'
 import { randomImage } from '../../utils/randomImageFunction'
