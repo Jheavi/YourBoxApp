@@ -12,7 +12,7 @@ jest.mock('./FormModifyProgram/FormModifyProgram')
 
 const buildStore = configureStore([thunk])
 
-describe('Schedules', () => {
+describe('Programs', () => {
   let initialState: any
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)

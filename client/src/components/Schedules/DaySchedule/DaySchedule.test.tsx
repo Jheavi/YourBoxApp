@@ -10,7 +10,7 @@ jest.mock('../FormModifySession/FormModifySession')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('DaySchedule', () => {
   let weekDay
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)

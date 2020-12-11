@@ -12,7 +12,7 @@ jest.mock('./UserDaySchedule/UserDaySchedule')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('UserSchedules', () => {
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()

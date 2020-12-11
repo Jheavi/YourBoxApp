@@ -2,7 +2,6 @@ import React from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { images } from '../../constants/images'
-import { props } from '../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function AdminHome ({ navigation }: props) {
+function AdminHome ({ navigation }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -55,7 +54,6 @@ function AdminHome ({ navigation }: props) {
             <Text style={styles.buttonsText} testID="workoutTextBtn">Your workouts</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('AdminWorkout')}
             style={styles.buttons}
           >
             <Icon
@@ -87,6 +85,7 @@ function AdminHome ({ navigation }: props) {
             name="coins"
             size={50}
             color="white"
+            testID="programsBtn"
             />
             <Text style={styles.buttonsText}>Your programs</Text>
           </TouchableOpacity>

@@ -13,7 +13,7 @@ jest.mock('../../../redux/actions/userActions')
 
 const buildStore = configureStore([thunk])
 
-describe('UserHome', () => {
+describe('Login', () => {
   let navigation: {navigate: jest.Mock<any, any>}
   let request: AuthSession.AuthRequest | null
   let result: any

@@ -12,7 +12,7 @@ jest.mock('../../../redux/actions/workoutActions')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('FormModifyWorkout', () => {
   let todayDate: dateObject
   let setModalVisible: Function
 

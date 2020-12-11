@@ -12,7 +12,7 @@ jest.mock('../../../redux/actions/userActions')
 
 const buildStore = configureStore([thunk])
 
-describe('Workout', () => {
+describe('UserSessionItem', () => {
   let session
   let fakeUser: userInterface
   let day: string

@@ -10,7 +10,7 @@ jest.mock('../../../redux/actions/schedulesActions')
 
 const buildStore = configureStore([thunk])
 
-describe('FormModifyWorkout', () => {
+describe('FormModifySession', () => {
   let fakeSession
   let initialState: any
   let wrapper: any
