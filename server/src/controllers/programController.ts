@@ -18,12 +18,12 @@ function workoutController (programModel): programControllerInterface {
     }
   }
 
-  async function patchProgram ({ params: { name }, body: { program } }: Request, res: Response) {
+  async function patchProgram ({ params: { programId }, body: { program } }: Request, res: Response) {
     try {
-      const query = { box: program.box, name }
-      const update = { name: program.name, sessionsPerMonth: program.sessionsPerMonth }
+      const query = { box: program.box, _id: programId }
+      const update = { ...program, name: program.name, sessionsPerMonth: program.sessionsPerMonth }
 
-      const updatedProgram = await programModel.findOne(query, update)
+      const updatedProgram = await programModel.findOneAndUpdate(query, update, { new: true })
 
       res.send(updatedProgram)
     } catch (error) {

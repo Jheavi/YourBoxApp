@@ -9,7 +9,7 @@ export async function changeReservedSessionsToPastSessions () {
     const users = await userModel.find(query)
     const bulkOps = []
 
-    users?.forEach((user: { reservedSessions: reservedSessionInterface[]; userId: string }) => {
+    users?.forEach((user: { reservedSessions: reservedSessionInterface[], userId: string }) => {
       const alreadyPastSessions = user.reservedSessions.filter(
         (reservedSession: reservedSessionInterface) =>
           actualDay.dayString > reservedSession.day

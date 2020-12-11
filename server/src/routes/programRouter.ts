@@ -8,7 +8,7 @@ function programRouter (programModel) {
   router.route('/')
     .get(programs.getAllPrograms)
 
-  router.route('/:name')
+  router.route('/:programId')
     .patch(programs.patchProgram)
 
   return router
