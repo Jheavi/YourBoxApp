@@ -4,6 +4,7 @@ interface workoutControllerInterface {
   getAllMethod: Function
   getWorkoutMethod: Function
   patchWorkoutMethod: Function
+  deleteWorkoutMethod: Function
 }
 
 function workoutController (workoutModel): workoutControllerInterface {
@@ -47,7 +48,19 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  return { getAllMethod, getWorkoutMethod, patchWorkoutMethod }
+  async function deleteWorkoutMethod ({ body: { boxId }, params: { date } }: Request, res: Response) {
+    try {
+      const query = { box: boxId, date }
+
+      const workout = await workoutModel.findOneAndDelete(query)
+
+      res.send(workout)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  return { getAllMethod, getWorkoutMethod, patchWorkoutMethod, deleteWorkoutMethod }
 }
 
 module.exports = workoutController
