@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { updateProgram } from '../../../redux/actions/programActions'
-import { ProgramInterface, props } from '../../../interfaces/interfaces'
+import { props } from '../../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   container: {
@@ -54,10 +54,12 @@ const styles = StyleSheet.create({
 
 function FormModifyProgram ({ dispatch, program }: props) {
   const [nameValue, setNameValue] = useState(program?.name)
-  const [sessionsPerMonthValue, setSessionsPerMonthValue] = useState(program?.sessionsPerMonth)
+  const [sessionsPerMonthValue, setSessionsPerMonthValue] = useState(program?.sessionsPerMonth || 0)
 
-  function onPressUpdate (program: ProgramInterface) {
-    dispatch(updateProgram({ ...program, name: nameValue, sessionsPerMonth: sessionsPerMonthValue }))
+  function onPress () {
+    if (program) {
+      dispatch(updateProgram({ ...program, name: nameValue, sessionsPerMonth: sessionsPerMonthValue }))
+    }
   }
 
   return (
@@ -66,6 +68,7 @@ function FormModifyProgram ({ dispatch, program }: props) {
         style={styles.nameText}
         value={nameValue}
         placeholder="Enter the name"
+        placeholderTextColor="#ffffff88"
         testID="inputName"
         onChangeText={text => setNameValue(text)}
         autoCorrect={false}
@@ -74,14 +77,16 @@ function FormModifyProgram ({ dispatch, program }: props) {
         style={styles.sessionsText}
         value={sessionsPerMonthValue.toString()}
         placeholder="Enter the number of sessions"
+        placeholderTextColor="#ffffff88"
         testID="inputSessions"
         onChangeText={text => setSessionsPerMonthValue(+text)}
       />
       <TouchableOpacity
         style={styles.saveButton}
-        onPress={() => onPressUpdate(program)}
+        onPress={onPress}
       >
-        <Text style={styles.buttonText}>Save changes</Text>
+        {program && <Text style={styles.buttonText}>Save changes</Text>}
+        {!program && <Text style={styles.buttonText}>Create program</Text>}
       </TouchableOpacity>
     </View>
   )
