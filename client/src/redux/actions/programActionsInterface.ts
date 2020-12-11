@@ -11,6 +11,42 @@ type loadProgramsErrorAction = {
   error: any
 }
 
+type updateProgramAction = {
+  type: typeof actionTypes.UPDATE_PROGRAM
+  program: ProgramInterface
+}
+
+type updateProgramErrorAction = {
+  type: typeof actionTypes.UPDATE_PROGRAM_ERROR
+  error: any
+}
+
+type deleteProgramAction = {
+  type: typeof actionTypes.DELETE_PROGRAM
+  program: ProgramInterface
+}
+
+type deleteProgramErrorAction = {
+  type: typeof actionTypes.DELETE_PROGRAM_ERROR
+  error: any
+}
+
+type createProgramAction = {
+  type: typeof actionTypes.CREATE_PROGRAM
+  newProgram: ProgramInterface
+}
+
+type createProgramErrorAction = {
+  type: typeof actionTypes.CREATE_PROGRAM_ERROR
+  error: any
+}
+
 export type ProgramActionTypes =
 loadProgramsAction |
-loadProgramsErrorAction
+loadProgramsErrorAction |
+updateProgramAction |
+updateProgramErrorAction |
+deleteProgramAction |
+deleteProgramErrorAction |
+createProgramAction |
+createProgramErrorAction

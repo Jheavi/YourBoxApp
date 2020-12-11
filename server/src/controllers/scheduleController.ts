@@ -52,8 +52,7 @@ function scheduleController (scheduleModel): scheduleControllerInterface {
         }
       }
 
-      const scheduleNew = await scheduleModel.findOneAndUpdate(query, update, { new: true })
-      console.log(scheduleNew)
+      await scheduleModel.findOneAndUpdate(query, update, { new: true })
 
       const schedules = await scheduleModel.find({ box: boxId })
       res.send(schedules)

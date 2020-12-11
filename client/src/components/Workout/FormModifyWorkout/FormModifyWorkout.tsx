@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginBottom: 20,
     paddingBottom: 5,
-    width: 'auto',
-    textTransform: 'uppercase'
+    width: 'auto'
   },
   descriptionText: {
     color: 'white',
@@ -76,6 +75,16 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
     setTypeValue(value)
   }
 
+  function onSave () {
+    dispatch(updateWorkout(
+      displayedDay || dayString,
+      user.ownerOfBox._id,
+      descriptionValue.trim(),
+      titleValue.toUpperCase().trim(),
+      typeValue))
+    setModalVisible(false)
+  }
+
   return (
     <View style={styles.container} testID="container">
       <View style={styles.innerContainer}>
@@ -84,7 +93,7 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
           value={titleValue}
           placeholder="Enter the title"
           testID="inputTitle"
-          onChangeText={text => setTitleValue(text)}
+          onChangeText={text => { setTitleValue(text) }}
           autoCorrect={false}
           multiline={true}
         />
@@ -114,15 +123,7 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
             title="Save changes"
             color="#14680c"
             testID="saveButton"
-            onPress={() => {
-              dispatch(updateWorkout(
-                displayedDay || dayString,
-                user.ownerOfBox._id,
-                descriptionValue,
-                titleValue,
-                typeValue))
-              setModalVisible(false)
-            }}
+            onPress={onSave}
           />
         </View>
       </View>

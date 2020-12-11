@@ -7,6 +7,10 @@ function programRouter (programModel) {
 
   router.route('/')
     .get(programs.getAllPrograms)
+    .post(programs.createProgram)
+
+  router.route('/:programId')
+    .patch(programs.patchProgram)
 
   return router
 }

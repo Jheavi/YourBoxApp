@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
-import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Overlay } from 'react-native-elements'
 import { connect } from 'react-redux'
-import { images } from '../../constants/images'
 import { ProgramInterface, props } from '../../interfaces/interfaces'
 import { loadPrograms } from '../../redux/actions/programActions'
-import { randomImage } from '../../utils/randomImageFunction'
+import FormModifyProgram from './FormModifyProgram/FormModifyProgram'
+import ProgramDetail from './ProgramDetail/ProgramDetail'
 
 const { height, width } = Dimensions.get('window')
 
@@ -12,6 +13,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width,
+    backgroundColor: '#0d0d0d',
+    alignItems: 'center',
     position: 'relative'
   },
   scrollContent: {
@@ -19,107 +22,65 @@ const styles = StyleSheet.create({
     height,
     width,
     alignItems: 'center',
-    fontFamily: 'Roboto, Open Sans, sans-serif',
-    backgroundColor: '#0d0d0d'
+    fontFamily: 'Roboto, Open Sans, sans-serif'
   },
   titleText: {
     fontSize: 28,
     color: 'white',
     marginVertical: 30
   },
-  programView: {
-    position: 'relative',
-    minWidth: '85%',
-    maxWidth: '85%',
-    minHeight: 150,
-    height: 'auto',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 30,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: 'white',
-    flexDirection: 'row'
-  },
-  programViewColumn: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: 'white'
-  },
-  deleteButton: {
+  createButton: {
+    position: 'absolute',
+    right: 30,
+    top: 33,
     backgroundColor: '#cb1313',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: 85,
+    minWidth: 40,
     minHeight: 40,
     borderRadius: 4,
-    elevation: 8
+    elevation: 5,
+    zIndex: 100
   },
-  buttonText: {
+  createButtonText: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 30,
     color: 'white'
-  },
-  backgroundImg: {
-    flex: 1,
-    resizeMode: 'contain',
-    opacity: 0.4,
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    top: 0
   }
 })
 
 function Programs ({ dispatch, programs, user }: props) {
+  const [modalVisible, setModalVisible] = useState(false)
+
   useEffect(() => {
     dispatch(loadPrograms(user.ownerOfBox!._id))
   }, [])
 
   return (
     <View style={styles.container}>
+      <Text style={styles.titleText} testID="programsTitle">Your programs</Text>
+      <TouchableOpacity
+        style={styles.createButton}
+        onPress={() => { setModalVisible(true) }}
+        testID="touchableModal"
+      >
+        <Text style={styles.createButtonText}>+</Text>
+      </TouchableOpacity>
+      <Overlay
+        animationType="fade"
+        isVisible={modalVisible}
+        onBackdropPress={() => { setModalVisible(false) }}
+        testID="programModal"
+      >
+        <FormModifyProgram />
+      </Overlay>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         scrollEnabled={true}
       >
-        <Text style={styles.titleText} testID="programsTitle">Your programs</Text>
         {programs?.map((program: ProgramInterface) => (
-        <View style={styles.programView} key={performance.now() * Math.random()}>
-          <ImageBackground
-            source={randomImage()}
-            style= {styles.backgroundImg}
-          />
-          <View style={{ flex: 1 }}/>
-          <View style={styles.programViewColumn}>
-            <Text style={styles.text}>{program.name}</Text>
-            <Text style={styles.text}>Sessions</Text>
-            <Text style={styles.text}>{`per month: ${program.sessionsPerMonth}`}</Text>
-          </View>
-          <View style={{ flex: 2 }}/>
-          <View style={styles.programViewColumn}>
-            <View style={{ flex: 5 }}/>
-            <TouchableOpacity style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}>
-              <Text style={styles.buttonText}>Update</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 1 }}/>
-            <TouchableOpacity style={styles.deleteButton}>
-              <Text style={styles.buttonText}>Delete</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 2 }}/>
-          </View>
-          <View style={{ flex: 1 }}/>
-        </View>
+          <ProgramDetail program={program} key={performance.now() * Math.random()}/>
         ))}
       </ScrollView>
     </View>
-
   )
 }
 

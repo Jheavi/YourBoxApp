@@ -48,6 +48,7 @@ export interface props {
   day: string
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
+  program: ProgramInterface
   programs: ProgramInterface[]
   schedule: scheduleInterface
   schedules: scheduleInterface[]
@@ -86,8 +87,9 @@ export interface PastSession extends ReservedSession {
 }
 
 export interface ProgramInterface {
+  _id: string
   name: string
-  gym: string
+  box: string
   sessionsPerMonth: number
 }
 
