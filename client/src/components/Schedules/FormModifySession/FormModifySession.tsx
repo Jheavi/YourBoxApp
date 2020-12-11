@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { View, Button, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import hourSelection from '../../../constants/hourSelection'
-import { createSession, updateSession } from '../../../redux/actions/schedulesActions'
+import { createSession, deleteSession, updateSession } from '../../../redux/actions/schedulesActions'
 import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
@@ -52,6 +52,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center'
+  },
+  modalButton: {
+    backgroundColor: '#14680c',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 22,
+    textAlign: 'center'
   }
 })
 
@@ -80,6 +93,10 @@ function FormModifySession ({ day, dispatch, session, user }: any) {
     } else {
       dispatch(createSession(user.ownerOfBox._id, day, finishHourValue, startHourValue, typeValue))
     }
+  }
+
+  function onDeletePress (): void {
+    dispatch(deleteSession(user.ownerOfBox._id, day, session))
   }
 
   function onStartHourValueChange (value: string): void {
@@ -155,12 +172,24 @@ function FormModifySession ({ day, dispatch, session, user }: any) {
           />
         </View>
         <View style={{ marginBottom: 30, width: 'auto' }}>
-          <Button
-            title="Save changes"
-            color="#14680c"
-            testID="saveButton"
-            onPress={onSavePress}
-          />
+          <View style={{ marginBottom: 15 }}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={onSavePress}
+              testID="saveButton"
+            >
+              <Text style={styles.buttonText}>Save changes</Text>
+            </TouchableOpacity>
+          </View>
+          {session &&
+            <TouchableOpacity
+              style={{ ...styles.modalButton, backgroundColor: '#cb1313' }}
+              onPress={onDeletePress}
+              testID="deleteButton"
+            >
+              <Text style={styles.buttonText}>Delete session</Text>
+            </TouchableOpacity>
+          }
         </View>
       </View>
     </View>

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
-import { updateSession, createSession } from '../../../redux/actions/schedulesActions'
+import { updateSession, createSession, deleteSession } from '../../../redux/actions/schedulesActions'
 import FormModifySession from './FormModifySession'
 
 jest.mock('../../../redux/actions/schedulesActions')
@@ -69,6 +69,20 @@ describe('FormModifySession', () => {
     fireEvent(saveButton, 'press')
 
     expect(updateSession).toHaveBeenCalled()
+  })
+
+  it('Delete button should call deleteSession', () => {
+    fakeSession = {
+      finishHour: '10:00',
+      startHour: '09:00',
+      type: 'WOD'
+    }
+    const { getByTestId } = render(<FormModifySession day={day} session={fakeSession}/>, { wrapper })
+
+    const deleteButton = getByTestId('deleteButton')
+    fireEvent(deleteButton, 'press')
+
+    expect(deleteSession).toHaveBeenCalled()
   })
 
   it('should change the start hour', () => {

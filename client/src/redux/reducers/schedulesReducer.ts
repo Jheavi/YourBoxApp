@@ -19,6 +19,7 @@ export default function schedulesReducer (state = initialState, action: AnyActio
     case actionTypes.LOAD_SCHEDULES:
     case actionTypes.UPDATE_SESSION:
     case actionTypes.CREATE_SESSION:
+    case actionTypes.DELETE_SESSION:
       schedulesWithOrderedHours = action.schedules.map((schedule: scheduleInterface) => {
         return { ...schedule, sessions: schedule.sessions.sort((session1, session2) => session1.startHour >= session2.startHour ? 1 : -1) }
       }).sort(sortByWeekDays)

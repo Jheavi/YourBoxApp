@@ -142,3 +142,30 @@ export function loadSchedule (date: string, boxId: string): any {
     }
   }
 }
+
+export function deleteSessionSuccess (schedules: [scheduleInterface]): SchedulesActionTypes {
+  return {
+    type: actionTypes.DELETE_SESSION,
+    schedules
+  }
+}
+
+export function deleteSessionError (error: any): SchedulesActionTypes {
+  return {
+    type: actionTypes.DELETE_SESSION_ERROR,
+    error
+  }
+}
+export function deleteSession (boxId: string, weekDay: string, session: SessionInterface): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const config = { data: { session, boxId } }
+
+      const { data } = await axios.delete(`${serverUrls.scheduleUrl}/${weekDay}`, config)
+
+      dispatch(deleteSessionSuccess(data))
+    } catch (error) {
+      dispatch(deleteSessionError(error))
+    }
+  }
+}

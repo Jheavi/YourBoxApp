@@ -2,7 +2,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import serverUrls from '../../constants/serverUrls'
 import axios from 'axios'
-import { loadSchedules, updateSession, createSession, isSchedulesLoading, loadSchedule } from './schedulesActions'
+import { loadSchedules, updateSession, createSession, isSchedulesLoading, loadSchedule, deleteSession } from './schedulesActions'
 import actionTypes from './action-types'
 import { SessionInterface } from '../../interfaces/interfaces'
 
@@ -184,6 +184,41 @@ describe('Schedules actions', () => {
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.LOAD_SCHEDULE_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
+  describe('deleteSession', () => {
+    test('should call axios.delete with the url', async () => {
+      await store!.dispatch(deleteSession(fakeBoxId, newDate, fakeSession))
+
+      const args = [
+        `${serverUrls.scheduleUrl}/${newDate}`,
+        { data: { boxId: fakeBoxId, session: fakeSession } }
+      ]
+
+      expect(axios.delete).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type DELETE_SESSION', async () => {
+      axios.delete = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(deleteSession(fakeBoxId, newDate, fakeSession))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.DELETE_SESSION,
+        schedules: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type DELETE_SESSION_ERROR if promise rejected', async () => {
+      axios.delete = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(deleteSession(fakeBoxId, newDate, fakeSession))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.DELETE_SESSION_ERROR,
         error: fakeError
       })
     })
