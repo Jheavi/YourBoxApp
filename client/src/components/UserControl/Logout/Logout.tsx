@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
-import images from '../../../constants/images'
+import { images } from '../../../constants/images'
 import { logout } from '../../../redux/actions/userActions'
 import { connect } from 'react-redux'
 
