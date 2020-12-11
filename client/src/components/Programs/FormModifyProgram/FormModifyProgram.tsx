@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     width: 'auto',
     textAlign: 'center'
+
   },
   sessionsText: {
     color: 'white',
@@ -71,7 +72,7 @@ function FormModifyProgram ({ dispatch, program, user }: props) {
         placeholder="Enter the name"
         placeholderTextColor="#ffffff88"
         testID="inputName"
-        onChangeText={text => setNameValue(text)}
+        onChangeText={value => setNameValue(value) }
         autoCorrect={false}
       />
       <TextInput
@@ -80,7 +81,7 @@ function FormModifyProgram ({ dispatch, program, user }: props) {
         placeholder="Enter the number of sessions"
         placeholderTextColor="#ffffff88"
         testID="inputSessions"
-        onChangeText={text => setSessionsPerMonthValue(+text)}
+        onChangeText={value => setSessionsPerMonthValue(+value)}
       />
       <TouchableOpacity
         style={styles.saveButton}
