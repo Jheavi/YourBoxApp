@@ -50,7 +50,7 @@ export function updateProgram (program: ProgramInterface): any {
     try {
       const body = { program }
 
-      const { data } = await axios.patch(`${serverUrls.programURL}/${program.name}`, body)
+      const { data } = await axios.patch(`${serverUrls.programURL}/${program._id}`, body)
 
       dispatch(updateProgramSuccess(data))
     } catch (error) {

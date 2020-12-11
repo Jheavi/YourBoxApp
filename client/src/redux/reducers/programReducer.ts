@@ -17,12 +17,8 @@ export default function programReducer (state = initialState, action: AnyAction)
       updateState = { ...state, programs: action.programs }
       break
     case actionTypes.UPDATE_PROGRAMS:
-      console.log(action.program)
-
-      updatedPrograms = state.programs!.filter((program) => (program.name !== action.program.name))
-      // updatedPrograms.push(action.program)
-      console.log(updatedPrograms)
-
+      updatedPrograms = state.programs!.filter((program) => (program._id !== action.program._id))
+      updatedPrograms.push(action.program)
       updateState = { ...state, programs: updatedPrograms }
       break
     default:
