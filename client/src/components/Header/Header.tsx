@@ -5,7 +5,7 @@ import UserButton from './UserButton/UserButton'
 import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
-import images from '../../constants/images'
+import { images } from '../../constants/images'
 
 const styles = StyleSheet.create({
   container: {

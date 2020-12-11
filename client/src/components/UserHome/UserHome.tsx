@@ -4,7 +4,7 @@ import IconFont5 from 'react-native-vector-icons/FontAwesome5'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
-import images from '../../constants/images'
+import { images } from '../../constants/images'
 import { props } from '../../interfaces/interfaces'
 import { extractDataFromDate } from '../../utils/dateFunctions'
 

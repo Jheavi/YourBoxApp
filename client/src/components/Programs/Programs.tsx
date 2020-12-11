@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Dimensions, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import images from '../../constants/images'
+import { images } from '../../constants/images'
 import { ProgramInterface, props } from '../../interfaces/interfaces'
 import { loadPrograms } from '../../redux/actions/programActions'
 
@@ -70,12 +70,10 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
     opacity: 0.4,
-    height: 150,
+    height: '100%',
     width: '100%',
     position: 'absolute',
-    top: 0,
-    marginBottom: 'auto',
-    marginTop: 'auto'
+    top: 0
   }
 })
 
@@ -92,32 +90,30 @@ function Programs ({ dispatch, programs, user }: props) {
       >
         <Text style={styles.titleText} testID="programsTitle">Your programs</Text>
         {programs?.map((program: ProgramInterface) => (
-        <View key={performance.now() * Math.random()}>
+        <View style={styles.programView} key={performance.now() * Math.random()}>
           <ImageBackground
             source={images.haltero1}
             style= {styles.backgroundImg}
           />
-          <View style={styles.programView}>
-            <View style={{ flex: 1 }}/>
-            <View style={styles.programViewColumn}>
-              <Text style={styles.text}>{program.name}</Text>
-              <Text style={styles.text}>Sessions</Text>
-              <Text style={styles.text}>{`per month: ${program.sessionsPerMonth}`}</Text>
-            </View>
-            <View style={{ flex: 2 }}/>
-            <View style={styles.programViewColumn}>
-              <View style={{ flex: 5 }}/>
-              <TouchableOpacity style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}>
-                <Text style={styles.buttonText}>Update</Text>
-              </TouchableOpacity>
-              <View style={{ flex: 1 }}/>
-              <TouchableOpacity style={styles.deleteButton}>
-                <Text style={styles.buttonText}>Delete</Text>
-              </TouchableOpacity>
-              <View style={{ flex: 2 }}/>
-            </View>
-            <View style={{ flex: 1 }}/>
+          <View style={{ flex: 1 }}/>
+          <View style={styles.programViewColumn}>
+            <Text style={styles.text}>{program.name}</Text>
+            <Text style={styles.text}>Sessions</Text>
+            <Text style={styles.text}>{`per month: ${program.sessionsPerMonth}`}</Text>
           </View>
+          <View style={{ flex: 2 }}/>
+          <View style={styles.programViewColumn}>
+            <View style={{ flex: 5 }}/>
+            <TouchableOpacity style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}>
+              <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 1 }}/>
+            <TouchableOpacity style={styles.deleteButton}>
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 2 }}/>
+          </View>
+          <View style={{ flex: 1 }}/>
         </View>
         ))}
       </ScrollView>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform, Alert, ScrollView, Dimensions } from 'react-native'
-import images from '../../../constants/images'
+import { images } from '../../../constants/images'
 import { login } from '../../../redux/actions/userActions'
 import { connect } from 'react-redux'
 import IconFont5 from 'react-native-vector-icons/FontAwesome5'
