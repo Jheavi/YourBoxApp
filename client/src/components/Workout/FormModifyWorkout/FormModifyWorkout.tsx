@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { View, Button, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
-import { updateWorkout } from '../../../redux/actions/workoutActions'
+import { deleteWorkout, updateWorkout } from '../../../redux/actions/workoutActions'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,11 +35,18 @@ const styles = StyleSheet.create({
     margin: 30,
     fontSize: 20
   },
-  picker: {
-    height: 50,
-    width: 200,
-    backgroundColor: '#0d0d0d',
-    color: 'white'
+  modalButton: {
+    backgroundColor: '#14680c',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 22,
+    textAlign: 'center'
   }
 })
 
@@ -71,17 +78,26 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
     }
   }, [workout])
 
-  function onTypeChange (value: string) {
+  function onTypeChange (value: string): void {
     setTypeValue(value)
   }
 
-  function onSave () {
+  function onSave (): void {
     dispatch(updateWorkout(
       displayedDay || dayString,
       user.ownerOfBox._id,
       descriptionValue.trim(),
       titleValue.toUpperCase().trim(),
-      typeValue))
+      typeValue
+    ))
+    setModalVisible(false)
+  }
+
+  function onDelete (): void {
+    dispatch(deleteWorkout(
+      displayedDay || dayString,
+      user.ownerOfBox._id
+    ))
     setModalVisible(false)
   }
 
@@ -119,12 +135,24 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
           multiline={true}
         />
         <View style={{ marginBottom: 30, width: 'auto' }}>
-          <Button
-            title="Save changes"
-            color="#14680c"
-            testID="saveButton"
-            onPress={onSave}
-          />
+          <View style={{ marginBottom: 20 }}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={onSave}
+              testID="saveButton"
+            >
+              <Text style={styles.buttonText}>Save changes</Text>
+            </TouchableOpacity>
+          </View>
+          {workout &&
+            <TouchableOpacity
+              style={{ ...styles.modalButton, backgroundColor: '#cb1313' }}
+              onPress={onDelete}
+              testID="deleteButton"
+            >
+              <Text style={styles.buttonText}>{'Delete workout'}</Text>
+            </TouchableOpacity>
+          }
         </View>
       </View>
     </View>
