@@ -10,7 +10,7 @@ jest.mock('../../../redux/actions/userActions')
 
 const buildStore = configureStore([thunk])
 
-describe('FormModifyProgram', () => {
+describe('Logout', () => {
   let initialState: any
   let wrapper: any
   const wrapperFactory = (wrapperInitialState: any) => {

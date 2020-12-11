@@ -1,11 +1,10 @@
 import React from 'react'
-import { StyleSheet, View, Text, StatusBar, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, View, Text, StatusBar, TouchableOpacity } from 'react-native'
 import BurgerButton from './BurgerButton/BurgerButton'
 import UserButton from './UserButton/UserButton'
 import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
-import { images } from '../../constants/images'
 
 const styles = StyleSheet.create({
   container: {
@@ -34,6 +33,15 @@ const styles = StyleSheet.create({
 
 function Header ({ user }: props) {
   const navigation = useNavigation()
+
+  function navigate () {
+    !user
+      ? navigation.navigate('Login')
+      : user.admin
+        ? navigation.navigate('Home')
+        : navigation.navigate('UserHome')
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar hidden={true}/>
@@ -42,15 +50,10 @@ function Header ({ user }: props) {
       <View style={{ flex: 1 }} />
       <TouchableOpacity
         style={styles.titleTouchable}
-        onPress={() => {
-          !user
-            ? navigation.navigate('Login')
-            : user.admin
-              ? navigation.navigate('Home')
-              : navigation.navigate('UserHome')
-        }}
+        onPress={navigate}
+        testID="navigateBtn"
       >
-        <Text style={styles.title}>YourBoxApp</Text>
+        <Text style={styles.title} testID="appName">YourBoxApp</Text>
       </TouchableOpacity>
       <View style={{ flex: 1 }} />
       {user && <UserButton />}
