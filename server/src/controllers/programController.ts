@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 interface programControllerInterface {
   getAllPrograms: Function
   patchProgram: Function
+  createProgram: Function
 }
 
 function workoutController (programModel): programControllerInterface {
@@ -31,7 +32,19 @@ function workoutController (programModel): programControllerInterface {
     }
   }
 
-  return { getAllPrograms, patchProgram }
+  async function createProgram ({ body: { name, sessions, boxId } }: Request, res: Response) {
+    try {
+      const newProgram = { name, sessionsPerMonth: sessions, box: boxId }
+
+      const programCreated = await programModel.create(newProgram)
+
+      res.send(programCreated)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  return { getAllPrograms, patchProgram, createProgram }
 }
 
 module.exports = workoutController
