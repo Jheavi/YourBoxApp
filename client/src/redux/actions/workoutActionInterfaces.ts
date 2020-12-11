@@ -25,8 +25,19 @@ type isWorkoutLoadingAction = {
   type: typeof actionTypes.WORKOUT_LOADING
 }
 
+type DeleteWorkoutAction = {
+  type: typeof actionTypes.DELETE_WORKOUT
+}
+
+type DeleteWorkoutErrorAction = {
+  type: typeof actionTypes.DELETE_WORKOUT_ERROR
+  error: any
+}
+
 export type WorkoutActionTypes = LoadWorkoutAction |
 LoadWorkoutErrorAction |
 UpdateWorkoutAction |
 UpdateWorkoutErrorAction |
-isWorkoutLoadingAction
+isWorkoutLoadingAction |
+DeleteWorkoutAction |
+DeleteWorkoutErrorAction

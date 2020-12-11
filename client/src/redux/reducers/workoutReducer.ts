@@ -3,21 +3,31 @@ import { workoutInterface } from '../../interfaces/interfaces'
 import { AnyAction } from 'redux'
 
 export interface workoutState {
-  workout?: workoutInterface
+  workout?: workoutInterface | null
   workoutLoading?: boolean
 }
 
 const initialState: workoutState = {}
 
 export default function workoutReducer (state = initialState, action: AnyAction): workoutState {
+  let updatedState
   switch (action.type) {
     case actionTypes.LOAD_WORKOUT:
-      return { ...state, workout: action.workout, workoutLoading: false }
+      updatedState = { ...state, workout: action.workout, workoutLoading: false }
+      break
     case actionTypes.UPDATE_WORKOUT:
-      return { ...state, workout: action.workout }
+      updatedState = { ...state, workout: action.workout }
+      break
     case actionTypes.WORKOUT_LOADING:
-      return { ...state, workoutLoading: true }
+      updatedState = { ...state, workoutLoading: true }
+      break
+    case actionTypes.DELETE_WORKOUT:
+      updatedState = { ...state, workout: null }
+      break
     default:
-      return state
+      updatedState = state
+      break
   }
+
+  return updatedState
 }
