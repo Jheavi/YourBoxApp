@@ -104,12 +104,12 @@ function UserHome ({ navigation, pastSessionsThisMonth, reservedSessionsThisMont
           <TouchableOpacity
             style={styles.buttons}
             >
-            <IconMaterialIcons
-            name="view-agenda"
-            size={50}
-            color="white"
+            <IconFont5
+              name="user"
+              size={50}
+              color="white"
             />
-            <Text style={styles.buttonsText}>Your bookings</Text>
+            <Text style={styles.buttonsText}>Your profile</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}/>
