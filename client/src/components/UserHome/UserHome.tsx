@@ -6,7 +6,6 @@ import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { images } from '../../constants/images'
 import { props } from '../../interfaces/interfaces'
-import { extractDataFromDate } from '../../utils/dateFunctions'
 
 const styles = StyleSheet.create({
   container: {
@@ -53,10 +52,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function UserHome ({ navigation, user }: props) {
-  const pastSessionsThisMonth = user.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
-  const reservedSessionsThisMonth = user.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
-
+function UserHome ({ navigation, pastSessionsThisMonth, reservedSessionsThisMonth, user }: props) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -94,7 +90,10 @@ function UserHome ({ navigation, user }: props) {
         </View>
         <View style={{ flex: 1 }}/>
         <View style={{ flexDirection: 'column' }}>
-          <TouchableOpacity style={styles.buttons}>
+          <TouchableOpacity
+            style={styles.buttons}
+            onPress={() => navigation.navigate('UserResults')}
+          >
             <IconEntypo
               name="blackboard"
               size={50}
@@ -118,10 +117,10 @@ function UserHome ({ navigation, user }: props) {
       <View style={{ flex: 0.25 }}/>
       <View style={styles.lowerView}>
         <View style={styles.remainingClassesView}>
-          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth}`}</Text>
-          <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth}`}</Text>
+          <Text style={styles.lowerText} testID="sessionsText">{`Sessions used this month: ${pastSessionsThisMonth.length}`}</Text>
+          <Text style={styles.lowerText}>{`Sessions actually reserved: ${reservedSessionsThisMonth.length}`}</Text>
           <Text style={styles.lowerText} testID="remainingText">{`Remaining sessions: ${typeof user.affiliatedProgram === 'object'
-                ? user.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth
+                ? user.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth.length - reservedSessionsThisMonth.length
                 : '0'}`}
           </Text>
         </View>
@@ -133,7 +132,9 @@ function UserHome ({ navigation, user }: props) {
 
 function mapStateToProps ({ userReducer }: any) {
   return {
-    user: userReducer.user
+    user: userReducer.user,
+    pastSessionsThisMonth: userReducer.pastSessionsThisMonth,
+    reservedSessionsThisMonth: userReducer.reservedSessionsThisMonth
   }
 }
 

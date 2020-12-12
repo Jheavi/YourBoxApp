@@ -1,18 +1,23 @@
 import actionTypes from '../actions/action-types'
 import { AnyAction } from 'redux'
-import { userInterface } from '../../interfaces/interfaces'
-import { sortBySession } from '../../utils/dateFunctions'
+import { PastSession, ReservedSession, userInterface } from '../../interfaces/interfaces'
+import { extractDataFromDate, sortBySession } from '../../utils/dateFunctions'
 
 export interface userState {
-  user?: userInterface | null,
   isLogged: boolean
+  pastSessionsThisMonth?: PastSession[]
+  reservedSessionsThisMonth?: ReservedSession[]
+  user?: userInterface | null
 }
 
 const initialState: userState = { isLogged: false }
 
 export default function userReducer (state = initialState, action: AnyAction): userState {
+  let pastSessionsThisMonth: PastSession[]
+  let reservedSessionsThisMonth: ReservedSession[]
   let updatedState: userState
   let userWithOrderedPastSessions: userInterface
+
   switch (action.type) {
     case actionTypes.USER_LOGIN:
     case actionTypes.ADD_OR_REMOVE_SESSION:
@@ -20,7 +25,19 @@ export default function userReducer (state = initialState, action: AnyAction): u
         ...action.user,
         pastSessions: action.user.pastSessions.sort(sortBySession)
       }
-      updatedState = { ...state, user: userWithOrderedPastSessions, isLogged: true }
+      pastSessionsThisMonth = action.user.pastSessions.filter((session: PastSession) => (
+        extractDataFromDate(session.day).month === extractDataFromDate().month
+      ))
+      reservedSessionsThisMonth = action.user.reservedSessions.filter((session: ReservedSession) => (
+        extractDataFromDate(session.day).month === extractDataFromDate().month
+      ))
+      updatedState = {
+        ...state,
+        isLogged: true,
+        pastSessionsThisMonth,
+        reservedSessionsThisMonth,
+        user: userWithOrderedPastSessions
+      }
       break
     case actionTypes.USER_LOGOUT:
       updatedState = { ...state, user: null, isLogged: false }
