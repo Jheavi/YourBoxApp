@@ -98,8 +98,7 @@ export function deleteWorkout (
     try {
       const config = { data: { boxId } }
 
-      await axios.delete(
-        `${serverUrls.workoutUrl}/${date}`, config)
+      await axios.delete(`${serverUrls.workoutUrl}/${date}`, config)
 
       dispatch(deleteWorkoutSuccess())
     } catch (error) {

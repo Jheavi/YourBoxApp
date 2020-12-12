@@ -104,6 +104,40 @@ describe('Workout actions', () => {
     })
   })
 
+  describe('deleteWorkout', () => {
+    test('should call axios.delete with the url and the box id', async () => {
+      axios.delete = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(actions.deleteWorkout(newDate, fakeBoxId))
+
+      const args = [
+        `${serverUrls.workoutUrl}/${newDate}`,
+        { data: { boxId: fakeBoxId } }
+      ]
+
+      expect(axios.delete).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type DELETE_WORKOUT', async () => {
+      axios.delete = jest.fn().mockResolvedValueOnce(fakeData)
+      await store!.dispatch(actions.deleteWorkout(newDate, fakeBoxId))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.DELETE_WORKOUT
+      })
+    })
+
+    test('the store should have an action with type DELETE_WORKOUT_ERROR if promise rejected', async () => {
+      axios.delete = jest.fn().mockRejectedValueOnce(fakeError)
+      await store!.dispatch(actions.deleteWorkout(newDate, fakeBoxId))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.DELETE_WORKOUT_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
   test('the store should have an action with type WORKOUT_LOADING', () => {
     store!.dispatch(actions.isWorkoutLoading())
 

@@ -40,4 +40,14 @@ describe('workoutReducer', () => {
 
     expect(state).toEqual({ workoutLoading: true })
   })
+
+  it('should put the workout property to null if action type is DELETE_WORKOUT', () => {
+    const fakeAction = {
+      type: actionTypes.DELETE_WORKOUT
+    }
+
+    const state = workoutReducer(undefined, fakeAction)
+
+    expect(state).toEqual({ workout: null })
+  })
 })
