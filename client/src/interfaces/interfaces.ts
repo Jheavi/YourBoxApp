@@ -54,6 +54,7 @@ export interface props {
   program: ProgramInterface
   programs: ProgramInterface[]
   reservedSessionsThisMonth: ReservedSession[]
+  resultWorkout: workoutInterface
   schedule: scheduleInterface
   schedules: scheduleInterface[]
   schedulesLoading: boolean
