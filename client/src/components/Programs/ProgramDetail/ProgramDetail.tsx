@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     borderRadius: 10,
     borderWidth: 2,
+    overflow: 'hidden',
     borderColor: 'white',
     flexDirection: 'row'
   },
