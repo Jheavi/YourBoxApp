@@ -59,17 +59,45 @@ function userController (userModel): userControllerInterface {
     }
   }
 
-  async function updateUser ({ body: { reservedSession, option }, params: { userId } }: Request, res: Response) {
+  async function updateUser ({ body: { pastSession, reservedSession, result, option }, params: { userId } }: Request, res: Response) {
     try {
-      const query = { userId }
-      if (option === 'add') {
+      let query
+      if (option === 'addSession') {
+        query = { userId }
         const update = { $addToSet: { reservedSessions: reservedSession } }
         const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
         await updatedUser.populate('affiliatedProgram').execPopulate()
         await updatedUser.populate('affiliatedBox').execPopulate()
         res.send(updatedUser)
-      } else {
+      } else if (option === 'removeSession') {
+        query = { userId }
         const update = { $pull: { reservedSessions: reservedSession } }
+        const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+        await updatedUser.populate('affiliatedProgram').execPopulate()
+        await updatedUser.populate('affiliatedBox').execPopulate()
+        res.send(updatedUser)
+      } else if (option === 'updateResult') {
+        const query = {
+          userId,
+          pastSessions: {
+            $elemMatch: {
+              finishHour: pastSession.finishHour,
+              startHour: pastSession.startHour,
+              type: pastSession.type,
+              day: pastSession.day
+            }
+          }
+        }
+
+        const update = {
+          $set: {
+            'pastSessions.$.finishHour': pastSession.finishHour,
+            'pastSessions.$.startHour': pastSession.startHour,
+            'pastSessions.$.type': pastSession.type,
+            'pastSessions.$.day': pastSession.day,
+            'pastSessions.$.result': result
+          }
+        }
         const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
         await updatedUser.populate('affiliatedProgram').execPopulate()
         await updatedUser.populate('affiliatedBox').execPopulate()

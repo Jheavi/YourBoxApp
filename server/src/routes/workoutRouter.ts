@@ -10,9 +10,9 @@ function workoutRouter (workoutModel) {
     .get(workouts.getAllMethod)
 
   router.route('/:date')
-    .get(workouts.getWorkoutMethod)
-    .patch(workouts.patchWorkoutMethod)
-    .delete(workouts.deleteWorkoutMethod)
+    .get(workouts.getWorkout)
+    .patch(workouts.updateWorkout)
+    .delete(workouts.deleteWorkout)
 
   return router
 }

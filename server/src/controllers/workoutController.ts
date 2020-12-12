@@ -2,9 +2,9 @@ import { Request, Response } from 'express'
 
 interface workoutControllerInterface {
   getAllMethod: Function
-  getWorkoutMethod: Function
-  patchWorkoutMethod: Function
-  deleteWorkoutMethod: Function
+  getWorkout: Function
+  updateWorkout: Function
+  deleteWorkout: Function
 }
 
 function workoutController (workoutModel): workoutControllerInterface {
@@ -18,7 +18,7 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  async function getWorkoutMethod ({ params: { date }, query: { boxId } }: Request, res: Response) {
+  async function getWorkout ({ params: { date }, query: { boxId } }: Request, res: Response) {
     try {
       const queryToFind = { date, box: boxId }
 
@@ -29,7 +29,7 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  async function patchWorkoutMethod ({ params: { date }, body: { boxId, updatedDescription, updatedTitle, updatedType } }: Request, res: Response) {
+  async function updateWorkout ({ params: { date }, body: { boxId, updatedDescription, updatedTitle, updatedType } }: Request, res: Response) {
     try {
       const queryToFind = { date }
       const workout = await workoutModel.findOneAndUpdate(
@@ -48,7 +48,7 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  async function deleteWorkoutMethod ({ body: { boxId }, params: { date } }: Request, res: Response) {
+  async function deleteWorkout ({ body: { boxId }, params: { date } }: Request, res: Response) {
     try {
       const query = { box: boxId, date }
 
@@ -60,7 +60,7 @@ function workoutController (workoutModel): workoutControllerInterface {
     }
   }
 
-  return { getAllMethod, getWorkoutMethod, patchWorkoutMethod, deleteWorkoutMethod }
+  return { getAllMethod, getWorkout, updateWorkout, deleteWorkout }
 }
 
 module.exports = workoutController

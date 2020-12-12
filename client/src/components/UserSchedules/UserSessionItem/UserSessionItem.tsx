@@ -80,11 +80,11 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
   }, [user])
 
   function OnEnrollPress (): void {
-    dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'add'))
+    dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'addSession'))
   }
 
   function OnCancelPress (): void {
-    dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'remove'))
+    dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'removeSession'))
   }
 
   return (

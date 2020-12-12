@@ -1,4 +1,4 @@
-import { scheduleInterface, dateObject } from '../interfaces/interfaces'
+import { scheduleInterface, dateObject, PastSession } from '../interfaces/interfaces'
 
 export function extractDataFromDate (date?: string): dateObject {
   const dayToFormat: Date = new Date(date || Date.now())
@@ -49,10 +49,20 @@ export function extractDataFromDate (date?: string): dateObject {
   }
 }
 
-export function sortByWeekDays (dayOne: scheduleInterface, dayTWo: scheduleInterface) {
+export function sortByWeekDays (dayOne: scheduleInterface, dayTWo: scheduleInterface): number {
   const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
   const dayOneIndex = days.indexOf(dayOne.day)
   const dayTWoIndex = days.indexOf(dayTWo.day)
   return dayOneIndex > dayTWoIndex ? 1 : -1
+}
+
+export function sortBySession (sessionOne: PastSession, sessionTwo: PastSession): number {
+  return sessionOne.day < sessionTwo.day
+    ? 1
+    : sessionOne.day > sessionTwo.day
+      ? -1
+      : sessionOne.startHour.split(':')[0] < sessionTwo.startHour.split(':')[0]
+        ? 1
+        : -1
 }

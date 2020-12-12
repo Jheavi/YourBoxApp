@@ -40,6 +40,16 @@ type loadUsersErrorAction = {
   error: any
 }
 
+type updateResultAction = {
+  type: typeof actionTypes.UPDATE_RESULT
+  users: userInterface[]
+}
+
+type updateResultErrorAction = {
+  type: typeof actionTypes.UPDATE_RESULT_ERROR
+  error: any
+}
+
 export type UserActionTypes =
 loginUserAction |
 loginUserErrorAction |
@@ -48,4 +58,6 @@ logoutUserErrorAction |
 addOrRemoveSessionAction |
 addOrRemoveSessionErrorAction |
 loadUsersAction |
-loadUsersErrorAction
+loadUsersErrorAction |
+updateResultAction |
+updateResultErrorAction

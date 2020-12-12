@@ -90,10 +90,7 @@ export function deleteWorkoutError (error: any): WorkoutActionTypes {
   }
 }
 
-export function deleteWorkout (
-  date: string,
-  boxId: string
-): any {
+export function deleteWorkout (date: string, boxId: string): any {
   return async (dispatch: AppDispatch) => {
     try {
       const config = { data: { boxId } }
