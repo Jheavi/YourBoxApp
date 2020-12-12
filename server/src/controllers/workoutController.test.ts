@@ -34,11 +34,11 @@ describe('workoutController', () => {
     })
   })
 
-  describe('getWorkoutMethod', () => {
+  describe('getWorkout', () => {
     test('should call res.send with the workout', async () => {
       workoutModel.findOne = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-      await workoutControllerTest.getWorkoutMethod(req, res)
+      await workoutControllerTest.getWorkout(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeWorkout)
     })
@@ -46,17 +46,17 @@ describe('workoutController', () => {
     test('should call res.send with the error if promise rejected', async () => {
       workoutModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await workoutControllerTest.getWorkoutMethod(req, res)
+      await workoutControllerTest.getWorkout(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeError)
     })
   })
 
-  describe('patchWorkoutMethod', () => {
+  describe('updateWorkout', () => {
     test('should call res.send with the updated workout', async () => {
       workoutModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-      await workoutControllerTest.patchWorkoutMethod(req, res)
+      await workoutControllerTest.updateWorkout(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeWorkout)
     })
@@ -64,17 +64,17 @@ describe('workoutController', () => {
     test('should call res.send with the error if promise rejected', async () => {
       workoutModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await workoutControllerTest.patchWorkoutMethod(req, res)
+      await workoutControllerTest.updateWorkout(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeError)
     })
   })
 
-  describe('deleteWorkoutMethod', () => {
+  describe('deleteWorkout', () => {
     test('should call res.send with the erased workout', async () => {
       workoutModel.findOneAndDelete = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-      await workoutControllerTest.deleteWorkoutMethod(req, res)
+      await workoutControllerTest.deleteWorkout(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeWorkout)
     })
@@ -82,7 +82,7 @@ describe('workoutController', () => {
     test('should call res.send with the error if promise rejected', async () => {
       workoutModel.findOneAndDelete = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await workoutControllerTest.deleteWorkoutMethod(req, res)
+      await workoutControllerTest.deleteWorkout(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeError)
     })
