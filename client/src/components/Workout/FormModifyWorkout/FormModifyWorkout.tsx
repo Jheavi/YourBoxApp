@@ -144,15 +144,15 @@ function FormModifyWorkout ({ workout, dispatch, dayString, displayedDay, setMod
               <Text style={styles.buttonText}>Save changes</Text>
             </TouchableOpacity>
           </View>
-          {workout &&
-            <TouchableOpacity
+          {workout
+            ? (<TouchableOpacity
               style={{ ...styles.modalButton, backgroundColor: '#cb1313' }}
               onPress={onDelete}
               testID="deleteButton"
             >
-              <Text style={styles.buttonText}>{'Delete workout'}</Text>
-            </TouchableOpacity>
-          }
+              <Text style={styles.buttonText}>Delete workout</Text>
+            </TouchableOpacity>)
+            : (<View style={{ height: 0 }}/>)}
         </View>
       </View>
     </View>

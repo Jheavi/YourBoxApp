@@ -6,7 +6,7 @@ import FormModifyWorkout from './FormModifyWorkout'
 import { fireEvent, render } from '@testing-library/react-native'
 import { dateObject } from '../../../interfaces/interfaces'
 import { extractDataFromDate } from '../../../utils/dateFunctions'
-import { updateWorkout } from '../../../redux/actions/workoutActions'
+import { deleteWorkout, updateWorkout } from '../../../redux/actions/workoutActions'
 
 jest.mock('../../../redux/actions/workoutActions')
 
@@ -118,5 +118,22 @@ describe('FormModifyWorkout', () => {
     fireEvent(saveButton, 'press')
 
     expect(updateWorkout).toHaveBeenCalled()
+  })
+
+  it('delete button should call deleteWorkout', () => {
+    const initialState = {
+      userReducer: { user: { ownerOfBox: {} } },
+      workoutReducer: { workout: { title: 'A', description: 'aa' } }
+    }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<FormModifyWorkout
+      todayString={todayDate.dayString}
+      setModalVisible={setModalVisible}
+      />, { wrapper })
+
+    const deleteButton = getByTestId('deleteButton')
+    fireEvent(deleteButton, 'press')
+
+    expect(deleteWorkout).toHaveBeenCalled()
   })
 })

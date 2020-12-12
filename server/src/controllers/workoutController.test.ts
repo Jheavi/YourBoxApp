@@ -16,51 +16,75 @@ describe('workoutController', () => {
     fakeError = 'error'
   })
 
-  test('getAllMethod should call res.send with the workout', async () => {
-    workoutModel.find = jest.fn().mockResolvedValueOnce(fakeWorkout)
+  describe('getAllMethod', () => {
+    test('should call res.send with the workout', async () => {
+      workoutModel.find = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-    await workoutControllerTest.getAllMethod(req, res)
+      await workoutControllerTest.getAllMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeWorkout)
+      expect(res.send).toHaveBeenCalledWith(fakeWorkout)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      workoutModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await workoutControllerTest.getAllMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getAllMethod should call res.send with the error if promise rejected', async () => {
-    workoutModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+  describe('getWorkoutMethod', () => {
+    test('should call res.send with the workout', async () => {
+      workoutModel.findOne = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-    await workoutControllerTest.getAllMethod(req, res)
+      await workoutControllerTest.getWorkoutMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(res.send).toHaveBeenCalledWith(fakeWorkout)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      workoutModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await workoutControllerTest.getWorkoutMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getWorkoutMethod should call res.send with the workout', async () => {
-    workoutModel.findOne = jest.fn().mockResolvedValueOnce(fakeWorkout)
+  describe('patchWorkoutMethod', () => {
+    test('should call res.send with the updated workout', async () => {
+      workoutModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-    await workoutControllerTest.getWorkoutMethod(req, res)
+      await workoutControllerTest.patchWorkoutMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeWorkout)
+      expect(res.send).toHaveBeenCalledWith(fakeWorkout)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      workoutModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await workoutControllerTest.patchWorkoutMethod(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 
-  test('getWorkoutMethod should call res.send with the error if promise rejected', async () => {
-    workoutModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
+  describe('deleteWorkoutMethod', () => {
+    test('should call res.send with the erased workout', async () => {
+      workoutModel.findOneAndDelete = jest.fn().mockResolvedValueOnce(fakeWorkout)
 
-    await workoutControllerTest.getWorkoutMethod(req, res)
+      await workoutControllerTest.deleteWorkoutMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeError)
-  })
+      expect(res.send).toHaveBeenCalledWith(fakeWorkout)
+    })
 
-  test('patchWorkoutMethod should call res.send with the workout', async () => {
-    workoutModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeWorkout)
+    test('should call res.send with the error if promise rejected', async () => {
+      workoutModel.findOneAndDelete = jest.fn().mockRejectedValueOnce(fakeError)
 
-    await workoutControllerTest.patchWorkoutMethod(req, res)
+      await workoutControllerTest.deleteWorkoutMethod(req, res)
 
-    expect(res.send).toHaveBeenCalledWith(fakeWorkout)
-  })
-
-  test('patchWorkoutMethod should call res.send with the error if promise rejected', async () => {
-    workoutModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
-
-    await workoutControllerTest.patchWorkoutMethod(req, res)
-
-    expect(res.send).toHaveBeenCalledWith(fakeError)
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
   })
 })

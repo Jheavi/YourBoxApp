@@ -68,43 +68,43 @@ function ProgramDetail ({ program }: props) {
 
   return (
     <View style={styles.programView}>
-          <ImageBackground
-            source={randomImage()}
-            style= {styles.backgroundImg}
-          />
-          <View style={{ flex: 3 }}/>
-          <View style={styles.programViewColumn}>
-            <Text style={styles.text} testID="programName">{program.name}</Text>
-            <Text style={styles.text}>Sessions</Text>
-            <Text style={styles.text} testID="programSessions">{`per month: ${program.sessionsPerMonth}`}</Text>
-          </View>
-          <View style={{ flex: 4 }}/>
-          <View style={styles.programViewColumn}>
-            <View style={{ flex: 5 }}/>
-            <TouchableOpacity
-              style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}
-              onPress={() => { setModalVisible(true) }}
-              testID="touchableModal"
-            >
-              <Text style={styles.buttonText}>Update</Text>
-              <Overlay
-                overlayStyle={styles.overlayModal}
-                testID="programModal"
-                animationType="fade"
-                isVisible={modalVisible}
-                onBackdropPress={() => { setModalVisible(false) }}
-              >
-                <FormModifyProgram program={program} />
-              </Overlay>
-            </TouchableOpacity>
-            <View style={{ flex: 1 }}/>
-            <TouchableOpacity style={styles.deleteButton}>
-              <Text style={styles.buttonText}>Delete</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 2 }}/>
-          </View>
-          <View style={{ flex: 1 }}/>
-        </View>
+      <ImageBackground
+        source={randomImage()}
+        style= {styles.backgroundImg}
+      />
+      <View style={{ flex: 3 }}/>
+      <View style={styles.programViewColumn}>
+        <Text style={styles.text} testID="programName">{program.name}</Text>
+        <Text style={styles.text}>Sessions</Text>
+        <Text style={styles.text} testID="programSessions">{`per month: ${program.sessionsPerMonth}`}</Text>
+      </View>
+      <View style={{ flex: 4 }}/>
+      <View style={styles.programViewColumn}>
+        <View style={{ flex: 5 }}/>
+        <TouchableOpacity
+          style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}
+          onPress={() => { setModalVisible(true) }}
+          testID="touchableModal"
+        >
+          <Text style={styles.buttonText}>Update</Text>
+          <Overlay
+            overlayStyle={styles.overlayModal}
+            testID="programModal"
+            animationType="fade"
+            isVisible={modalVisible}
+            onBackdropPress={() => { setModalVisible(false) }}
+          >
+            <FormModifyProgram program={program} />
+          </Overlay>
+        </TouchableOpacity>
+        <View style={{ flex: 1 }}/>
+        <TouchableOpacity style={styles.deleteButton}>
+          <Text style={styles.buttonText}>Delete</Text>
+        </TouchableOpacity>
+        <View style={{ flex: 2 }}/>
+      </View>
+      <View style={{ flex: 1 }}/>
+    </View>
   )
 }
 

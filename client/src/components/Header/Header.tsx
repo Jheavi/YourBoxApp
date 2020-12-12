@@ -1,10 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, Text, StatusBar, TouchableOpacity } from 'react-native'
-import BurgerButton from './BurgerButton/BurgerButton'
 import UserButton from './UserButton/UserButton'
 import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
+import { Image } from 'react-native-elements'
+import { images } from '../../constants/images'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 34,
     textAlign: 'center'
+  },
+  logo: {
+    height: 40,
+    width: 40,
+    resizeMode: 'contain'
   }
 })
 
@@ -46,7 +52,7 @@ function Header ({ user }: props) {
     <View style={styles.container}>
       <StatusBar hidden={true}/>
       <View style={{ flex: 2 }} />
-      <BurgerButton />
+      <Image source={images.logo} style={styles.logo}/>
       <View style={{ flex: 1 }} />
       <TouchableOpacity
         style={styles.titleTouchable}

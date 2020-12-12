@@ -11,18 +11,29 @@ const initialState: programState = { programs: [] }
 
 export default function programReducer (state = initialState, action: AnyAction): programState {
   let updateState: programState
+  let orderedPrograms: ProgramInterface[]
   let updatedPrograms: ProgramInterface[]
   switch (action.type) {
     case actionTypes.LOAD_PROGRAMS:
-      updateState = { ...state, programs: action.programs }
+      orderedPrograms = action.programs.sort((program1: ProgramInterface, program2: ProgramInterface) => (
+        program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
+      ))
+      updateState = { ...state, programs: orderedPrograms }
       break
     case actionTypes.UPDATE_PROGRAM:
       updatedPrograms = state.programs!.filter((program) => (program._id !== action.program._id))
       updatedPrograms.push(action.program)
-      updateState = { ...state, programs: updatedPrograms }
+      orderedPrograms = updatedPrograms.sort((program1: ProgramInterface, program2: ProgramInterface) => (
+        program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
+      ))
+      updateState = { ...state, programs: orderedPrograms }
       break
     case actionTypes.CREATE_PROGRAM:
-      updateState = { ...state, programs: [...state.programs, action.newProgram] }
+      updatedPrograms = [...state.programs, action.newProgram]
+      orderedPrograms = updatedPrograms.sort((program1: ProgramInterface, program2: ProgramInterface) => (
+        program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
+      ))
+      updateState = { ...state, programs: orderedPrograms }
       break
     default:
       updateState = state
