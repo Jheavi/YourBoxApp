@@ -19,7 +19,7 @@ export default function workoutReducer (state = initialState, action: AnyAction)
       updatedState = { ...state, workout: action.workout }
       break
     case actionTypes.WORKOUT_LOADING:
-      updatedState = { ...state, workoutLoading: true }
+      updatedState = { ...state, workout: null, workoutLoading: true }
       break
     case actionTypes.DELETE_WORKOUT:
       updatedState = { ...state, workout: null }
