@@ -7,7 +7,7 @@ import { loadPrograms } from '../../redux/actions/programActions'
 import FormModifyProgram from './FormModifyProgram/FormModifyProgram'
 import ProgramDetail from './ProgramDetail/ProgramDetail'
 
-const { height, width } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    height,
     width,
     alignItems: 'center',
+    marginBottom: 30,
     fontFamily: 'Roboto, Open Sans, sans-serif'
   },
   titleText: {
