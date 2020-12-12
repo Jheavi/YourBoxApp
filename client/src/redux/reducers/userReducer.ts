@@ -21,6 +21,7 @@ export default function userReducer (state = initialState, action: AnyAction): u
   switch (action.type) {
     case actionTypes.USER_LOGIN:
     case actionTypes.ADD_OR_REMOVE_SESSION:
+    case actionTypes.UPDATE_RESULT:
       userWithOrderedPastSessions = {
         ...action.user,
         pastSessions: action.user.pastSessions.sort(sortBySession)

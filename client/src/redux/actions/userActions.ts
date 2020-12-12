@@ -1,7 +1,7 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import serverUrls from '../../constants/serverUrls'
-import { Auth0UserInterface, ReservedSession, userInterface } from '../../interfaces/interfaces'
+import { Auth0UserInterface, PastSession, ReservedSession, userInterface } from '../../interfaces/interfaces'
 import { onLogout } from '../../utils/authFunctions'
 import { AppDispatch } from '../configureStore'
 import actionTypes from './action-types'
@@ -90,7 +90,7 @@ function addOrRemoveSessionError (error: any): UserActionTypes {
 export function addOrRemoveReservedSession (
   reservedSession: ReservedSession,
   user: userInterface,
-  option: 'add' | 'remove'
+  option: 'addSession' | 'removeSession'
 ): any {
   return async (dispatch: AppDispatch) => {
     try {
@@ -102,6 +102,41 @@ export function addOrRemoveReservedSession (
       dispatch(addOrRemoveSessionSuccess(data))
     } catch (error) {
       dispatch(addOrRemoveSessionError(error))
+    }
+  }
+}
+
+function updateResultSuccess (updatedUser: userInterface): UserActionTypes {
+  return {
+    type: actionTypes.UPDATE_RESULT,
+    user: updatedUser
+  }
+}
+
+function updateResultError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.UPDATE_RESULT_ERROR,
+    error
+  }
+}
+
+export function updateResult (
+  pastSession: PastSession,
+  user: userInterface,
+  option: 'updateResult',
+  result: string
+): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { data } = await axios.patch(`${serverUrls.userUrl}/${user.userId}`, {
+        pastSession,
+        option,
+        result
+      })
+
+      dispatch(updateResultSuccess(data))
+    } catch (error) {
+      dispatch(updateResultError(error))
     }
   }
 }
