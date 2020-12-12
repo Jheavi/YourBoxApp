@@ -48,7 +48,7 @@ describe('schedulesReducer', () => {
     expect(state).toEqual({ programs: [] })
   })
 
-  it('should return the programs in a property called programs if action type is LOAD_PROGRAMS', () => {
+  it('should return the programs ordered in a property called programs if action type is LOAD_PROGRAMS', () => {
     const fakeAction = {
       type: actionTypes.LOAD_PROGRAMS,
       programs: fakePrograms
@@ -59,7 +59,7 @@ describe('schedulesReducer', () => {
     expect(state).toEqual({ programs: fakePrograms })
   })
 
-  it('should return the programs updated with the changed program if action type is UPDATE_PROGRAM', () => {
+  it('should return the programs updated with the changed program and ordered if action type is UPDATE_PROGRAM', () => {
     const fakeAction = {
       type: actionTypes.UPDATE_PROGRAM,
       program: fakeUpdatedProgram
@@ -88,7 +88,7 @@ describe('schedulesReducer', () => {
     })
   })
 
-  it('should return the programs updated with the new program if action type is CREATE_PROGRAM', () => {
+  it('should return the programs updated with the new program and ordered if action type is CREATE_PROGRAM', () => {
     const fakeAction = {
       type: actionTypes.CREATE_PROGRAM,
       newProgram: fakeNewProgram
@@ -100,6 +100,12 @@ describe('schedulesReducer', () => {
 
     expect(state).toEqual({
       programs: [
+        {
+          _id: '12345',
+          name: 'a',
+          sessionsPerMonth: 8,
+          box: '456'
+        },
         {
           _id: '14567',
           name: 'abc',
@@ -113,7 +119,6 @@ describe('schedulesReducer', () => {
           sessionsPerMonth: 13,
           box: '456'
         }
-
       ]
     })
   })
