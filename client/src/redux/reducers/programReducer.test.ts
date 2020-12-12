@@ -14,6 +14,18 @@ describe('schedulesReducer', () => {
         name: 'a',
         sessionsPerMonth: 8,
         box: '456'
+      },
+      {
+        _id: '13456',
+        name: 'ab',
+        sessionsPerMonth: 13,
+        box: '456'
+      },
+      {
+        _id: '14567',
+        name: 'abc',
+        sessionsPerMonth: 10,
+        box: '456'
       }
     ]
     fakeUpdatedProgram = {
@@ -56,7 +68,24 @@ describe('schedulesReducer', () => {
 
     const state = programReducer(previousState, fakeAction)
 
-    expect(state).toEqual({ programs: [fakeUpdatedProgram] })
+    expect(state).toEqual({
+      programs: [
+        {
+          _id: '14567',
+          name: 'abc',
+          sessionsPerMonth: 10,
+          box: '456'
+        },
+        fakeUpdatedProgram,
+        {
+          _id: '13456',
+          name: 'ab',
+          sessionsPerMonth: 13,
+          box: '456'
+        }
+
+      ]
+    })
   })
 
   it('should return the programs updated with the new program if action type is CREATE_PROGRAM', () => {
@@ -65,8 +94,27 @@ describe('schedulesReducer', () => {
       newProgram: fakeNewProgram
     }
 
-    const state = programReducer(undefined, fakeAction)
+    const previousState = { programs: fakePrograms }
 
-    expect(state).toEqual({ programs: [fakeNewProgram] })
+    const state = programReducer(previousState, fakeAction)
+
+    expect(state).toEqual({
+      programs: [
+        {
+          _id: '14567',
+          name: 'abc',
+          sessionsPerMonth: 10,
+          box: '456'
+        },
+        fakeNewProgram,
+        {
+          _id: '13456',
+          name: 'ab',
+          sessionsPerMonth: 13,
+          box: '456'
+        }
+
+      ]
+    })
   })
 })
