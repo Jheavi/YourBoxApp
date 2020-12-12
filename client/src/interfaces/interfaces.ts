@@ -39,6 +39,7 @@ type RootStackParamList = {
   Login: undefined
   Logout: undefined
   UserHome: undefined
+  UserResults: undefined
   UserSchedules: undefined
   UserView: undefined
   UserWorkout: undefined
@@ -48,6 +49,7 @@ export interface props {
   day: string
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
+  pastSession: PastSession
   program: ProgramInterface
   programs: ProgramInterface[]
   schedule: scheduleInterface
