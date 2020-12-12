@@ -50,8 +50,10 @@ export interface props {
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
   pastSession: PastSession
+  pastSessionsThisMonth: PastSession[]
   program: ProgramInterface
   programs: ProgramInterface[]
+  reservedSessionsThisMonth: ReservedSession[]
   schedule: scheduleInterface
   schedules: scheduleInterface[]
   schedulesLoading: boolean
@@ -61,6 +63,7 @@ export interface props {
   weekDay: string
   workout: workoutInterface
   workoutLoading: boolean
+  workouts: workoutInterface[]
 }
 
 export interface dayScheduleProps {
