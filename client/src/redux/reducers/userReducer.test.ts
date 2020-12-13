@@ -4,27 +4,62 @@ import { extractDataFromDate } from '../../utils/dateFunctions'
 
 describe('userReducer', () => {
   const { month } = extractDataFromDate()
-  const sessionOne = {
-    day: '2020-06-20'
-  }
-  const sessionTwo = {
-    day: `2020-${month}-01`
-  }
-  const sessionThree = {
-    day: `2020-${month}-28`
-  }
-  const fakeUser = {
-    active: false,
-    admin: false,
-    affiliatedProgram: 'newDate',
-    connection: 'newDate',
-    email: 'newDate',
-    name: 'newDate',
-    pastSessions: [sessionOne, sessionTwo],
-    reservedSessions: [sessionOne, sessionThree],
-    signInDate: 'newDate',
-    userId: 'newDate'
-  }
+  let sessionOne: any
+  let sessionTwo: any
+  let sessionThree: any
+  let fakeUser: any
+  let fakeUserTwo: any
+  let fakeUserTwoUpdated: any
+  let fakeUsers: any
+
+  beforeEach(() => {
+    sessionOne = {
+      day: '2020-06-20'
+    }
+    sessionTwo = {
+      day: `2020-${month}-01`
+    }
+    sessionThree = {
+      day: `2020-${month}-28`
+    }
+    fakeUser = {
+      active: false,
+      admin: false,
+      affiliatedProgram: 'aa',
+      connection: 'aa',
+      email: 'aa',
+      name: 'aa',
+      pastSessions: [sessionOne, sessionTwo],
+      reservedSessions: [sessionOne, sessionThree],
+      signInDate: 'newDate',
+      userId: 'aa'
+    }
+    fakeUserTwo = {
+      active: true,
+      admin: false,
+      affiliatedProgram: 'bb',
+      connection: 'bb',
+      email: 'bb',
+      name: 'bb',
+      pastSessions: [],
+      reservedSessions: [],
+      signInDate: 'newDate',
+      userId: 'bb'
+    }
+    fakeUserTwoUpdated = {
+      active: false,
+      admin: false,
+      affiliatedProgram: 'bb',
+      connection: 'bb',
+      email: 'bb',
+      name: 'bb',
+      pastSessions: [],
+      reservedSessions: [],
+      signInDate: 'newDate',
+      userId: 'bb'
+    }
+    fakeUsers = [fakeUser, fakeUserTwo]
+  })
 
   it('should return the default state', () => {
     const state = userReducer(undefined, { type: 'null' })
@@ -108,5 +143,27 @@ describe('userReducer', () => {
     const state = userReducer(undefined, fakeAction)
 
     expect(state).toEqual({ user: null, isLogged: false })
+  })
+
+  it('should return the users in a property called users if action type is LOAD_USERS', () => {
+    const fakeAction = {
+      type: actionTypes.LOAD_USERS,
+      users: fakeUsers
+    }
+
+    const state = userReducer(undefined, fakeAction)
+
+    expect(state).toEqual({ users: fakeUsers, isLogged: false })
+  })
+
+  it('should update the user in the variable users from state if action type is TOGGLE_USER_ACTIVE', () => {
+    const fakeAction = {
+      type: actionTypes.TOGGLE_USER_ACTIVE,
+      user: fakeUserTwoUpdated
+    }
+    const state = userReducer({ users: fakeUsers, isLogged: false }, fakeAction)
+    const expectedState = { users: [fakeUser, fakeUserTwoUpdated], isLogged: false }
+
+    expect(state).toEqual(expectedState)
   })
 })
