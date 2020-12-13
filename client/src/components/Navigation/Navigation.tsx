@@ -17,10 +17,14 @@ import UserResults from '../UserResults/UserResults'
 const { Navigator, Screen } = createStackNavigator()
 
 const header = {
-  header: () => <Header />
+  header: ({ navigation }:any) => {
+    return <Header navigation={navigation}/>
+  }
 }
 
-function Navigation ({ user }: props) {
+function Navigation ({ navigation, user }: props) {
+  console.log(navigation)
+
   return (
       <Navigator initialRouteName={
         !user
