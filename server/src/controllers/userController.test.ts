@@ -162,4 +162,26 @@ describe('userController', () => {
       expect(res.send).toHaveBeenCalledWith(fakeError)
     })
   })
+
+  describe('toggleActive', () => {
+    beforeEach(() => {
+      req = { params: { userId: 'fake' }, body: { active: true } }
+    })
+
+    test('should call res.send with the user', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
+
+      await userControllerTest.toggleActive(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.toggleActive(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
+  })
 })
