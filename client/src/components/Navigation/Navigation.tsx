@@ -6,9 +6,9 @@ import Workout from '../Workout/Workout'
 import Header from '../Header/Header'
 import AdminHome from '../AdminHome/AdminHome'
 import Schedules from '../Schedules/Schedules'
-import Login from '../UserControl/Login/Login'
+import Login from '../Login/Login'
 import UserWorkout from '../UserWorkout/UserWorkout'
-import Logout from '../UserControl/Logout/Logout'
+import UserProfile from '../UserProfile/UserProfile'
 import UserHome from '../UserHome/UserHome'
 import UserSchedules from '../UserSchedules/UserSchedules'
 import Programs from '../Programs/Programs'
@@ -17,10 +17,14 @@ import UserResults from '../UserResults/UserResults'
 const { Navigator, Screen } = createStackNavigator()
 
 const header = {
-  header: () => <Header />
+  header: ({ navigation }:any) => {
+    return <Header navigation={navigation}/>
+  }
 }
 
-function Navigation ({ user }: props) {
+function Navigation ({ navigation, user }: props) {
+  console.log(navigation)
+
   return (
       <Navigator initialRouteName={
         !user
@@ -64,8 +68,8 @@ function Navigation ({ user }: props) {
                   options={header}
                 />
                 <Screen
-                  name="Logout"
-                  component={Logout}
+                  name="UserProfile"
+                  component={UserProfile}
                   options={header}
                 />
               </>
@@ -91,8 +95,8 @@ function Navigation ({ user }: props) {
                   options={header}
                 />
                 <Screen
-                  name="Logout"
-                  component={Logout}
+                  name="UserProfile"
+                  component={UserProfile}
                   options={header}
                 />
               </>

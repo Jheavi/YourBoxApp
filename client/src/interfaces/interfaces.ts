@@ -2,16 +2,16 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { AppDispatch } from '../redux/configureStore'
 
 export interface workoutInterface {
-  description?: string,
-  box?: string,
-  date: string,
+  description?: string
+  box?: string
+  date: string
   type?: 'For Time' | 'AMRAP' | 'EMOM'
   title?: string
 }
 
 export interface scheduleInterface {
-  day: string,
-  box?: string,
+  day: string
+  box?: string
   sessions: SessionInterface[]
 }
 
@@ -39,6 +39,7 @@ type RootStackParamList = {
   Login: undefined
   Logout: undefined
   UserHome: undefined
+  UserProfile: undefined
   UserResults: undefined
   UserSchedules: undefined
   UserView: undefined
@@ -78,9 +79,9 @@ export interface StringMap {
 }
 
 export interface Auth0UserInterface {
-  connection: string,
-  email?: string,
-  name?: string,
+  connection: string
+  email?: string
+  name?: string
   userId: string
 }
 
@@ -101,23 +102,24 @@ export interface ProgramInterface {
 
 export interface userInterface {
   active: boolean
-  readonly admin: boolean,
-  affiliatedBox?: BoxInterface,
-  affiliatedProgram: ProgramInterface | string,
-  connection: string,
-  email: string,
-  name: string,
-  ownerOfBox?: BoxInterface,
-  pastSessions: PastSession[],
-  reservedSessions: ReservedSession[],
-  signInDate: string,
+  readonly admin: boolean
+  avatar: string
+  affiliatedBox?: BoxInterface
+  affiliatedProgram?: ProgramInterface
+  connection: string
+  email: string
+  name: string
+  ownerOfBox?: BoxInterface
+  pastSessions: PastSession[]
+  reservedSessions: ReservedSession[]
+  signInDate: string
   userId: string
 }
 
 export interface BoxInterface {
-  _id: string,
-  name: string,
-  owner: string,
-  direction: string,
+  _id: string
+  name: string
+  owner: string
+  direction: string
   affiliates: string[]
 }

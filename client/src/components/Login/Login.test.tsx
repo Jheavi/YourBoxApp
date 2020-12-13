@@ -3,13 +3,13 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
-import { login } from '../../../redux/actions/userActions'
+import { login } from '../../redux/actions/userActions'
 import * as AuthSession from 'expo-auth-session'
 import Login from './Login'
 
 jest.mock('@react-navigation/native')
 jest.mock('expo-auth-session')
-jest.mock('../../../redux/actions/userActions')
+jest.mock('../../redux/actions/userActions')
 
 const buildStore = configureStore([thunk])
 

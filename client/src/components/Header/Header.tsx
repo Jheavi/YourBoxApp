@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, StatusBar, TouchableOpacity } from 'react-native'
 import UserButton from './UserButton/UserButton'
-import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
 import { Image } from 'react-native-elements'
@@ -37,10 +36,8 @@ const styles = StyleSheet.create({
   }
 })
 
-function Header ({ user }: props) {
-  const navigation = useNavigation()
-
-  function navigate () {
+function Header ({ navigation, user }: props) {
+  function navigateTo () {
     !user
       ? navigation.navigate('Login')
       : user.admin
@@ -56,13 +53,13 @@ function Header ({ user }: props) {
       <View style={{ flex: 1 }} />
       <TouchableOpacity
         style={styles.titleTouchable}
-        onPress={navigate}
+        onPress={navigateTo}
         testID="navigateBtn"
       >
         <Text style={styles.title} testID="appName">YourBoxApp</Text>
       </TouchableOpacity>
       <View style={{ flex: 1 }} />
-      {user && <UserButton />}
+      {user ? <UserButton navigation={navigation}/> : <View style={{ height: 30, width: 30 }}/>}
       <View style={{ flex: 2 }} />
     </View>
   )
