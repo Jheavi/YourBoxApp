@@ -3,14 +3,14 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
-import { logout } from '../../../redux/actions/userActions'
-import Logout from './Logout'
+import { logout } from '../../redux/actions/userActions'
+import UserProfile from './UserProfile'
 
 jest.mock('../../../redux/actions/userActions')
 
 const buildStore = configureStore([thunk])
 
-describe('Logout', () => {
+describe('UserProfile', () => {
   let initialState: any
   let wrapper: any
   const wrapperFactory = (wrapperInitialState: any) => {
@@ -36,7 +36,7 @@ describe('Logout', () => {
   })
 
   it('renders correctly the logout button', () => {
-    const { getByTestId } = render(<Logout />, { wrapper })
+    const { getByTestId } = render(<UserProfile />, { wrapper })
 
     const logoutButtonText = getByTestId('logoutBtnText')
 
@@ -44,7 +44,7 @@ describe('Logout', () => {
   })
 
   it('should call the logout action with the logout button', () => {
-    const { getByTestId } = render(<Logout />, { wrapper })
+    const { getByTestId } = render(<UserProfile />, { wrapper })
 
     const logoutButton = getByTestId('logoutBtn')
     fireEvent.press(logoutButton)

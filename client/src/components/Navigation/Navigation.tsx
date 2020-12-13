@@ -8,7 +8,7 @@ import AdminHome from '../AdminHome/AdminHome'
 import Schedules from '../Schedules/Schedules'
 import Login from '../UserControl/Login/Login'
 import UserWorkout from '../UserWorkout/UserWorkout'
-import Logout from '../UserControl/Logout/Logout'
+import UserProfile from '../UserProfile/UserProfile'
 import UserHome from '../UserHome/UserHome'
 import UserSchedules from '../UserSchedules/UserSchedules'
 import Programs from '../Programs/Programs'
@@ -64,8 +64,8 @@ function Navigation ({ user }: props) {
                   options={header}
                 />
                 <Screen
-                  name="Logout"
-                  component={Logout}
+                  name="UserProfile"
+                  component={UserProfile}
                   options={header}
                 />
               </>
@@ -91,8 +91,8 @@ function Navigation ({ user }: props) {
                   options={header}
                 />
                 <Screen
-                  name="Logout"
-                  component={Logout}
+                  name="UserProfile"
+                  component={UserProfile}
                   options={header}
                 />
               </>

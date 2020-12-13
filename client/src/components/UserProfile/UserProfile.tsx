@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
-import { images } from '../../../constants/images'
-import { logout } from '../../../redux/actions/userActions'
+import { images } from '../../constants/images'
+import { logout } from '../../redux/actions/userActions'
 import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function Logout ({ dispatch }: any) {
+function UserProfile ({ dispatch }: any) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -54,4 +54,4 @@ function Logout ({ dispatch }: any) {
   )
 }
 
-export default connect(null)(Logout)
+export default connect(null)(UserProfile)
