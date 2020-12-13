@@ -13,6 +13,7 @@ import UserHome from '../UserHome/UserHome'
 import UserSchedules from '../UserSchedules/UserSchedules'
 import Programs from '../Programs/Programs'
 import UserResults from '../UserResults/UserResults'
+import AdminUserList from '../AdminUserList/AdminUserList'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -22,9 +23,7 @@ const header = {
   }
 }
 
-function Navigation ({ navigation, user }: props) {
-  console.log(navigation)
-
+function Navigation ({ user }: props) {
   return (
       <Navigator initialRouteName={
         !user
@@ -65,6 +64,11 @@ function Navigation ({ navigation, user }: props) {
                 <Screen
                   name="AdminPrograms"
                   component={Programs}
+                  options={header}
+                />
+                <Screen
+                  name="AdminUsers"
+                  component={AdminUserList}
                   options={header}
                 />
                 <Screen

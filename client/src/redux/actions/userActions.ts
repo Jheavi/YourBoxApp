@@ -163,3 +163,57 @@ export function updateResult (
     }
   }
 }
+
+function loadUsersSuccess (users: userInterface[]): UserActionTypes {
+  return {
+    type: actionTypes.LOAD_USERS,
+    users
+  }
+}
+
+function loadUsersError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.LOAD_USERS_ERROR,
+    error
+  }
+}
+
+export function loadUsers (boxId: string, active?: boolean): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { params: { affiliatedBox: boxId, active } }
+      const { data } = await axios.get(serverUrls.userUrl, body)
+
+      dispatch(loadUsersSuccess(data))
+    } catch (error) {
+      dispatch(loadUsersError(error))
+    }
+  }
+}
+
+function toggleUserActiveSuccess (user: userInterface): UserActionTypes {
+  return {
+    type: actionTypes.TOGGLE_USER_ACTIVE,
+    user
+  }
+}
+
+function toggleUserActiveError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.TOGGLE_USER_ACTIVE_ERROR,
+    error
+  }
+}
+
+export function toggleUserActive (user: userInterface): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { active: user.active }
+      const { data } = await axios.patch(`${serverUrls.toggleActiveUrl}/${user.userId}`, body)
+
+      dispatch(toggleUserActiveSuccess(data))
+    } catch (error) {
+      dispatch(toggleUserActiveError(error))
+    }
+  }
+}

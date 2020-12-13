@@ -30,7 +30,7 @@ describe('UserSessionItem', () => {
   beforeEach(() => {
     day = '2080-11-15'
     fakeUser = {
-      active: false,
+      active: true,
       admin: false,
       affiliatedProgram: {
         _id: '1234',
@@ -38,6 +38,7 @@ describe('UserSessionItem', () => {
         name: 'a',
         sessionsPerMonth: 8
       },
+      avatar: 'a',
       connection: 'a',
       email: 'fakeEmail',
       name: 'a',
@@ -195,14 +196,14 @@ describe('UserSessionItem', () => {
   })
 
   it('cancel button should be disabled if session is today but has passed', () => {
-    session = { finishHour: '06:00', startHour: '05:00', type: 'Open Box' }
+    session = { finishHour: '01:00', startHour: '00:00', type: 'Open Box' }
     day = extractDataFromDate().dayString
     const fakeUserReserved = {
       ...fakeUser,
       reservedSessions: [{
         day: extractDataFromDate().dayString,
-        finishHour: '06:00',
-        startHour: '05:00',
+        finishHour: '01:00',
+        startHour: '00:00',
         type: 'Open Box'
       }]
     }

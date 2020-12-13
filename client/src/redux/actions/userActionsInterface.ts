@@ -42,7 +42,7 @@ type removeSessionErrorAction = {
 
 type updateResultAction = {
   type: typeof actionTypes.UPDATE_RESULT
-  user: userInterface[]
+  user: userInterface
 }
 
 type updateResultErrorAction = {
@@ -60,6 +60,16 @@ type loadUsersErrorAction = {
   error: any
 }
 
+type toggleUserActiveAction = {
+  type: typeof actionTypes.TOGGLE_USER_ACTIVE
+  user: userInterface
+}
+
+type toggleUserActiveErrorAction = {
+  type: typeof actionTypes.TOGGLE_USER_ACTIVE_ERROR
+  error: any
+}
+
 export type UserActionTypes =
 loginUserAction |
 loginUserErrorAction |
@@ -72,4 +82,6 @@ removeSessionErrorAction |
 loadUsersAction |
 loadUsersErrorAction |
 updateResultAction |
-updateResultErrorAction
+updateResultErrorAction |
+toggleUserActiveAction |
+toggleUserActiveErrorAction

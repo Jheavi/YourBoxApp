@@ -47,6 +47,7 @@ type RootStackParamList = {
 };
 
 export interface props {
+  affiliatedUser: userInterface
   day: string
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
@@ -62,6 +63,7 @@ export interface props {
   session: SessionInterface
   user: userInterface
   userCanBook: boolean
+  users: userInterface[]
   weekDay: string
   workout: workoutInterface
   workoutLoading: boolean

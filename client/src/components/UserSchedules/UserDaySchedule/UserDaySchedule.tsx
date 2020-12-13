@@ -59,12 +59,16 @@ const styles = StyleSheet.create({
 })
 
 function UserDaySchedule ({ day, user, weekDay }: dayScheduleProps) {
-  const [userCanBook, setUserCanBook] = useState(true)
+  const [userCanBook, setUserCanBook] = useState(false)
 
   useEffect(() => {
-    const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
-    const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
-    setUserCanBook(typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth > 0)
+    if (!user!.active) {
+      setUserCanBook(false)
+    } else {
+      const pastSessionsThisMonth = user!.pastSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+      const reservedSessionsThisMonth = user!.reservedSessions.filter((session) => extractDataFromDate(session.day).month === extractDataFromDate().month).length
+      setUserCanBook(typeof user!.affiliatedProgram === 'object' && user!.affiliatedProgram.sessionsPerMonth - pastSessionsThisMonth - reservedSessionsThisMonth > 0)
+    }
   }, [user])
 
   return (

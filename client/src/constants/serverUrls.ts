@@ -7,6 +7,7 @@ const serverUrls = {
   addSessionUrl: `${baseUrl}/users/addSession`,
   removeSessionUrl: `${baseUrl}/users/removeSession`,
   updateResultUrl: `${baseUrl}/users/updateResult`,
+  toggleActiveUrl: `${baseUrl}/users/toggleActive`,
   programURL: `${baseUrl}/programs`
 }
 

@@ -36,9 +36,12 @@ describe('UserDaySchedule', () => {
       active: false,
       admin: false,
       affiliatedProgram: {
+        _id: 'a',
+        box: 'a',
         name: 'a',
         sessionsPerMonth: 8
       },
+      avatar: 'a',
       connection: 'a',
       email: 'fakeEmail',
       name: 'a',
@@ -77,7 +80,7 @@ describe('UserDaySchedule', () => {
 
   it('should render "no schedule" if there is no sessions', () => {
     fakeSchedule = { day: 'Another Day', sessions: [] }
-    const initialState = { userReducer: { user: fakeUser } }
+    const initialState = { userReducer: { user: { ...fakeUser, active: true } } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserDaySchedule weekDay={fakeSchedule} day={fakeDay}/>, { wrapper })
 
@@ -90,9 +93,9 @@ describe('UserDaySchedule', () => {
     fakeSchedule = {
       day: 'Another Day',
       sessions: [
-        { finishHour: '1', startHour: '1', type: '1' },
-        { finishHour: '2', startHour: '2', type: '2' },
-        { finishHour: '3', startHour: '3', type: '3' }
+        { finishHour: '1', startHour: '1', type: 'WOD' },
+        { finishHour: '2', startHour: '2', type: 'WOD' },
+        { finishHour: '3', startHour: '3', type: 'WOD' }
       ]
     }
     const initialState = { userReducer: { user: fakeUser } }
