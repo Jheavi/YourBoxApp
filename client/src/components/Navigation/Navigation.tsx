@@ -22,9 +22,7 @@ const header = {
   }
 }
 
-function Navigation ({ navigation, user }: props) {
-  console.log(navigation)
-
+function Navigation ({ user }: props) {
   return (
       <Navigator initialRouteName={
         !user
