@@ -50,7 +50,7 @@ describe('UserHome', () => {
   })
 
   it('renders correctly', () => {
-    const initialState = { userReducer: { user: fakeUser } }
+    const initialState = { userReducer: { user: fakeUser, pastSessionsThisMonth: [], reservedSessionsThisMonth: [] } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserHome />, { wrapper })
 
@@ -60,7 +60,7 @@ describe('UserHome', () => {
   })
 
   it('should call navigation.navigate with argument "UserWorkout" with "Workout of the day" button', () => {
-    const initialState = { userReducer: { user: fakeUser } }
+    const initialState = { userReducer: { user: fakeUser, pastSessionsThisMonth: [], reservedSessionsThisMonth: [] } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
 
@@ -71,7 +71,7 @@ describe('UserHome', () => {
   })
 
   it('should call navigation.navigate with argument "UserSchedules" with "Book" button', () => {
-    const initialState = { userReducer: { user: fakeUser } }
+    const initialState = { userReducer: { user: fakeUser, pastSessionsThisMonth: [], reservedSessionsThisMonth: [] } }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
 
@@ -81,8 +81,25 @@ describe('UserHome', () => {
     expect(navigation.navigate).toHaveBeenCalledWith('UserSchedules')
   })
 
+  it('should call navigation.navigate with argument "UserResults" with "Your Results" button', () => {
+    const initialState = { userReducer: { user: fakeUser, pastSessionsThisMonth: [], reservedSessionsThisMonth: [] } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
+
+    const resultsButton = getByTestId('resultsBtn')
+    fireEvent.press(resultsButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('UserResults')
+  })
+
   it('should not render remaining sessions if affiliatedProgram is not correct', () => {
-    const initialState = { userReducer: { user: { ...fakeUser, affiliatedProgram: 'error' } } }
+    const initialState = {
+      userReducer: {
+        user: { ...fakeUser, affiliatedProgram: 'error' },
+        pastSessionsThisMonth: [],
+        reservedSessionsThisMonth: []
+      }
+    }
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
 
@@ -95,15 +112,9 @@ describe('UserHome', () => {
     const { month } = extractDataFromDate()
     const initialState = {
       userReducer: {
-        user: {
-          ...fakeUser,
-          pastSessions: [
-            { day: `2020-${month}-01` }
-          ],
-          reservedSessions: [
-            { day: `2020-${month}-28` }
-          ]
-        }
+        user: fakeUser,
+        pastSessionsThisMonth: [{ day: `2020-${month}-01` }],
+        reservedSessionsThisMonth: [{ day: `2020-${month}-28` }]
       }
     }
     const wrapper = wrapperFactory(initialState)
