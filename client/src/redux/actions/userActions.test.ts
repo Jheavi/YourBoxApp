@@ -6,7 +6,7 @@ import axios from 'axios'
 import * as authFunctions from '../../utils/authFunctions'
 import jwtDecode from 'jwt-decode'
 import actionTypes from './action-types'
-import { addOrRemoveReservedSession, login, logout } from './userActions'
+import { addReservedSession, login, logout, removeReservedSession, updateResult } from './userActions'
 import { ReservedSession, userInterface } from '../../interfaces/interfaces'
 
 jest.mock('axios')
@@ -28,6 +28,7 @@ describe('Schedules actions', () => {
   let idToken: string
   let fakeSession: ReservedSession
   let fakeUser: userInterface
+  let fakeResult: string
   beforeEach(() => {
     store = mockStore()
     fakeData = { data: { id: 1 } }
@@ -51,6 +52,7 @@ describe('Schedules actions', () => {
       type: 'a',
       day: '1'
     }
+    fakeResult = '12345'
   })
 
   afterEach(() => {
@@ -58,7 +60,7 @@ describe('Schedules actions', () => {
   })
 
   describe('login', () => {
-    test('should call axios.get with the url', async () => {
+    test('should call axios.post with the url', async () => {
       axios.post = jest.fn().mockResolvedValueOnce(fakeData)
 
       await store!.dispatch(login(idToken))
@@ -138,36 +140,112 @@ describe('Schedules actions', () => {
     })
   })
 
-  describe('addOrRemoveReservedSession', () => {
-    test('should call axios.get with the url', async () => {
+  describe('addReservedSession', () => {
+    test('should call axios.patch with the url', async () => {
       axios.patch = jest.fn()
 
-      await store!.dispatch(addOrRemoveReservedSession(fakeSession, fakeUser, 'add'))
+      await store!.dispatch(addReservedSession(fakeSession, fakeUser))
 
-      expect(axios.patch).toHaveBeenCalledWith(`${serverUrls.userUrl}/fakeId`, {
-        reservedSession: fakeSession,
-        option: 'add'
-      })
+      const args = [
+        `${serverUrls.addSessionUrl}/fakeId`,
+        { reservedSession: fakeSession }
+      ]
+
+      expect(axios.patch).toHaveBeenCalledWith(...args)
     })
 
-    test('the store should have an action with type ADD_OR_REMOVE_SESSION', async () => {
+    test('the store should have an action with type ADD_SESSION', async () => {
       axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
 
-      await store!.dispatch(addOrRemoveReservedSession(fakeSession, fakeUser, 'add'))
+      await store!.dispatch(addReservedSession(fakeSession, fakeUser))
 
       expect(store!.getActions()[0]).toEqual({
-        type: actionTypes.ADD_OR_REMOVE_SESSION,
+        type: actionTypes.ADD_SESSION,
         user: fakeData.data
       })
     })
 
-    test('the store should have an action with type ADD_OR_REMOVE_SESSION_ERROR', async () => {
+    test('the store should have an action with type ADD_SESSION_ERROR', async () => {
       axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await store!.dispatch(addOrRemoveReservedSession(fakeSession, fakeUser, 'add'))
+      await store!.dispatch(addReservedSession(fakeSession, fakeUser))
 
       expect(store!.getActions()[0]).toEqual({
-        type: actionTypes.ADD_OR_REMOVE_SESSION_ERROR,
+        type: actionTypes.ADD_SESSION_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
+  describe('removeReservedSession', () => {
+    test('should call axios.patch with the url', async () => {
+      axios.patch = jest.fn()
+
+      await store!.dispatch(removeReservedSession(fakeSession, fakeUser))
+
+      const args = [
+        `${serverUrls.removeSessionUrl}/fakeId`,
+        { reservedSession: fakeSession }
+      ]
+
+      expect(axios.patch).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type REMOVE_SESSION', async () => {
+      axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(removeReservedSession(fakeSession, fakeUser))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.REMOVE_SESSION,
+        user: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type REMOVE_SESSION_ERROR', async () => {
+      axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(removeReservedSession(fakeSession, fakeUser))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.REMOVE_SESSION_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
+  describe('updateResult', () => {
+    test('should call axios.patch with the url', async () => {
+      axios.patch = jest.fn()
+
+      await store!.dispatch(updateResult(fakeSession, fakeUser, fakeResult))
+
+      const args = [
+        `${serverUrls.updateResultUrl}/fakeId`,
+        { pastSession: fakeSession, result: fakeResult }
+      ]
+
+      expect(axios.patch).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type UPDATE_RESULT', async () => {
+      axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(updateResult(fakeSession, fakeUser, fakeResult))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.UPDATE_RESULT,
+        user: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type UPDATE_RESULT_ERROR', async () => {
+      axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(updateResult(fakeSession, fakeUser, fakeResult))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.UPDATE_RESULT_ERROR,
         error: fakeError
       })
     })

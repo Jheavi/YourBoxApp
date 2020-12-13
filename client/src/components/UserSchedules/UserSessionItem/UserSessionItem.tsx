@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { props } from '../../../interfaces/interfaces'
-import { addOrRemoveReservedSession } from '../../../redux/actions/userActions'
+import { addReservedSession, removeReservedSession } from '../../../redux/actions/userActions'
 import { extractDataFromDate } from '../../../utils/dateFunctions'
 
 const styles = StyleSheet.create({
@@ -80,11 +80,11 @@ function UserSessionItem ({ day, dispatch, session, user, userCanBook }: props) 
   }, [user])
 
   function OnEnrollPress (): void {
-    dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'addSession'))
+    dispatch(addReservedSession({ ...session, day }, user))
   }
 
   function OnCancelPress (): void {
-    dispatch(addOrRemoveReservedSession({ ...session, day }, user, 'removeSession'))
+    dispatch(removeReservedSession({ ...session, day }, user))
   }
 
   return (

@@ -3,22 +3,22 @@ import { AppDispatch } from '../redux/configureStore'
 
 export interface workoutInterface {
   description?: string,
-  gym?: string,
+  box?: string,
   date: string,
-  type?: string,
+  type?: 'For Time' | 'AMRAP' | 'EMOM'
   title?: string
 }
 
 export interface scheduleInterface {
   day: string,
-  gym?: string,
+  box?: string,
   sessions: SessionInterface[]
 }
 
 export interface SessionInterface {
   finishHour: string
   startHour: string
-  type: string
+  type: 'WOD' | 'Open Box' | 'Olympics'
 }
 
 export interface dateObject {

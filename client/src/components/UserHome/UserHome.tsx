@@ -2,7 +2,6 @@ import React from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import IconFont5 from 'react-native-vector-icons/FontAwesome5'
 import IconEntypo from 'react-native-vector-icons/Entypo'
-import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { images } from '../../constants/images'
 import { props } from '../../interfaces/interfaces'
@@ -78,12 +77,12 @@ function UserHome ({ navigation, pastSessionsThisMonth, reservedSessionsThisMont
           <TouchableOpacity
             style={styles.buttons}
             onPress={() => navigation.navigate('UserSchedules')}
-            >
+            testID="bookBtn"
+          >
             <IconFont5
             name="calendar"
             size={50}
             color="white"
-            testID="bookBtn"
             />
             <Text style={styles.buttonsText}>Book</Text>
           </TouchableOpacity>
@@ -93,6 +92,7 @@ function UserHome ({ navigation, pastSessionsThisMonth, reservedSessionsThisMont
           <TouchableOpacity
             style={styles.buttons}
             onPress={() => navigation.navigate('UserResults')}
+            testID="resultsBtn"
           >
             <IconEntypo
               name="blackboard"

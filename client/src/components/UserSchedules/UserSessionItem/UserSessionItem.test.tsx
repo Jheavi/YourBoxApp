@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
 import UserSessionItem from './UserSessionItem'
 import { userInterface } from '../../../interfaces/interfaces'
-import { addOrRemoveReservedSession } from '../../../redux/actions/userActions'
+import { addReservedSession, removeReservedSession } from '../../../redux/actions/userActions'
 import { extractDataFromDate } from '../../../utils/dateFunctions'
 
 jest.mock('../../../redux/actions/userActions')
@@ -33,6 +33,8 @@ describe('UserSessionItem', () => {
       active: false,
       admin: false,
       affiliatedProgram: {
+        _id: '1234',
+        box: '456',
         name: 'a',
         sessionsPerMonth: 8
       },
@@ -140,7 +142,7 @@ describe('UserSessionItem', () => {
     expect(cancelButton).toBeDefined()
   })
 
-  it('should call addOrRemoveReservedSession action if enroll button is pressed', () => {
+  it('should call addReservedSession action if enroll button is pressed', () => {
     session = { finishHour: '10:00', startHour: '09:00', type: 'Open Box' }
     const initialState = { userReducer: { user: fakeUser } }
     const wrapper = wrapperFactory(initialState)
@@ -149,14 +151,13 @@ describe('UserSessionItem', () => {
     const enrollButton = getByTestId('enrollBtn')
     fireEvent.press(enrollButton)
 
-    expect(addOrRemoveReservedSession).toHaveBeenCalledWith(
+    expect(addReservedSession).toHaveBeenCalledWith(
       { ...session, day: '2080-11-15' },
-      fakeUser,
-      'add'
+      fakeUser
     )
   })
 
-  it('should call addOrRemoveReservedSession action if cancel button is pressed', () => {
+  it('should call removeReservedSession action if cancel button is pressed', () => {
     session = { finishHour: '10:00', startHour: '09:00', type: 'Open Box' }
     const fakeUserReserved = {
       ...fakeUser,
@@ -174,10 +175,9 @@ describe('UserSessionItem', () => {
     const cancelButton = getByTestId('cancelBtn')
     fireEvent.press(cancelButton)
 
-    expect(addOrRemoveReservedSession).toHaveBeenCalledWith(
+    expect(removeReservedSession).toHaveBeenCalledWith(
       { ...session, day: '2080-11-15' },
-      fakeUserReserved,
-      'remove'
+      fakeUserReserved
     )
   })
 
