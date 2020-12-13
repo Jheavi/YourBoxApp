@@ -6,7 +6,7 @@ import axios from 'axios'
 import * as authFunctions from '../../utils/authFunctions'
 import jwtDecode from 'jwt-decode'
 import actionTypes from './action-types'
-import { addReservedSession, login, logout, removeReservedSession, updateResult } from './userActions'
+import { addReservedSession, loadUsers, login, logout, removeReservedSession, toggleUserActive, updateResult } from './userActions'
 import { ReservedSession, userInterface } from '../../interfaces/interfaces'
 
 jest.mock('axios')
@@ -37,7 +37,13 @@ describe('Schedules actions', () => {
     fakeUser = {
       active: false,
       admin: false,
-      affiliatedProgram: 'a',
+      affiliatedProgram: {
+        _id: 'a',
+        box: 'a',
+        name: 'a',
+        sessionsPerMonth: 0
+      },
+      avatar: 'a',
       connection: 'a',
       email: 'fakeEmail',
       name: 'a',
@@ -49,7 +55,7 @@ describe('Schedules actions', () => {
     fakeSession = {
       finishHour: '1',
       startHour: '1',
-      type: 'a',
+      type: 'WOD',
       day: '1'
     }
     fakeResult = '12345'
@@ -246,6 +252,80 @@ describe('Schedules actions', () => {
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.UPDATE_RESULT_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
+  describe('loadUsers', () => {
+    test('should call axios.patch with the url', async () => {
+      axios.get = jest.fn()
+
+      await store!.dispatch(loadUsers('123'))
+
+      const args = [
+        serverUrls.userUrl,
+        { params: { affiliatedBox: '123' } }
+      ]
+
+      expect(axios.get).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type LOAD_USERS', async () => {
+      axios.get = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(loadUsers('123'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.LOAD_USERS,
+        users: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type LOAD_USERS_ERROR', async () => {
+      axios.get = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(loadUsers('123'))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.LOAD_USERS_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
+  describe('toggleUserActive', () => {
+    test('should call axios.patch with the url', async () => {
+      axios.patch = jest.fn()
+
+      await store!.dispatch(toggleUserActive(fakeUser))
+
+      const args = [
+        `${serverUrls.toggleActiveUrl}/fakeId`,
+        { active: false }
+      ]
+
+      expect(axios.patch).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type TOGGLE_USER_ACTIVE', async () => {
+      axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(toggleUserActive(fakeUser))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.TOGGLE_USER_ACTIVE,
+        user: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type TOGGLE_USER_ACTIVE_ERROR', async () => {
+      axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(toggleUserActive(fakeUser))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.TOGGLE_USER_ACTIVE_ERROR,
         error: fakeError
       })
     })
