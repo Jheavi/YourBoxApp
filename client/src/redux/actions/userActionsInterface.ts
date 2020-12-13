@@ -20,13 +20,33 @@ type logoutUserErrorAction = {
   error: any
 }
 
-type addOrRemoveSessionAction = {
-  type: typeof actionTypes.ADD_OR_REMOVE_SESSION
-  user: Auth0UserInterface
+type addSessionAction = {
+  type: typeof actionTypes.ADD_SESSION
+  user: userInterface
 }
 
-type addOrRemoveSessionErrorAction = {
-  type: typeof actionTypes.ADD_OR_REMOVE_SESSION_ERROR
+type addSessionErrorAction = {
+  type: typeof actionTypes.ADD_SESSION_ERROR
+  error: any
+}
+
+type removeSessionAction = {
+  type: typeof actionTypes.REMOVE_SESSION
+  user: userInterface
+}
+
+type removeSessionErrorAction = {
+  type: typeof actionTypes.REMOVE_SESSION_ERROR
+  error: any
+}
+
+type updateResultAction = {
+  type: typeof actionTypes.UPDATE_RESULT
+  user: userInterface[]
+}
+
+type updateResultErrorAction = {
+  type: typeof actionTypes.UPDATE_RESULT_ERROR
   error: any
 }
 
@@ -40,23 +60,15 @@ type loadUsersErrorAction = {
   error: any
 }
 
-type updateResultAction = {
-  type: typeof actionTypes.UPDATE_RESULT
-  users: userInterface[]
-}
-
-type updateResultErrorAction = {
-  type: typeof actionTypes.UPDATE_RESULT_ERROR
-  error: any
-}
-
 export type UserActionTypes =
 loginUserAction |
 loginUserErrorAction |
 logoutUserAction |
 logoutUserErrorAction |
-addOrRemoveSessionAction |
-addOrRemoveSessionErrorAction |
+addSessionAction |
+addSessionErrorAction |
+removeSessionAction |
+removeSessionErrorAction |
 loadUsersAction |
 loadUsersErrorAction |
 updateResultAction |

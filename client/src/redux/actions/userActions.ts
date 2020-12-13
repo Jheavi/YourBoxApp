@@ -73,35 +73,62 @@ export function logout (): any {
   }
 }
 
-function addOrRemoveSessionSuccess (updatedUser: userInterface): UserActionTypes {
+function addSessionSuccess (updatedUser: userInterface): UserActionTypes {
   return {
-    type: actionTypes.ADD_OR_REMOVE_SESSION,
+    type: actionTypes.ADD_SESSION,
     user: updatedUser
   }
 }
 
-function addOrRemoveSessionError (error: any): UserActionTypes {
+function addSessionError (error: any): UserActionTypes {
   return {
-    type: actionTypes.ADD_OR_REMOVE_SESSION_ERROR,
+    type: actionTypes.ADD_SESSION_ERROR,
     error
   }
 }
 
-export function addOrRemoveReservedSession (
+export function addReservedSession (
   reservedSession: ReservedSession,
-  user: userInterface,
-  option: 'addSession' | 'removeSession'
+  { userId }: userInterface
 ): any {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.patch(`${serverUrls.userUrl}/${user.userId}`, {
-        reservedSession,
-        option
-      })
+      const body = { reservedSession }
+      const { data } = await axios.patch(`${serverUrls.addSessionUrl}/${userId}`, body)
 
-      dispatch(addOrRemoveSessionSuccess(data))
+      dispatch(addSessionSuccess(data))
     } catch (error) {
-      dispatch(addOrRemoveSessionError(error))
+      dispatch(addSessionError(error))
+    }
+  }
+}
+
+function removeSessionSuccess (updatedUser: userInterface): UserActionTypes {
+  return {
+    type: actionTypes.REMOVE_SESSION,
+    user: updatedUser
+  }
+}
+
+function removeSessionError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.REMOVE_SESSION_ERROR,
+    error
+  }
+}
+
+export function removeReservedSession (
+  reservedSession: ReservedSession,
+  { userId }: userInterface
+): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { reservedSession }
+      const { data } = await axios.patch(`${serverUrls.removeSessionUrl}/${userId}`, body)
+
+      dispatch(removeSessionSuccess(data))
+    } catch (error) {
+      dispatch(removeSessionError(error))
     }
   }
 }
@@ -122,17 +149,13 @@ function updateResultError (error: any): UserActionTypes {
 
 export function updateResult (
   pastSession: PastSession,
-  user: userInterface,
-  option: 'updateResult',
+  { userId }: userInterface,
   result: string
 ): any {
   return async (dispatch: AppDispatch) => {
     try {
-      const { data } = await axios.patch(`${serverUrls.userUrl}/${user.userId}`, {
-        pastSession,
-        option,
-        result
-      })
+      const body = { pastSession, result }
+      const { data } = await axios.patch(`${serverUrls.updateResultUrl}/${userId}`, body)
 
       dispatch(updateResultSuccess(data))
     } catch (error) {
