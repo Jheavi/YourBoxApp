@@ -4,6 +4,9 @@ const serverUrls = {
   workoutUrl: `${baseUrl}/workouts`,
   scheduleUrl: `${baseUrl}/schedules`,
   userUrl: `${baseUrl}/users`,
+  addSessionUrl: `${baseUrl}/users/addSession`,
+  removeSessionUrl: `${baseUrl}/users/removeSession`,
+  updateResultUrl: `${baseUrl}/users/updateResult`,
   programURL: `${baseUrl}/programs`
 }
 
