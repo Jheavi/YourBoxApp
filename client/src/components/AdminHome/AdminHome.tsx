@@ -54,7 +54,9 @@ function AdminHome ({ navigation }: any) {
             <Text style={styles.buttonsText} testID="workoutTextBtn">Your workouts</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => navigation.navigate('AdminUsers')}
             style={styles.buttons}
+            testID="usersBtn"
           >
             <Icon
             name="user"
