@@ -10,6 +10,7 @@ interface userControllerInterface {
   addSession: Function
   removeSession: Function
   updateResult: Function
+  toggleActive: Function
 }
 
 function userController (userModel): userControllerInterface {
@@ -27,6 +28,7 @@ function userController (userModel): userControllerInterface {
   async function postUser ({ body: { user } }: Request, res: Response) {
     try {
       const queryUserExists = { userId: user.userId }
+
       const userExists = await userModel.findOne(queryUserExists)
 
       if (userExists) {
@@ -54,7 +56,9 @@ function userController (userModel): userControllerInterface {
   async function getUser ({ params: { userId } }: Request, res: Response) {
     try {
       const query = { userId }
+
       const user = await userModel.findOne(query)
+
       res.send(user)
     } catch (error) {
       res.send(error)
@@ -65,9 +69,12 @@ function userController (userModel): userControllerInterface {
     try {
       const query = { userId }
       const update = { $addToSet: { reservedSessions: reservedSession } }
+
       const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+
       await updatedUser.populate('affiliatedProgram').execPopulate()
       await updatedUser.populate('affiliatedBox').execPopulate()
+
       res.send(updatedUser)
     } catch (error) {
       res.send(error)
@@ -78,9 +85,12 @@ function userController (userModel): userControllerInterface {
     try {
       const query = { userId }
       const update = { $pull: { reservedSessions: reservedSession } }
+
       const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+
       await updatedUser.populate('affiliatedProgram').execPopulate()
       await updatedUser.populate('affiliatedBox').execPopulate()
+
       res.send(updatedUser)
     } catch (error) {
       res.send(error)
@@ -110,9 +120,28 @@ function userController (userModel): userControllerInterface {
           'pastSessions.$.result': result
         }
       }
+
       const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+
       await updatedUser.populate('affiliatedProgram').execPopulate()
       await updatedUser.populate('affiliatedBox').execPopulate()
+
+      res.send(updatedUser)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  async function toggleActive ({ params: { userId }, body: { active } }: Request, res: Response) {
+    try {
+      const query = { userId }
+      const update = { active: !active }
+
+      const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+
+      await updatedUser.populate('affiliatedProgram').execPopulate()
+      await updatedUser.populate('affiliatedBox').execPopulate()
+
       res.send(updatedUser)
     } catch (error) {
       res.send(error)
@@ -125,7 +154,8 @@ function userController (userModel): userControllerInterface {
     postUser,
     addSession,
     removeSession,
-    updateResult
+    updateResult,
+    toggleActive
   }
 }
 
