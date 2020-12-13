@@ -27,7 +27,6 @@ module.exports = {
     'no-unused-vars': 1,
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
-    'react/display-name': 'off',
-    'no-debugger': 1
+    'react/display-name': 'off'
   }
 }
