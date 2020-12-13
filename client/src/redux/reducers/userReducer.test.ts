@@ -1,7 +1,18 @@
 import userReducer from './userReducer'
 import actionTypes from '../actions/action-types'
+import { extractDataFromDate } from '../../utils/dateFunctions'
 
 describe('userReducer', () => {
+  const { month } = extractDataFromDate()
+  const sessionOne = {
+    day: '2020-06-20'
+  }
+  const sessionTwo = {
+    day: `2020-${month}-01`
+  }
+  const sessionThree = {
+    day: `2020-${month}-28`
+  }
   const fakeUser = {
     active: false,
     admin: false,
@@ -9,8 +20,8 @@ describe('userReducer', () => {
     connection: 'newDate',
     email: 'newDate',
     name: 'newDate',
-    pastSessions: [],
-    reservedSessions: [],
+    pastSessions: [sessionOne, sessionTwo],
+    reservedSessions: [sessionOne, sessionThree],
     signInDate: 'newDate',
     userId: 'newDate'
   }
@@ -28,19 +39,65 @@ describe('userReducer', () => {
     }
 
     const state = userReducer(undefined, fakeAction)
+    const expectedState = {
+      user: fakeUser,
+      isLogged: true,
+      pastSessionsThisMonth: [sessionTwo],
+      reservedSessionsThisMonth: [sessionThree]
+    }
 
-    expect(state).toEqual({ user: fakeUser, isLogged: true })
+    expect(state).toEqual(expectedState)
   })
 
-  it('should return the user in a property called user if action type is ADD_OR_REMOVE_SESSION', () => {
+  it('should return the user in a property called user if action type is ADD_SESSION', () => {
     const fakeAction = {
-      type: actionTypes.ADD_OR_REMOVE_SESSION,
+      type: actionTypes.ADD_SESSION,
       user: fakeUser
     }
 
     const state = userReducer(undefined, fakeAction)
+    const expectedState = {
+      user: fakeUser,
+      isLogged: true,
+      pastSessionsThisMonth: [sessionTwo],
+      reservedSessionsThisMonth: [sessionThree]
+    }
 
-    expect(state).toEqual({ user: fakeUser, isLogged: true })
+    expect(state).toEqual(expectedState)
+  })
+
+  it('should return the user in a property called user if action type is REMOVE_SESSION', () => {
+    const fakeAction = {
+      type: actionTypes.REMOVE_SESSION,
+      user: fakeUser
+    }
+
+    const state = userReducer(undefined, fakeAction)
+    const expectedState = {
+      user: fakeUser,
+      isLogged: true,
+      pastSessionsThisMonth: [sessionTwo],
+      reservedSessionsThisMonth: [sessionThree]
+    }
+
+    expect(state).toEqual(expectedState)
+  })
+
+  it('should return the user in a property called user if action type is UPDATE_RESULT', () => {
+    const fakeAction = {
+      type: actionTypes.UPDATE_RESULT,
+      user: fakeUser
+    }
+
+    const state = userReducer(undefined, fakeAction)
+    const expectedState = {
+      user: fakeUser,
+      isLogged: true,
+      pastSessionsThisMonth: [sessionTwo],
+      reservedSessionsThisMonth: [sessionThree]
+    }
+
+    expect(state).toEqual(expectedState)
   })
 
   it('should return the user null if action type is USER_LOGOUT', () => {
