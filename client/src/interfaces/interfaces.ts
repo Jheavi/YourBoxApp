@@ -18,7 +18,7 @@ export interface scheduleInterface {
 export interface SessionInterface {
   finishHour: string
   startHour: string
-  type: string
+  type: 'WOD' | 'Open Box' | 'Olympics'
 }
 
 export interface dateObject {
