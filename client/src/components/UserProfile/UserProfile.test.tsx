@@ -6,7 +6,7 @@ import { fireEvent, render } from '@testing-library/react-native'
 import { logout } from '../../redux/actions/userActions'
 import UserProfile from './UserProfile'
 
-jest.mock('../../../redux/actions/userActions')
+jest.mock('../../redux/actions/userActions')
 
 const buildStore = configureStore([thunk])
 
@@ -25,7 +25,17 @@ describe('UserProfile', () => {
   }
 
   beforeEach(() => {
-    initialState = { userReducer: { user: { ownerOfBox: {} } } }
+    initialState = {
+      userReducer: {
+        user: {
+          admin: true,
+          ownerOfBox: {
+            name: 'fakeBox',
+            affiliates: []
+          }
+        }
+      }
+    }
     wrapper = wrapperFactory(initialState)
   })
 
@@ -50,5 +60,102 @@ describe('UserProfile', () => {
     fireEvent.press(logoutButton)
 
     expect(logout).toHaveBeenCalled()
+  })
+
+  it('should render the name of the box owned if user is admin', () => {
+    const { getByTestId } = render(<UserProfile />, { wrapper })
+
+    const boxName = getByTestId('boxOwnerName')
+
+    expect(boxName.children[0]).toBe('fakeBox')
+  })
+
+  describe('user not admin profile', () => {
+    beforeEach(() => {
+      initialState = {
+        userReducer: {
+          user: {
+            admin: false,
+            active: true,
+            affiliatedBox: { name: 'fakeBox' },
+            affiliatedProgram: { name: 'program1', sessionsPerMonth: 3 }
+          }
+        }
+      }
+      wrapper = wrapperFactory(initialState)
+    })
+
+    it('should render the name of the box if user is affiliated to a box', () => {
+      const { getByTestId } = render(<UserProfile />, { wrapper })
+
+      const boxName = getByTestId('boxNonOwnerName')
+
+      expect(boxName.children[0]).toBe('fakeBox')
+    })
+
+    it('should render "not affiliated" if user is not affiliated to a box', () => {
+      initialState = {
+        userReducer: {
+          user: {
+            admin: false,
+            active: true,
+            affiliatedBox: null,
+            affiliatedProgram: null
+          }
+        }
+      }
+      wrapper = wrapperFactory(initialState)
+      const { getByTestId } = render(<UserProfile />, { wrapper })
+
+      const notAffiliatedText = getByTestId('notAffiliated')
+
+      expect(notAffiliatedText.children[0]).toBe('Actually not affiliated')
+    })
+
+    it('should render "yes" if user is active', () => {
+      const { getByTestId } = render(<UserProfile />, { wrapper })
+
+      const userActive = getByTestId('userActive')
+
+      expect(userActive.children[0]).toBe('Active: Yes')
+    })
+
+    it('should render "no" if user is inactive', () => {
+      initialState = {
+        userReducer: {
+          user: {
+            admin: false,
+            active: false,
+            affiliatedBox: { name: 'fakeBox' },
+            affiliatedProgram: { name: 'program1', sessionsPerMonth: 3 }
+          }
+        }
+      }
+      wrapper = wrapperFactory(initialState)
+      const { getByTestId } = render(<UserProfile />, { wrapper })
+
+      const userActive = getByTestId('userActive')
+
+      expect(userActive.children[0]).toBe('Active: No')
+    })
+
+    it('should render "no" if user has no active program', () => {
+      initialState = {
+        userReducer: {
+          user: {
+            admin: false,
+            active: true,
+            affiliatedBox: { name: 'fakeBox' },
+            affiliatedProgram: null
+          }
+        }
+      }
+      wrapper = wrapperFactory(initialState)
+      const { getByTestId } = render(<UserProfile />, { wrapper })
+
+      const programName = getByTestId('programName')
+
+      expect(programName.children[0]).toBe('Active program: No')
+    })
   })
 })
