@@ -8,6 +8,7 @@ export interface userState {
   pastSessionsThisMonth?: PastSession[]
   reservedSessionsThisMonth?: ReservedSession[]
   user?: userInterface | null
+  users?: userInterface[]
 }
 
 const initialState: userState = { isLogged: false }
@@ -43,6 +44,9 @@ export default function userReducer (state = initialState, action: AnyAction): u
       break
     case actionTypes.USER_LOGOUT:
       updatedState = { ...state, user: null, isLogged: false }
+      break
+    case actionTypes.LOAD_USERS:
+      updatedState = { ...state, users: action.users }
       break
     default:
       updatedState = state

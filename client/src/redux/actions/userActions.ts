@@ -163,3 +163,30 @@ export function updateResult (
     }
   }
 }
+
+function loadUsersSuccess (users: userInterface[]): UserActionTypes {
+  return {
+    type: actionTypes.LOAD_USERS,
+    users
+  }
+}
+
+function loadUsersError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.LOAD_USERS_ERROR,
+    error
+  }
+}
+
+export function loadUsers (boxId: string, active?: boolean): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { params: { affiliatedBox: boxId, active } }
+      const { data } = await axios.get(serverUrls.userUrl, body)
+
+      dispatch(loadUsersSuccess(data))
+    } catch (error) {
+      dispatch(loadUsersError(error))
+    }
+  }
+}
