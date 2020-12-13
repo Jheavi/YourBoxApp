@@ -13,6 +13,7 @@ export interface pastSession extends reservedSessionInterface {
 export interface userInterface {
   active: boolean
   readonly admin: boolean,
+  avatar: string
   affiliatedBox?: string,
   affiliatedProgram?: string,
   connection: string,
@@ -27,7 +28,8 @@ export interface userInterface {
 
 const userSchema: userInterface = new Schema({
   active: Boolean,
-  admin: false,
+  admin: Boolean,
+  avatar: String,
   affiliatedBox: { type: Schema.Types.ObjectId, ref: 'Box' },
   affiliatedProgram: { type: Schema.Types.ObjectId, ref: 'Program' },
   connection: String,

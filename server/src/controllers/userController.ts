@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import images from '../constants/images'
 import { extractDataFromDate } from '../utils/dateFunctions'
 
 interface userControllerInterface {
@@ -37,7 +38,7 @@ function userController (userModel): userControllerInterface {
         res.send(userExists)
       } else {
         const { dayString } = extractDataFromDate()
-        const userToCreate = { ...user, active: false, admin: false, pastSessions: [], reservedSessions: [], signInDate: dayString }
+        const userToCreate = { ...user, active: false, admin: false, avatar: images.avatar, pastSessions: [], reservedSessions: [], signInDate: dayString }
         const userCreated = await userModel.create(userToCreate)
 
         await userCreated.populate('ownerOfBox').execPopulate()
