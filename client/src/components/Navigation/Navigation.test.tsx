@@ -56,7 +56,7 @@ describe('Navigation', () => {
   })
 
   it('render the UserHome component if there is a non-admin user', async () => {
-    const initialState = { userReducer: { user: fakeUser } }
+    const initialState = { userReducer: { user: fakeUser, pastSessionsThisMonth: [], reservedSessionsThisMonth: [] } }
     const wrapper = wrapperFactory(initialState)
     const { getByText } = render(<Navigation />, { wrapper })
     const workoutButton = getByText(/Workout of the day/)
