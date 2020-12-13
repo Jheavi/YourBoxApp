@@ -5,7 +5,7 @@ export interface workoutInterface {
   description?: string,
   box?: string,
   date: string,
-  type?: string,
+  type?: 'For Time' | 'AMRAP' | 'EMOM'
   title?: string
 }
 
