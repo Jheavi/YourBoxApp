@@ -3,21 +3,12 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
-import { useNavigation } from '@react-navigation/native'
 import Header from './Header'
-
-jest.mock('@react-navigation/native', () => {
-  const actualNav = jest.requireActual('@react-navigation/native')
-  return {
-    ...actualNav,
-    useNavigation: () => ({ navigate: jest.fn() })
-  }
-})
 
 const buildStore = configureStore([thunk])
 
 describe('Header', () => {
-  let navigation: any
+  let navigation: {navigate: jest.Mock<any, any>}
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()
@@ -30,11 +21,12 @@ describe('Header', () => {
   }
 
   beforeEach(() => {
-    navigation = useNavigation()
+    navigation = {
+      navigate: jest.fn()
+    }
   })
 
   afterEach(() => {
-    navigation = null
     jest.resetAllMocks()
   })
 
@@ -48,14 +40,36 @@ describe('Header', () => {
     expect(title.children[0]).toBe('YourBoxApp')
   })
 
-  // it('should call navigation.navigate to Login page if there is no user', () => {
-  //   const initialState = { userReducer: { user: null } }
-  //   const wrapper = wrapperFactory(initialState)
-  //   const { getByTestId } = render(<Header />, { wrapper })
+  it('should call navigation.navigate to Login page if there is no user', () => {
+    const initialState = { userReducer: { user: null } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Header navigation={navigation}/>, { wrapper })
 
-  //   const navigateButton = getByTestId('navigateBtn')
-  //   fireEvent.press(navigateButton)
+    const navigateButton = getByTestId('navigateBtn')
+    fireEvent.press(navigateButton)
 
-  //   expect(navigation.navigate).toHaveBeenCalledWith('Login')
-  // })
+    expect(navigation.navigate).toHaveBeenCalledWith('Login')
+  })
+
+  it('should call navigation.navigate to AdminHome page if user is admin', () => {
+    const initialState = { userReducer: { user: { admin: true } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Header navigation={navigation}/>, { wrapper })
+
+    const navigateButton = getByTestId('navigateBtn')
+    fireEvent.press(navigateButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('Home')
+  })
+
+  it('should call navigation.navigate to UserHome page if user is not admin', () => {
+    const initialState = { userReducer: { user: { admin: false } } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<Header navigation={navigation}/>, { wrapper })
+
+    const navigateButton = getByTestId('navigateBtn')
+    fireEvent.press(navigateButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('UserHome')
+  })
 })
