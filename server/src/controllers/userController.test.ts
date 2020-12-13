@@ -10,6 +10,8 @@ describe('userController', () => {
   let newUser
   let fakeError
   let fakeReservedSession
+  let fakePastSession
+  let fakeResult
 
   beforeEach(() => {
     res = { send: jest.fn() }
@@ -17,6 +19,8 @@ describe('userController', () => {
     newUser = { name: 'aa', populate: jest.fn().mockReturnValue({ execPopulate: jest.fn() }) }
     fakeError = 'error'
     fakeReservedSession = {}
+    fakePastSession = {}
+    fakeResult = '1342'
   })
 
   describe('getUsers', () => {
@@ -71,7 +75,7 @@ describe('userController', () => {
 
   describe('getUser', () => {
     test('should call res.send with the user', async () => {
-      req = { params: { email: 'fake' } }
+      req = { params: { userId: 'fake' } }
       userModel.findOne = jest.fn().mockResolvedValueOnce(fakeUser)
 
       await userControllerTest.getUser(req, res)
@@ -80,7 +84,7 @@ describe('userController', () => {
     })
 
     test('should call res.send with the error if promise rejected', async () => {
-      req = { params: { email: 'fake' } }
+      req = { params: { userId: 'fake' } }
       userModel.findOne = jest.fn().mockRejectedValueOnce(fakeError)
 
       await userControllerTest.getUser(req, res)
@@ -89,30 +93,67 @@ describe('userController', () => {
     })
   })
 
-  describe('updateUser', () => {
-    test('should call res.send with the user if option is "add"', async () => {
-      req = { params: { email: 'fake' }, body: { option: 'add', reservedSession: fakeReservedSession } }
-      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
-
-      await userControllerTest.updateUser(req, res)
-
-      expect(res.send).toHaveBeenCalledWith(fakeUser)
+  describe('addSession', () => {
+    beforeEach(() => {
+      req = { params: { userId: 'fake' }, body: { reservedSession: fakeReservedSession } }
     })
 
-    test('should call res.send with the user if option is "remove"', async () => {
-      req = { params: { email: 'fake' }, body: { option: 'remove', reservedSession: fakeReservedSession } }
+    test('should call res.send with the user', async () => {
       userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
 
-      await userControllerTest.updateUser(req, res)
+      await userControllerTest.addSession(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeUser)
     })
 
     test('should call res.send with the error if promise rejected', async () => {
-      req = { params: { email: 'fake' }, body: { option: 'remove', reservedSession: fakeReservedSession } }
       userModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
 
-      await userControllerTest.updateUser(req, res)
+      await userControllerTest.addSession(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
+  })
+
+  describe('removeSession', () => {
+    beforeEach(() => {
+      req = { params: { userId: 'fake' }, body: { reservedSession: fakeReservedSession } }
+    })
+
+    test('should call res.send with the user', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
+
+      await userControllerTest.removeSession(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.removeSession(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
+  })
+
+  describe('updateResult', () => {
+    beforeEach(() => {
+      req = { params: { userId: 'fake' }, body: { pastSession: fakePastSession, result: fakeResult } }
+    })
+
+    test('should call res.send with the user', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
+
+      await userControllerTest.updateResult(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.updateResult(req, res)
 
       expect(res.send).toHaveBeenCalledWith(fakeError)
     })

@@ -6,7 +6,9 @@ interface userControllerInterface {
   getUsers: Function
   getUser: Function
   postUser: Function
-  updateUser: Function
+  addSession: Function
+  removeSession: Function
+  updateResult: Function
 }
 
 function userController (userModel): userControllerInterface {
@@ -59,61 +61,71 @@ function userController (userModel): userControllerInterface {
     }
   }
 
-  async function updateUser ({ body: { pastSession, reservedSession, result, option }, params: { userId } }: Request, res: Response) {
+  async function addSession ({ body: { reservedSession }, params: { userId } }: Request, res: Response) {
     try {
-      let query
-      if (option === 'addSession') {
-        query = { userId }
-        const update = { $addToSet: { reservedSessions: reservedSession } }
-        const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
-        await updatedUser.populate('affiliatedProgram').execPopulate()
-        await updatedUser.populate('affiliatedBox').execPopulate()
-        res.send(updatedUser)
-      } else if (option === 'removeSession') {
-        query = { userId }
-        const update = { $pull: { reservedSessions: reservedSession } }
-        const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
-        await updatedUser.populate('affiliatedProgram').execPopulate()
-        await updatedUser.populate('affiliatedBox').execPopulate()
-        res.send(updatedUser)
-      } else if (option === 'updateResult') {
-        const query = {
-          userId,
-          pastSessions: {
-            $elemMatch: {
-              finishHour: pastSession.finishHour,
-              startHour: pastSession.startHour,
-              type: pastSession.type,
-              day: pastSession.day
-            }
-          }
-        }
+      const query = { userId }
+      const update = { $addToSet: { reservedSessions: reservedSession } }
+      const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+      await updatedUser.populate('affiliatedProgram').execPopulate()
+      await updatedUser.populate('affiliatedBox').execPopulate()
+      res.send(updatedUser)
+    } catch (error) {
+      res.send(error)
+    }
+  }
 
-        const update = {
-          $set: {
-            'pastSessions.$.finishHour': pastSession.finishHour,
-            'pastSessions.$.startHour': pastSession.startHour,
-            'pastSessions.$.type': pastSession.type,
-            'pastSessions.$.day': pastSession.day,
-            'pastSessions.$.result': result
+  async function removeSession ({ body: { reservedSession }, params: { userId } }: Request, res: Response) {
+    try {
+      const query = { userId }
+      const update = { $pull: { reservedSessions: reservedSession } }
+      const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+      await updatedUser.populate('affiliatedProgram').execPopulate()
+      await updatedUser.populate('affiliatedBox').execPopulate()
+      res.send(updatedUser)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
+  async function updateResult ({ body: { pastSession, result }, params: { userId } }: Request, res: Response) {
+    try {
+      const query = {
+        userId,
+        pastSessions: {
+          $elemMatch: {
+            finishHour: pastSession.finishHour,
+            startHour: pastSession.startHour,
+            type: pastSession.type,
+            day: pastSession.day
           }
         }
-        const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
-        await updatedUser.populate('affiliatedProgram').execPopulate()
-        await updatedUser.populate('affiliatedBox').execPopulate()
-        res.send(updatedUser)
       }
+
+      const update = {
+        $set: {
+          'pastSessions.$.finishHour': pastSession.finishHour,
+          'pastSessions.$.startHour': pastSession.startHour,
+          'pastSessions.$.type': pastSession.type,
+          'pastSessions.$.day': pastSession.day,
+          'pastSessions.$.result': result
+        }
+      }
+      const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+      await updatedUser.populate('affiliatedProgram').execPopulate()
+      await updatedUser.populate('affiliatedBox').execPopulate()
+      res.send(updatedUser)
     } catch (error) {
       res.send(error)
     }
   }
 
   return {
-    // deleteUser,
     getUsers,
     getUser,
     postUser,
-    updateUser
+    addSession,
+    removeSession,
+    updateResult
   }
 }
 

@@ -12,8 +12,15 @@ function userRouter (userModel) {
 
   router.route('/:userId')
     .get(users.getUser)
-    .patch(users.updateUser)
-  //   .delete(users.deleteUser)
+
+  router.route('/addSession/:userId')
+    .patch(users.addSession)
+
+  router.route('/removeSession/:userId')
+    .patch(users.removeSession)
+
+  router.route('/updateResult/:userId')
+    .patch(users.updateResult)
 
   return router
 }
