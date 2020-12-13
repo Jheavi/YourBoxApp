@@ -33,6 +33,7 @@ describe('UserHome', () => {
     fakeUser = {
       active: false,
       admin: false,
+      avatar: 'aa',
       affiliatedProgram: {
         _id: '12345',
         box: '456',
@@ -90,6 +91,17 @@ describe('UserHome', () => {
     fireEvent.press(resultsButton)
 
     expect(navigation.navigate).toHaveBeenCalledWith('UserResults')
+  })
+
+  it('should call navigation.navigate with argument "UserProfile" with "Your Profile" button', () => {
+    const initialState = { userReducer: { user: fakeUser, pastSessionsThisMonth: [], reservedSessionsThisMonth: [] } }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<UserHome navigation={navigation}/>, { wrapper })
+
+    const profileButton = getByTestId('profileBtn')
+    fireEvent.press(profileButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('UserProfile')
   })
 
   it('should not render remaining sessions if affiliatedProgram is not correct', () => {

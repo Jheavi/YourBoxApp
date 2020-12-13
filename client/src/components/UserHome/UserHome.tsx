@@ -103,13 +103,15 @@ function UserHome ({ navigation, pastSessionsThisMonth, reservedSessionsThisMont
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
-            >
+            onPress={() => navigation.navigate('UserProfile')}
+            testID="profileBtn"
+          >
             <IconFont5
               name="user"
               size={50}
               color="white"
             />
-            <Text style={styles.buttonsText}>Your profile</Text>
+            <Text style={styles.buttonsText}>Your Profile</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}/>
