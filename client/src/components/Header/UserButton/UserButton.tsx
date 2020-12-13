@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { useNavigation } from '@react-navigation/native'
 import { connect } from 'react-redux'
+import { props } from '../../../interfaces/interfaces'
 
 const styles = StyleSheet.create({
   userButton: {
@@ -18,9 +18,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function userButton () {
-  const navigation = useNavigation()
-
+function userButton ({ navigation }: props) {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('UserProfile')}

@@ -32,6 +32,10 @@ describe('UserHome', () => {
     wrapper = wrapperFactory(initialState)
   })
 
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
   it('renders correctly', () => {
     const { getByTestId } = render(<UserButton />, { wrapper })
 
@@ -41,7 +45,7 @@ describe('UserHome', () => {
   })
 
   it('should call navigation.navigate with argument "UserProfile"', () => {
-    const { getByTestId } = render(<UserButton />, { wrapper })
+    const { getByTestId } = render(<UserButton navigation={navigation}/>, { wrapper })
 
     const userButton = getByTestId('userButton')
     fireEvent.press(userButton)
