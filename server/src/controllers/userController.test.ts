@@ -7,8 +7,10 @@ describe('userController', () => {
   let res
   let req
   let fakeUser
+  let fakeUsers
   let newUser
   let fakeError
+  let fakeUsersError
   let fakeReservedSession
   let fakePastSession
   let fakeResult
@@ -16,8 +18,10 @@ describe('userController', () => {
   beforeEach(() => {
     res = { send: jest.fn() }
     fakeUser = { name: 'aa', populate: jest.fn().mockReturnValue({ execPopulate: jest.fn() }) }
+    fakeUsers = { users: [{ name: 'aa' }], populate: jest.fn().mockResolvedValueOnce([{ name: 'aa' }]) }
     newUser = { name: 'aa', populate: jest.fn().mockReturnValue({ execPopulate: jest.fn() }) }
     fakeError = 'error'
+    fakeUsersError = { populate: jest.fn().mockRejectedValueOnce(fakeError) }
     fakeReservedSession = {}
     fakePastSession = {}
     fakeResult = '1342'
@@ -26,16 +30,16 @@ describe('userController', () => {
   describe('getUsers', () => {
     test('should call res.send with the user', async () => {
       req = { query: { active: true, affiliatedBox: '456' } }
-      userModel.find = jest.fn().mockResolvedValueOnce(fakeUser)
+      userModel.find = jest.fn().mockReturnValueOnce(fakeUsers)
 
       await userControllerTest.getUsers(req, res)
 
-      expect(res.send).toHaveBeenCalledWith(fakeUser)
+      expect(res.send).toHaveBeenCalledWith([{ name: 'aa' }])
     })
 
     test('should call res.send with the error if promise rejected', async () => {
       req = { query: { affiliatedBox: '456' } }
-      userModel.find = jest.fn().mockRejectedValueOnce(fakeError)
+      userModel.find = jest.fn().mockReturnValueOnce(fakeUsersError)
 
       await userControllerTest.getUsers(req, res)
 

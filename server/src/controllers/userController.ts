@@ -16,7 +16,7 @@ function userController (userModel): userControllerInterface {
   async function getUsers ({ query: { active, affiliatedBox } }: Request, res: Response) {
     try {
       const query = active ? { active, affiliatedBox } : { affiliatedBox }
-      const users = await userModel.find(query)
+      const users = await userModel.find(query).populate('affiliatedProgram')
 
       res.send(users)
     } catch (error) {
