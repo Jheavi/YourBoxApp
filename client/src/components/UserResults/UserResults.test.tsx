@@ -9,7 +9,7 @@ jest.mock('./ResultDetail/ResultDetail')
 
 const buildStore = configureStore([thunk])
 
-describe('UserSchedules', () => {
+describe('UserResults', () => {
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()

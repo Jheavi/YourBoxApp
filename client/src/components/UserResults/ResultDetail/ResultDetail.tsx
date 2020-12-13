@@ -48,13 +48,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white'
   },
-  deleteButton: {
-    backgroundColor: '#cb1313',
+  uploadButton: {
+    backgroundColor: '#14680c',
     paddingVertical: 5,
     paddingHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
     minWidth: 85,
+    maxWidth: 140,
     minHeight: 40,
     borderRadius: 4,
     elevation: 8
@@ -141,9 +142,9 @@ function ResultDetail ({ dispatch, pastSession, user, workout, workoutLoading }:
               testID="seeWorkoutModalBtn"
               onPress={onWorkoutPress}
             >
-              <Text style={styles.leftText} testID="programName">{extractDataFromDate(pastSession.day).formattedDate}</Text>
+              <Text style={styles.leftText}>{extractDataFromDate(pastSession.day).formattedDate}</Text>
               <Text style={styles.leftText}>{`${pastSession.startHour} - ${pastSession.finishHour}`}</Text>
-              <Text style={styles.text} testID="programSessions">{`${pastSession.type}`}</Text>
+              <Text style={styles.text} testID="sessionType">{`${pastSession.type}`}</Text>
               <Overlay
                 overlayStyle={styles.overlayModal}
                 animationType="fade"
@@ -164,9 +165,9 @@ function ResultDetail ({ dispatch, pastSession, user, workout, workoutLoading }:
             </TouchableOpacity>)
           : (
             <>
-              <Text style={styles.leftText} testID="programName">{extractDataFromDate(pastSession.day).formattedDate}</Text>
+              <Text style={styles.leftText}>{extractDataFromDate(pastSession.day).formattedDate}</Text>
               <Text style={styles.leftText}>{`${pastSession.startHour} - ${pastSession.finishHour}`}</Text>
-              <Text style={styles.text} testID="programSessions">{`${pastSession.type}`}</Text>
+              <Text style={styles.text} testID="sessionTypeNoWod">{`${pastSession.type}`}</Text>
             </>)
         }
       </View>
@@ -181,7 +182,7 @@ function ResultDetail ({ dispatch, pastSession, user, workout, workoutLoading }:
                 </View>
                 <View style={{ flex: 4 }}/>
                 <TouchableOpacity
-                  style={{ ...styles.deleteButton, backgroundColor: '#14680c' }}
+                  style={styles.uploadButton}
                   testID="seeResultModalBtn"
                   onPress={() => setModalResultVisible(true)}
                 >
