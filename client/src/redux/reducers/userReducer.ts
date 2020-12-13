@@ -18,6 +18,7 @@ export default function userReducer (state = initialState, action: AnyAction): u
   let reservedSessionsThisMonth: ReservedSession[]
   let updatedState: userState
   let userWithOrderedPastSessions: userInterface
+  let updatedUsers: userInterface[]
 
   switch (action.type) {
     case actionTypes.USER_LOGIN:
@@ -47,6 +48,11 @@ export default function userReducer (state = initialState, action: AnyAction): u
       break
     case actionTypes.LOAD_USERS:
       updatedState = { ...state, users: action.users }
+      break
+    case actionTypes.TOGGLE_USER_ACTIVE:
+      updatedUsers = state.users!.filter((user) => user.userId !== action.user.userId)
+      updatedUsers.push(action.user)
+      updatedState = { ...state, users: updatedUsers }
       break
     default:
       updatedState = state

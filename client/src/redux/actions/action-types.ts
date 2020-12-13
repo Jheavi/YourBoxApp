@@ -37,6 +37,8 @@ export interface actionTypesInterface {
   LOAD_USERS_ERROR: string
   CREATE_PROGRAM:string
   CREATE_PROGRAM_ERROR:string
+  TOGGLE_USER_ACTIVE: string
+  TOGGLE_USER_ACTIVE_ERROR: string
 }
 
 const actionTypes: actionTypesInterface = {
@@ -77,7 +79,9 @@ const actionTypes: actionTypesInterface = {
   CREATE_PROGRAM: 'CREATE_PROGRAM',
   CREATE_PROGRAM_ERROR: 'CREATE_PROGRAM_ERROR',
   LOAD_USERS: 'LOAD_USERS',
-  LOAD_USERS_ERROR: 'LOAD_USERS_ERROR'
+  LOAD_USERS_ERROR: 'LOAD_USERS_ERROR',
+  TOGGLE_USER_ACTIVE: 'TOGGLE_USER_ACTIVE',
+  TOGGLE_USER_ACTIVE_ERROR: 'TOGGLE_USER_ACTIVE_ERROR'
 }
 
 export default actionTypes

@@ -190,3 +190,30 @@ export function loadUsers (boxId: string, active?: boolean): any {
     }
   }
 }
+
+function toggleUserActiveSuccess (user: userInterface): UserActionTypes {
+  return {
+    type: actionTypes.TOGGLE_USER_ACTIVE,
+    user
+  }
+}
+
+function toggleUserActiveError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.TOGGLE_USER_ACTIVE_ERROR,
+    error
+  }
+}
+
+export function toggleUserActive (user: userInterface): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { active: user.active }
+      const { data } = await axios.patch(`${serverUrls.toggleActiveUrl}/${user.userId}`, body)
+
+      dispatch(toggleUserActiveSuccess(data))
+    } catch (error) {
+      dispatch(toggleUserActiveError(error))
+    }
+  }
+}
