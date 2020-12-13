@@ -3,7 +3,7 @@ import { AppDispatch } from '../redux/configureStore'
 
 export interface workoutInterface {
   description?: string,
-  gym?: string,
+  box?: string,
   date: string,
   type?: string,
   title?: string
@@ -11,7 +11,7 @@ export interface workoutInterface {
 
 export interface scheduleInterface {
   day: string,
-  gym?: string,
+  box?: string,
   sessions: SessionInterface[]
 }
 
