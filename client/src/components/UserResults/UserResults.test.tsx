@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
-import { fireEvent, render } from '@testing-library/react-native'
+import { render } from '@testing-library/react-native'
 import UserResults from './UserResults'
 
 jest.mock('./ResultDetail/ResultDetail')
