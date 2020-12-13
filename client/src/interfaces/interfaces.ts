@@ -39,6 +39,7 @@ type RootStackParamList = {
   Login: undefined
   Logout: undefined
   UserHome: undefined
+  UserProfile: undefined
   UserResults: undefined
   UserSchedules: undefined
   UserView: undefined
