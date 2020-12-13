@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     maxWidth: 120,
     textAlign: 'center'
   },
-  modalButton: {
+  saveButton: {
     backgroundColor: '#14680c',
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -43,7 +43,7 @@ function FormModifyResult ({ dispatch, pastSession, user, resultWorkout, workout
   const [resultWorkoutValue, setResultWorkoutValue] = useState<workoutInterface | null>(null)
 
   useEffect(() => {
-    if (!resultWorkout) {
+    if (!resultWorkout && !workout) {
       dispatch(loadWorkout(pastSession.day, user.affiliatedBox!._id))
     }
   }, [])
@@ -57,12 +57,12 @@ function FormModifyResult ({ dispatch, pastSession, user, resultWorkout, workout
   }, [workout])
 
   function onUpdateResult () {
-    dispatch(updateResult(pastSession, user, 'updateResult', resultValue))
+    dispatch(updateResult(pastSession, user, resultValue))
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.buttonText}>
+      <Text style={styles.buttonText} testID="resultTitle">
         {resultWorkoutValue?.type === 'For Time' && 'Time:'}
         {resultWorkoutValue?.type === 'AMRAP' && 'Reps:'}
         {resultWorkoutValue?.type === 'EMOM' && 'Minutes completed:'}
@@ -78,7 +78,7 @@ function FormModifyResult ({ dispatch, pastSession, user, resultWorkout, workout
       />
       <View style={{ marginBottom: 20 }}>
         <TouchableOpacity
-          style={styles.modalButton}
+          style={styles.saveButton}
           onPress={onUpdateResult}
           testID="saveButton"
         >
