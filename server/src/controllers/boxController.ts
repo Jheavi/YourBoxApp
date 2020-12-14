@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 
-interface programControllerInterface {
+interface boxControllerInterface {
   getAllBoxes: Function
 }
 
-function programController (boxModel): programControllerInterface {
+function boxController (boxModel): boxControllerInterface {
   async function getAllBoxes (req: Request, res: Response) {
     try {
       const query = {}
@@ -20,4 +20,4 @@ function programController (boxModel): programControllerInterface {
   return { getAllBoxes }
 }
 
-module.exports = programController
+module.exports = boxController

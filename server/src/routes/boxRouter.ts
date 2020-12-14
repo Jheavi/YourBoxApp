@@ -1,6 +1,6 @@
 export {}
 const { Router } = require('express')
-const boxController = require('../controllers/programController')
+const boxController = require('../controllers/boxController')
 
 function boxRouter (boxModel) {
   const router = Router()
