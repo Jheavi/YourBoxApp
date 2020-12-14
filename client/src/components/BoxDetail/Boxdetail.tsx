@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform, Alert, ScrollView, Dimensions } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
 import { props } from '../../interfaces/interfaces'
+import { loadSchedules } from '../../redux/actions/schedulesActions'
 
 const styles = StyleSheet.create({
   gymView: {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 function BoxDetail ({ box, dispatch, navigation }: props) {
   function onPress () {
     navigation.navigate('AdminSchedules')
-    dispatch(loadBox(box._id))
+    dispatch(loadSchedules(box._id))
   }
 
   return (
