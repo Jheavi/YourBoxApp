@@ -100,9 +100,8 @@ const styles = StyleSheet.create({
   }
 })
 
-function Login ({ boxes, dispatch }: props) {
-  const useProxy = Platform.select({ web: false, default: true })
-  const redirectUri = makeRedirectUri({ useProxy })
+function Login ({ boxes, dispatch, navigation }: props) {
+  const redirectUri = makeRedirectUri()
 
   const [, result, promptAsync] = useAuthRequest(
     {
@@ -146,14 +145,14 @@ function Login ({ boxes, dispatch }: props) {
       >
         <TouchableOpacity
           style={styles.loginButton}
-          onPress={() => promptAsync({ useProxy })}
+          onPress={() => promptAsync()}
           testID="loginButton"
         >
           <Text style={styles.buttonsText}>Login</Text>
         </TouchableOpacity>
         <Text style={styles.secondaryTitles} testID="title">See gyms around you</Text>
         {boxes?.map((box: BoxInterface) => (
-          <Boxdetail box={box} key={performance.now() * Math.random()} />
+          <Boxdetail navigation={navigation} box={box} key={performance.now() * Math.random()}/>
         ))}
         <Text style={styles.secondaryTitles}>What is crossfit?</Text>
         <View style={styles.crossfitView}>
