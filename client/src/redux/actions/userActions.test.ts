@@ -6,7 +6,7 @@ import axios from 'axios'
 import * as authFunctions from '../../utils/authFunctions'
 import jwtDecode from 'jwt-decode'
 import actionTypes from './action-types'
-import { addReservedSession, loadUsers, login, logout, removeReservedSession, toggleUserActive, updateResult } from './userActions'
+import { addReservedSession, loadUsers, login, logout, removeReservedSession, toggleUserActive, updateResult, updateUserProgram } from './userActions'
 import { ReservedSession, userInterface } from '../../interfaces/interfaces'
 
 jest.mock('axios')
@@ -326,6 +326,43 @@ describe('Schedules actions', () => {
 
       expect(store!.getActions()[0]).toEqual({
         type: actionTypes.TOGGLE_USER_ACTIVE_ERROR,
+        error: fakeError
+      })
+    })
+  })
+
+  describe('updateUserProgram', () => {
+    test('should call axios.patch with the url', async () => {
+      axios.patch = jest.fn()
+
+      await store!.dispatch(updateUserProgram('1234', fakeUser.userId))
+
+      const args = [
+        `${serverUrls.updateUserProgramUrl}/fakeId`,
+        { programId: '1234' }
+      ]
+
+      expect(axios.patch).toHaveBeenCalledWith(...args)
+    })
+
+    test('the store should have an action with type UPDATE_USER_PROGRAM', async () => {
+      axios.patch = jest.fn().mockResolvedValueOnce(fakeData)
+
+      await store!.dispatch(updateUserProgram('1234', fakeUser.userId))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.UPDATE_USER_PROGRAM,
+        user: fakeData.data
+      })
+    })
+
+    test('the store should have an action with type UPDATE_USER_PROGRAM_ERROR', async () => {
+      axios.patch = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await store!.dispatch(updateUserProgram('1234', fakeUser.userId))
+
+      expect(store!.getActions()[0]).toEqual({
+        type: actionTypes.UPDATE_USER_PROGRAM_ERROR,
         error: fakeError
       })
     })
