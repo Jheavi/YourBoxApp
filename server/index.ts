@@ -13,6 +13,7 @@ const chalk = require('chalk')
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
 const userRouter = require('./src/routes/userRouter')(userModel, boxModel)
+const boxRouter = require('./src/routes/boxRouter')(boxModel)
 const programRouter = require('./src/routes/programRouter')(programModel)
 
 const oneHourTime = 3600000
@@ -33,6 +34,7 @@ server.use('/workouts', workoutRouter)
 server.use('/schedules', scheduleRouter)
 server.use('/users', userRouter)
 server.use('/programs', programRouter)
+server.use('/boxes', boxRouter)
 
 server.listen(port, () => {
   console.log(`Server listening on port ${chalk.blueBright(port)}...`)
