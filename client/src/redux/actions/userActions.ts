@@ -217,3 +217,30 @@ export function toggleUserActive (user: userInterface): any {
     }
   }
 }
+
+function updateUserProgramSuccess (user: userInterface): UserActionTypes {
+  return {
+    type: actionTypes.UPDATE_USER_PROGRAM,
+    user
+  }
+}
+
+function updateUserProgramError (error: any): UserActionTypes {
+  return {
+    type: actionTypes.UPDATE_USER_PROGRAM_ERROR,
+    error
+  }
+}
+
+export function updateUserProgram (programId: string, userId: string): any {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const body = { programId }
+      const { data } = await axios.patch(`${serverUrls.updateUserProgramUrl}/${userId}`, body)
+
+      dispatch(updateUserProgramSuccess(data))
+    } catch (error) {
+      dispatch(updateUserProgramError(error))
+    }
+  }
+}
