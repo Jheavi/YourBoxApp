@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '80%',
     height: 150,
+    maxHeight: 150,
     marginBottom: 30,
     borderRadius: 20,
     overflow: 'hidden',
