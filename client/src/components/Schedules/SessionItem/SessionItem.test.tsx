@@ -44,9 +44,9 @@ describe('SessionItem', () => {
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
 
-    const hourText = getByTestId('sessionContainer')
+    const sessionContainer = getByTestId('sessionContainer')
 
-    expect(hourText.props.style.backgroundColor).toBe('#014aa5')
+    expect(sessionContainer.props.style.backgroundColor).toBe('#014aa5')
   })
 
   it('should render background color of session type Open Box correctly', () => {
@@ -55,9 +55,9 @@ describe('SessionItem', () => {
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
 
-    const hourText = getByTestId('sessionContainer')
+    const sessionContainer = getByTestId('sessionContainer')
 
-    expect(hourText.props.style.backgroundColor).toBe('#016500')
+    expect(sessionContainer.props.style.backgroundColor).toBe('#016500')
   })
 
   it('should render background color of session type Olympics correctly', () => {
@@ -66,9 +66,9 @@ describe('SessionItem', () => {
     const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
 
-    const hourText = getByTestId('sessionContainer')
+    const sessionContainer = getByTestId('sessionContainer')
 
-    expect(hourText.props.style.backgroundColor).toBe('#a20000')
+    expect(sessionContainer.props.style.backgroundColor).toBe('#a20000')
   })
 
   it('should change the modal to visible if touchableModal is touched', () => {
