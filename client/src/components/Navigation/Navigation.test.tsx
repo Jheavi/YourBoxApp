@@ -31,7 +31,13 @@ describe('Navigation', () => {
     fakeUser = {
       active: false,
       admin: false,
-      affiliatedProgram: 'a',
+      affiliatedProgram: {
+        _id: '12345',
+        name: 'fakeProgramName',
+        sessionsPerMonth: 8,
+        box: '456'
+      },
+      avatar: 'a',
       connection: 'a',
       email: 'a',
       name: 'a',

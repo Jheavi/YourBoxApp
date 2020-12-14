@@ -109,7 +109,7 @@ function UserListDetail ({ dispatch, affiliatedUser }: props) {
             onPress={() => { setModalVisible(true) }}
           >
             <Text style={styles.text}>Actual program:</Text>
-            <Text style={styles.infoText}>
+            <Text style={styles.infoText} testID="affiliatedProgramName">
               {affiliatedUser.affiliatedProgram ? affiliatedUser.affiliatedProgram.name : 'none'}
             </Text>
             <Overlay
@@ -133,7 +133,7 @@ function UserListDetail ({ dispatch, affiliatedUser }: props) {
             testID="activateBtn"
             onPress={onActivatePress}
           >
-            <Text style={styles.buttonText}>{affiliatedUser.active ? 'Inactivate' : 'Activate'}</Text>
+            <Text style={styles.buttonText} testID="activateBtnText">{affiliatedUser.active ? 'Inactivate' : 'Activate'}</Text>
           </TouchableOpacity>
         </View>
       <View style={{ flex: 3 }}/>

@@ -39,7 +39,13 @@ describe('UserWorkout', () => {
         owner: 'b',
         direction: 'a'
       },
-      affiliatedProgram: { name: '1', sessionsPerMonth: 8 },
+      affiliatedProgram: {
+        _id: '12345',
+        name: 'fakeProgramName',
+        sessionsPerMonth: 8,
+        box: '456'
+      },
+      avatar: 'a',
       connection: 'a',
       email: 'a',
       name: 'a',
