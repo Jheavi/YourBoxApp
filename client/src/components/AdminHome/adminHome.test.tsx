@@ -70,4 +70,15 @@ describe('AdminHome', () => {
 
     expect(navigation.navigate).toHaveBeenCalledWith('AdminPrograms')
   })
+
+  it('should call navigation.navigate with argument "AdminUsers" with "Your users" button', () => {
+    const initialState = { workoutReducer: {} }
+    const wrapper = wrapperFactory(initialState)
+    const { getByTestId } = render(<AdminHome navigation={navigation}/>, { wrapper })
+
+    const usersButton = getByTestId('usersBtn')
+    fireEvent.press(usersButton)
+
+    expect(navigation.navigate).toHaveBeenCalledWith('AdminUsers')
+  })
 })
