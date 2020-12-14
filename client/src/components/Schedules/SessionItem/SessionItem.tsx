@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 19
   },
   modifyButton: {
-    backgroundColor: '#14680c',
+    backgroundColor: '#218520',
     height: 40,
     paddingVertical: 5,
     paddingHorizontal: 10,
