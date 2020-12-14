@@ -36,7 +36,7 @@ function AdminUserList ({ dispatch, user, users }:props) {
 
   return (
     <View style={styles.container}>
-    <Text style={styles.titleText} testID="programsTitle">Your Users</Text>
+    <Text style={styles.titleText} testID="usersTitle">Your Users</Text>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         scrollEnabled={true}
