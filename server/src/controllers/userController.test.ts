@@ -184,4 +184,26 @@ describe('userController', () => {
       expect(res.send).toHaveBeenCalledWith(fakeError)
     })
   })
+
+  describe('updateProgram', () => {
+    beforeEach(() => {
+      req = { params: { userId: 'fake' }, body: { programId: '1234' } }
+    })
+
+    test('should call res.send with the user', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockResolvedValueOnce(fakeUser)
+
+      await userControllerTest.updateProgram(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeUser)
+    })
+
+    test('should call res.send with the error if promise rejected', async () => {
+      userModel.findOneAndUpdate = jest.fn().mockRejectedValueOnce(fakeError)
+
+      await userControllerTest.updateProgram(req, res)
+
+      expect(res.send).toHaveBeenCalledWith(fakeError)
+    })
+  })
 })
