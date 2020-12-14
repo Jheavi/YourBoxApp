@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.1.131:2130'
+const baseUrl = 'http://192.168.43.206:2130'
 
 const serverUrls = {
   workoutUrl: `${baseUrl}/workouts`,
@@ -8,6 +8,7 @@ const serverUrls = {
   removeSessionUrl: `${baseUrl}/users/removeSession`,
   updateResultUrl: `${baseUrl}/users/updateResult`,
   toggleActiveUrl: `${baseUrl}/users/toggleActive`,
+  updateUserProgramUrl: `${baseUrl}/users/updateUserProgram`,
   programURL: `${baseUrl}/programs`
 }
 

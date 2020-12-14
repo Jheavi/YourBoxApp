@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Overlay } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { props } from '../../../interfaces/interfaces'
 import { toggleUserActive } from '../../../redux/actions/userActions'
+import FormChangeUserProgram from '../FormChangeUserProgram/FormChangeUserProgram'
 
 const { width } = Dimensions.get('window')
 
@@ -69,10 +71,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     color: 'white'
+  },
+  overlayModal: {
+    backgroundColor: '#0d0d0d',
+    borderColor: '#ffffff',
+    borderWidth: 2
   }
 })
 
 function UserListDetail ({ dispatch, affiliatedUser }: props) {
+  const [modalVisible, setModalVisible] = useState(false)
+
   function onActivatePress () {
     dispatch(toggleUserActive(affiliatedUser))
   }
@@ -95,10 +104,24 @@ function UserListDetail ({ dispatch, affiliatedUser }: props) {
           <Text style={styles.text}>Email:</Text>
           <Text style={styles.infoText}>{affiliatedUser.email}</Text>
           <View style={{ flex: 1 }}/>
-          <Text style={styles.text}>Actual program:</Text>
-          <Text style={styles.infoText}>
-            {affiliatedUser.affiliatedProgram ? affiliatedUser.affiliatedProgram.name : 'none'}
-          </Text>
+          <TouchableOpacity
+            testID="touchableModal"
+            onPress={() => { setModalVisible(true) }}
+          >
+            <Text style={styles.text}>Actual program:</Text>
+            <Text style={styles.infoText}>
+              {affiliatedUser.affiliatedProgram ? affiliatedUser.affiliatedProgram.name : 'none'}
+            </Text>
+            <Overlay
+              overlayStyle={styles.overlayModal}
+              isVisible={modalVisible}
+              animationType="fade"
+              testID="programModal"
+              onBackdropPress={() => { setModalVisible(false) }}
+            >
+              <FormChangeUserProgram affiliatedUser={affiliatedUser}/>
+            </Overlay>
+          </TouchableOpacity>
           <View style={{ flex: 1 }}/>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.text}>Active user:</Text>

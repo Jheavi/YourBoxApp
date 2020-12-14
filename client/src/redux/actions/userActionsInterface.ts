@@ -70,6 +70,16 @@ type toggleUserActiveErrorAction = {
   error: any
 }
 
+type UpdateuserProgramAction = {
+  type: typeof actionTypes.UPDATE_USER_PROGRAM
+  user: userInterface
+}
+
+type UpdateuserProgramErrorAction = {
+  type: typeof actionTypes.UPDATE_USER_PROGRAM_ERROR
+  error: any
+}
+
 export type UserActionTypes =
 loginUserAction |
 loginUserErrorAction |
@@ -84,4 +94,6 @@ loadUsersErrorAction |
 updateResultAction |
 updateResultErrorAction |
 toggleUserActiveAction |
-toggleUserActiveErrorAction
+toggleUserActiveErrorAction |
+UpdateuserProgramAction |
+UpdateuserProgramErrorAction

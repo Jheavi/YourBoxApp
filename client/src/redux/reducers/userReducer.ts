@@ -19,6 +19,7 @@ export default function userReducer (state = initialState, action: AnyAction): u
   let updatedState: userState
   let userWithOrderedPastSessions: userInterface
   let updatedUsers: userInterface[]
+  let orderedUsers: userInterface[]
 
   switch (action.type) {
     case actionTypes.USER_LOGIN:
@@ -47,12 +48,14 @@ export default function userReducer (state = initialState, action: AnyAction): u
       updatedState = { ...state, user: null, isLogged: false }
       break
     case actionTypes.LOAD_USERS:
-      updatedState = { ...state, users: action.users }
+      orderedUsers = action.users.sort((userOne: userInterface, userTwo: userInterface) => userOne.name > userTwo.name ? 1 : -1)
+      updatedState = { ...state, users: orderedUsers }
       break
     case actionTypes.TOGGLE_USER_ACTIVE:
+    case actionTypes.UPDATE_USER_PROGRAM:
       updatedUsers = state.users!.filter((user) => user.userId !== action.user.userId)
-      updatedUsers.push(action.user)
-      updatedState = { ...state, users: updatedUsers }
+      orderedUsers = [...updatedUsers, action.user].sort((userOne: userInterface, userTwo: userInterface) => userOne.name > userTwo.name ? 1 : -1)
+      updatedState = { ...state, users: orderedUsers }
       break
     default:
       updatedState = state
