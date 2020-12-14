@@ -7,9 +7,11 @@ import IconFont5 from 'react-native-vector-icons/FontAwesome5'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import auth0data from '../../constants/auth0data'
-import { props } from '../../interfaces/interfaces'
+import { BoxInterface, props } from '../../interfaces/interfaces'
 import UpperSawToothBorder from './SawToothBorders/UpperSawToothBorder'
 import LowerSawToothBorder from './SawToothBorders/LowerSawToothBorder'
+import { loadBoxes } from '../../redux/actions/boxActions'
+import Boxdetail from '../BoxDetail/Boxdetail'
 
 const { height, width } = Dimensions.get('window')
 
@@ -61,55 +63,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     opacity: 0.4
   },
-  gymView: {
-    zIndex: 10,
-    flex: 1,
-    minHeight: 200,
-    maxHeight: 200,
-    marginBottom: 30,
-    width: '100%',
-    position: 'relative'
-  },
-  triangleShape: {
-    zIndex: 10,
-    position: 'absolute',
-    width: 0,
-    height: 0,
-    right: 0,
-    bottom: 0,
-    borderLeftWidth: 220,
-    borderBottomWidth: 60,
-    backgroundColor: 'transparent',
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: '#000000'
-  },
-  gymBackImage: {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover'
-  },
-  schedulesButton: {
-    backgroundColor: 'transparent',
-    borderColor: 'white',
-    borderWidth: 4,
-    borderRadius: 100,
-    position: 'absolute',
-    fontSize: 20,
-    bottom: 20,
-    width: '50%',
-    marginLeft: 15,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden'
-  },
-  schedulesButtonText: {
-    color: 'white',
-    fontSize: 24
-  },
   crossfitView: {
     height: 300,
     maxHeight: 300,
@@ -137,10 +90,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     textAlign: 'justify',
     marginBottom: 10
+  },
+  gymBackImage: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover'
   }
 })
 
-function Login ({ dispatch, navigation }: props) {
+function Login ({ boxes, dispatch }: props) {
   const useProxy = Platform.select({ web: false, default: true })
   const redirectUri = makeRedirectUri({ useProxy })
 
@@ -171,10 +131,11 @@ function Login ({ dispatch, navigation }: props) {
     }
   }, [result])
 
-  // function onPress(boxName: string) {
-  //   navigation.navigate('AdminSchedules')
-  //   loadBox(boxName)
-  // }
+  useEffect(() => {
+    if (!boxes) {
+      dispatch(loadBoxes())
+    }
+  })
 
   return (
     <View style={styles.container}>
@@ -191,21 +152,9 @@ function Login ({ dispatch, navigation }: props) {
           <Text style={styles.buttonsText}>Login</Text>
         </TouchableOpacity>
         <Text style={styles.secondaryTitles} testID="title">See gyms around you</Text>
-        <View style={styles.gymView}>
-          <ImageBackground
-            style={styles.gymBackImage}
-            source={images.gym1}
-          />
-          <View style={styles.triangleShape}/>
-          <TouchableOpacity
-            style={styles.schedulesButton}
-            activeOpacity={0.4}
-            onPress={() => navigation.navigate('AdminSchedules')}
-            testID="seeSchedulesBtn"
-          >
-            <Text style={styles.schedulesButtonText}>See schedules</Text>
-          </TouchableOpacity>
-        </View>
+        {boxes?.map((box: BoxInterface) => (
+          <Boxdetail box={box} key={performance.now() * Math.random()} />
+        ))}
         <Text style={styles.secondaryTitles}>What is crossfit?</Text>
         <View style={styles.crossfitView}>
           <ImageBackground
@@ -278,4 +227,10 @@ function Login ({ dispatch, navigation }: props) {
   )
 }
 
-export default connect(null)(Login)
+function mapStateToProps ({ boxReducer: { boxes } }: any) {
+  return {
+    boxes
+  }
+}
+
+export default connect(mapStateToProps)(Login)
