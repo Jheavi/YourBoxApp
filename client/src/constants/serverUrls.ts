@@ -9,7 +9,8 @@ const serverUrls = {
   updateResultUrl: `${baseUrl}/users/updateResult`,
   toggleActiveUrl: `${baseUrl}/users/toggleActive`,
   updateUserProgramUrl: `${baseUrl}/users/updateUserProgram`,
-  programURL: `${baseUrl}/programs`
+  programURL: `${baseUrl}/programs`,
+  boxUrl: `${baseUrl}/boxes`
 }
 
 export default serverUrls
