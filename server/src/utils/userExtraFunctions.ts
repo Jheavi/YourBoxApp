@@ -9,8 +9,8 @@ export async function changeReservedSessionsToPastSessions () {
     const users = await userModel.find(query)
     const bulkOps = []
 
-    users?.forEach((user: { reservedSessions: reservedSessionInterface[], userId: string }) => {
-      const alreadyPastSessions = user.reservedSessions.filter(
+    for (let index = 0; index < users.length; index += 1) {
+      const alreadyPastSessions = users[index].reservedSessions.filter(
         (reservedSession: reservedSessionInterface) =>
           actualDay.dayString > reservedSession.day
             ? true
@@ -22,18 +22,18 @@ export async function changeReservedSessionsToPastSessions () {
       if (alreadyPastSessions.length) {
         bulkOps.push({
           updateOne: {
-            filter: { userId: user.userId },
+            filter: { userId: users[index].userId },
             update: { $addToSet: { pastSessions: { $each: alreadyPastSessions } } }
           }
         })
         bulkOps.push({
           updateOne: {
-            filter: { userId: user.userId },
+            filter: { userId: users[index].userId },
             update: { $pullAll: { reservedSessions: [...alreadyPastSessions] } }
           }
         })
       }
-    })
+    }
 
     if (bulkOps.length) {
       await userModel.bulkWrite(bulkOps, { ordered: true }, () => {

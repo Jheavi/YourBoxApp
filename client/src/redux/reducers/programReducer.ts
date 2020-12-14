@@ -21,19 +21,18 @@ export default function programReducer (state = initialState, action: AnyAction)
       updateState = { ...state, programs: orderedPrograms }
       break
     case actionTypes.UPDATE_PROGRAM:
-      updatedPrograms = state.programs!.filter((program) => (program._id !== action.program._id))
-      updatedPrograms.push(action.program)
-      orderedPrograms = updatedPrograms.sort((program1: ProgramInterface, program2: ProgramInterface) => (
+      updatedPrograms = state.programs.filter((program) => (program._id !== action.program._id))
+      orderedPrograms = [...updatedPrograms, action.program].sort((program1: ProgramInterface, program2: ProgramInterface) => (
         program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
       ))
       updateState = { ...state, programs: orderedPrograms }
       break
     case actionTypes.CREATE_PROGRAM:
       updatedPrograms = [...state.programs, action.newProgram]
-      orderedPrograms = updatedPrograms.sort((program1: ProgramInterface, program2: ProgramInterface) => (
+      updatedPrograms.sort((program1: ProgramInterface, program2: ProgramInterface) => (
         program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
       ))
-      updateState = { ...state, programs: orderedPrograms }
+      updateState = { ...state, programs: updatedPrograms }
       break
     default:
       updateState = state

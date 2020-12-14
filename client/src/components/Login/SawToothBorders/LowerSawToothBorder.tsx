@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   }
 })
 
-function UpperSawToothBorder ({ width }: any) {
+function LowerSawToothBorder ({ width }: any) {
   const firstTriangle = 30
   const triangles = Array.from({ length: Math.ceil(width / 50) }, (v, i) => firstTriangle + i * 50)
 
@@ -37,4 +37,4 @@ function UpperSawToothBorder ({ width }: any) {
   )
 }
 
-export default UpperSawToothBorder
+export default LowerSawToothBorder
