@@ -66,13 +66,13 @@ describe('ResultDetail', () => {
     expect(loadWorkout).not.toHaveBeenCalled()
   })
 
-  it('should render the result title correctly if workout type is "For Time"', async () => {
+  it('should render the result title correctly if workout type is "For Time"', () => {
     const initialState = {
       userReducer: { user: { affiliatedBox: {} } },
       workoutReducer: {}
     }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = await render(<FormModifyResult
+    const { getByTestId } = render(<FormModifyResult
       pastSession={fakePastSession}
       resultWorkout={fakeWorkout}
     />, { wrapper })
@@ -82,7 +82,7 @@ describe('ResultDetail', () => {
     expect(resultTitle.children[0]).toBe('Time:')
   })
 
-  it('should render the result title correctly if workout type is "AMRAP"', async () => {
+  it('should render the result title correctly if workout type is "AMRAP"', () => {
     fakeWorkout = {
       date: '2020-09-22',
       type: 'AMRAP'
@@ -92,7 +92,7 @@ describe('ResultDetail', () => {
       workoutReducer: {}
     }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = await render(<FormModifyResult
+    const { getByTestId } = render(<FormModifyResult
       pastSession={fakePastSession}
       resultWorkout={fakeWorkout}
     />, { wrapper })
@@ -102,7 +102,7 @@ describe('ResultDetail', () => {
     expect(resultTitle.children[0]).toBe('Reps:')
   })
 
-  it('should render the result title correctly if workout type is "EMOM"', async () => {
+  it('should render the result title correctly if workout type is "EMOM"', () => {
     fakeWorkout = {
       date: '2020-09-22',
       type: 'EMOM'
@@ -112,7 +112,7 @@ describe('ResultDetail', () => {
       workoutReducer: {}
     }
     const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = await render(<FormModifyResult
+    const { getByTestId } = render(<FormModifyResult
       pastSession={fakePastSession}
       resultWorkout={fakeWorkout}
     />, { wrapper })

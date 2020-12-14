@@ -41,8 +41,8 @@ function AdminUserList ({ dispatch, user, users }:props) {
         contentContainerStyle={styles.scrollContent}
         scrollEnabled={true}
       >
-        {users?.map((user: userInterface) => (
-          <UserListDetail affiliatedUser={user} key={performance.now() * Math.random()}/>
+        {users?.map((userListed: userInterface) => (
+          <UserListDetail affiliatedUser={userListed} key={performance.now() * Math.random()}/>
         ))}
       </ScrollView>
 
