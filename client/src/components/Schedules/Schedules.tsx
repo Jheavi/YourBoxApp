@@ -29,10 +29,6 @@ function Schedules ({ dispatch, schedules, schedulesLoading, user }: props) {
         dispatch(isSchedulesLoading())
         dispatch(loadSchedules(user.ownerOfBox!._id))
       }
-      // else {
-      //   dispatch(isSchedulesLoading())
-      //   dispatch(loadSchedules(box))
-      // }
     }
   }, [])
 
