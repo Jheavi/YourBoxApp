@@ -25,6 +25,9 @@ function userRouter (userModel) {
   router.route('/toggleActive/:userId')
     .patch(users.toggleActive)
 
+  router.route('/updateUserProgram/:userId')
+    .patch(users.updateProgram)
+
   return router
 }
 

@@ -3,7 +3,6 @@ import images from '../constants/images'
 import { extractDataFromDate } from '../utils/dateFunctions'
 
 interface userControllerInterface {
-  // deleteUser: Function
   getUsers: Function
   getUser: Function
   postUser: Function
@@ -11,6 +10,7 @@ interface userControllerInterface {
   removeSession: Function
   updateResult: Function
   toggleActive: Function
+  updateProgram: Function
 }
 
 function userController (userModel): userControllerInterface {
@@ -148,6 +148,22 @@ function userController (userModel): userControllerInterface {
     }
   }
 
+  async function updateProgram ({ params: { userId }, body: { programId } }: Request, res: Response) {
+    try {
+      const query = { userId }
+      const update = { affiliatedProgram: programId }
+
+      const updatedUser = await userModel.findOneAndUpdate(query, update, { new: true })
+
+      await updatedUser.populate('affiliatedProgram').execPopulate()
+      await updatedUser.populate('affiliatedBox').execPopulate()
+
+      res.send(updatedUser)
+    } catch (error) {
+      res.send(error)
+    }
+  }
+
   return {
     getUsers,
     getUser,
@@ -155,7 +171,8 @@ function userController (userModel): userControllerInterface {
     addSession,
     removeSession,
     updateResult,
-    toggleActive
+    toggleActive,
+    updateProgram
   }
 }
 
