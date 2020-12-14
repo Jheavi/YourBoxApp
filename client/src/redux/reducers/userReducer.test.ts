@@ -11,6 +11,8 @@ describe('userReducer', () => {
   let fakeUserTwo: any
   let fakeUserTwoUpdated: any
   let fakeUsers: any
+  let fakeUserThree: any
+  let fakeUserFour: any
 
   beforeEach(() => {
     sessionOne = {
@@ -25,16 +27,28 @@ describe('userReducer', () => {
     fakeUser = {
       active: false,
       admin: false,
+      affiliatedProgram: 'cc',
+      connection: 'cc',
+      email: 'cc',
+      name: 'cc',
+      pastSessions: [sessionOne, sessionTwo],
+      reservedSessions: [sessionOne, sessionThree],
+      signInDate: 'newDate',
+      userId: 'cc'
+    }
+    fakeUserTwo = {
+      active: true,
+      admin: false,
       affiliatedProgram: 'aa',
       connection: 'aa',
       email: 'aa',
       name: 'aa',
-      pastSessions: [sessionOne, sessionTwo],
-      reservedSessions: [sessionOne, sessionThree],
+      pastSessions: [],
+      reservedSessions: [],
       signInDate: 'newDate',
       userId: 'aa'
     }
-    fakeUserTwo = {
+    fakeUserThree = {
       active: true,
       admin: false,
       affiliatedProgram: 'bb',
@@ -46,19 +60,31 @@ describe('userReducer', () => {
       signInDate: 'newDate',
       userId: 'bb'
     }
-    fakeUserTwoUpdated = {
-      active: false,
+    fakeUserFour = {
+      active: true,
       admin: false,
-      affiliatedProgram: 'bb',
-      connection: 'bb',
-      email: 'bb',
-      name: 'bb',
+      affiliatedProgram: 'dd',
+      connection: 'dd',
+      email: 'dd',
+      name: 'dd',
       pastSessions: [],
       reservedSessions: [],
       signInDate: 'newDate',
-      userId: 'bb'
+      userId: 'dd'
     }
-    fakeUsers = [fakeUser, fakeUserTwo]
+    fakeUserTwoUpdated = {
+      active: false,
+      admin: false,
+      affiliatedProgram: 'aa',
+      connection: 'aa',
+      email: 'aa',
+      name: 'aa',
+      pastSessions: [],
+      reservedSessions: [],
+      signInDate: 'newDate',
+      userId: 'aa'
+    }
+    fakeUsers = [fakeUser, fakeUserTwo, fakeUserThree, fakeUserFour]
   })
 
   it('should return the default state', () => {
@@ -145,7 +171,7 @@ describe('userReducer', () => {
     expect(state).toEqual({ user: null, isLogged: false })
   })
 
-  it('should return the users in a property called users if action type is LOAD_USERS', () => {
+  it('should return the users (ordered by name) in a property called users if action type is LOAD_USERS', () => {
     const fakeAction = {
       type: actionTypes.LOAD_USERS,
       users: fakeUsers
@@ -153,16 +179,27 @@ describe('userReducer', () => {
 
     const state = userReducer(undefined, fakeAction)
 
-    expect(state).toEqual({ users: fakeUsers, isLogged: false })
+    expect(state).toEqual({ users: [fakeUserTwo, fakeUserThree, fakeUser, fakeUserFour], isLogged: false })
   })
 
-  it('should update the user in the variable users from state if action type is TOGGLE_USER_ACTIVE', () => {
+  it('should update the user in the variable users (ordered by name) from state if action type is TOGGLE_USER_ACTIVE', () => {
     const fakeAction = {
       type: actionTypes.TOGGLE_USER_ACTIVE,
       user: fakeUserTwoUpdated
     }
     const state = userReducer({ users: fakeUsers, isLogged: false }, fakeAction)
-    const expectedState = { users: [fakeUser, fakeUserTwoUpdated], isLogged: false }
+    const expectedState = { users: [fakeUserTwoUpdated, fakeUserThree, fakeUser, fakeUserFour], isLogged: false }
+
+    expect(state).toEqual(expectedState)
+  })
+
+  it('should update the user in the variable users (ordered by name) from state if action type is UPDATE_USER_PROGRAM', () => {
+    const fakeAction = {
+      type: actionTypes.UPDATE_USER_PROGRAM,
+      user: fakeUserTwoUpdated
+    }
+    const state = userReducer({ users: fakeUsers, isLogged: false }, fakeAction)
+    const expectedState = { users: [fakeUserTwoUpdated, fakeUserThree, fakeUser, fakeUserFour], isLogged: false }
 
     expect(state).toEqual(expectedState)
   })
