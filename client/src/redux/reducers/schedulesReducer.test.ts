@@ -11,18 +11,18 @@ describe('schedulesReducer', () => {
       {
         day: '1',
         sessions: [
-          { finishHour: '3', startHour: '3', type: '3' },
-          { finishHour: '1', startHour: '1', type: '1' },
-          { finishHour: '2', startHour: '2', type: '2' }
+          { finishHour: '3', startHour: '3', type: 'WOD' },
+          { finishHour: '1', startHour: '1', type: 'WOD' },
+          { finishHour: '2', startHour: '2', type: 'WOD' }
         ]
       }
     ]
     fakeSchedule = {
       day: '2',
       sessions: [
-        { finishHour: '6', startHour: '6', type: '6' },
-        { finishHour: '4', startHour: '4', type: '4' },
-        { finishHour: '5', startHour: '5', type: '5' }
+        { finishHour: '6', startHour: '6', type: 'WOD' },
+        { finishHour: '4', startHour: '4', type: 'WOD' },
+        { finishHour: '5', startHour: '5', type: 'WOD' }
       ]
     }
   })
