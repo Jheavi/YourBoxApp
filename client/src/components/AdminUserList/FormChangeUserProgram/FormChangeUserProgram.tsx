@@ -4,6 +4,7 @@ import RNPickerSelect from 'react-native-picker-select'
 import { connect } from 'react-redux'
 import { ProgramInterface, props } from '../../../interfaces/interfaces'
 import { loadPrograms } from '../../../redux/actions/programActions'
+import { updateUserProgram } from '../../../redux/actions/userActions'
 
 const styles = StyleSheet.create({
   container: {
@@ -47,14 +48,19 @@ const pickerSelectStyles = StyleSheet.create({
   }
 })
 
-function FormChangeUserProgram ({ affiliatedUser, programs, user }: props) {
+function FormChangeUserProgram ({ affiliatedUser, dispatch, programs, user }: props) {
   const [programName, setProgramName] = useState(affiliatedUser.affiliatedProgram?.name)
 
   useEffect(() => {
-    if (!programs) {
-      loadPrograms(user.ownerOfBox!._id)
+    if (!programs.length) {
+      dispatch(loadPrograms(user.ownerOfBox!._id))
     }
   }, [affiliatedUser])
+
+  function onSavePress () {
+    const programId = programs.find((program: ProgramInterface) => program.name === programName)!._id
+    dispatch(updateUserProgram(programId, affiliatedUser.userId))
+  }
 
   return (
     <View style={styles.container} testID="container">
@@ -74,7 +80,7 @@ function FormChangeUserProgram ({ affiliatedUser, programs, user }: props) {
       />
       <TouchableOpacity
         style={styles.saveButton}
-        onPress={() => {}}
+        onPress={onSavePress}
         testID="saveButton"
       >
         <Text style={styles.buttonText} testID="buttonText">Update Program</Text>
