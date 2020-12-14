@@ -49,6 +49,8 @@ type RootStackParamList = {
 export interface props {
   affiliatedUser: userInterface
   day: string
+  box: BoxInterface
+  boxes: BoxInterface[]
   dispatch: AppDispatch
   navigation: StackNavigationProp< RootStackParamList>
   pastSession: PastSession
@@ -124,4 +126,5 @@ export interface BoxInterface {
   owner: string
   direction: string
   affiliates: string[]
+  photos: string[]
 }

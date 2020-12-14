@@ -66,11 +66,12 @@ const styles = StyleSheet.create({
 
 function ProgramDetail ({ program }: props) {
   const [modalVisible, setModalVisible] = useState(false)
+  const [backgroundImg] = useState(randomImage())
 
   return (
     <View style={styles.programView}>
       <ImageBackground
-        source={randomImage()}
+        source={backgroundImg}
         style= {styles.backgroundImg}
       />
       <View style={{ flex: 3 }}/>

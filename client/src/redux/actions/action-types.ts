@@ -41,6 +41,8 @@ export interface actionTypesInterface {
   TOGGLE_USER_ACTIVE_ERROR: string
   UPDATE_USER_PROGRAM: string
   UPDATE_USER_PROGRAM_ERROR: string
+  LOAD_BOXES: string
+  LOAD_BOXES_ERROR: string
 }
 
 const actionTypes: actionTypesInterface = {
@@ -85,7 +87,9 @@ const actionTypes: actionTypesInterface = {
   TOGGLE_USER_ACTIVE: 'TOGGLE_USER_ACTIVE',
   TOGGLE_USER_ACTIVE_ERROR: 'TOGGLE_USER_ACTIVE_ERROR',
   UPDATE_USER_PROGRAM: 'UPDATE_USER_PROGRAM',
-  UPDATE_USER_PROGRAM_ERROR: 'UPDATE_USER_PROGRAM_ERROR'
+  UPDATE_USER_PROGRAM_ERROR: 'UPDATE_USER_PROGRAM_ERROR',
+  LOAD_BOXES: 'LOAD_BOXES',
+  LOAD_BOXES_ERROR: 'LOAD_BOXES_ERROR'
 }
 
 export default actionTypes
