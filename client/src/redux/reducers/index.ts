@@ -3,8 +3,10 @@ import workoutReducer from './workoutReducer'
 import schedulesReducer from './schedulesReducer'
 import userReducer from './userReducer'
 import programReducer from './programReducer'
+import boxReducer from './boxReducer'
 
 const rootReducer = combineReducers({
+  boxReducer,
   programReducer,
   schedulesReducer,
   userReducer,
