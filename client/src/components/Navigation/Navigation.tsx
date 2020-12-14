@@ -38,11 +38,11 @@ function Navigation ({ user }: props) {
                 component={Login}
                 options={header}
               />
-              {/* <Screen
+              <Screen
                 name="AdminSchedules"
                 component={Schedules}
                 options={header}
-              /> */}
+              />
             </>
           : user.admin
             ? <>
