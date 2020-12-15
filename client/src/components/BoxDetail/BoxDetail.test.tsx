@@ -29,7 +29,6 @@ describe('Login', () => {
   }
 
   beforeEach(() => {
-    global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
     navigation = { navigate: jest.fn() }
     fakeBox = {
       _id: '123',

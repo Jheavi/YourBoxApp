@@ -23,14 +23,7 @@ describe('Schedules', () => {
     )
   }
 
-  const performance = global.performance
-
-  beforeEach(() => {
-    global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
-  })
-
   afterEach(() => {
-    global.performance = performance
     jest.resetAllMocks()
   })
 

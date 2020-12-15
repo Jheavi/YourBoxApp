@@ -23,7 +23,6 @@ describe('Login', () => {
   let result: any
   let initialState: any
   let promptAsync: jest.Mock<any, any>
-  const performance = global.performance
 
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
@@ -45,7 +44,6 @@ describe('Login', () => {
   }
 
   beforeEach(() => {
-    global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
     navigation = { navigate: jest.fn() }
     promptAsync = jest.fn()
     request = null
@@ -54,7 +52,6 @@ describe('Login', () => {
   })
 
   afterEach(() => {
-    global.performance = performance
     jest.resetAllMocks()
   })
 
