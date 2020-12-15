@@ -75,7 +75,8 @@
       "<rootDir>/jest/jestSetup.js"
     ],
     "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
+      "@testing-library/jest-native/extend-expect",
+      "./setupFilesAfterEnv"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!(react-native|react-native-gesture-handler|react-native-ratings|react-native-size-matters|react-native-picker-select|react-native-swipe-gestures|react-native-status-bar-height|react-native-calendars|react-native-animatable|react-native-modal|react-native-vector-icons|@react-native-community/picker|@react-native-picker/picker|expo-auth-session|expo-constants|expo-linking|expo-web-browser|expo-crypto|expo-random|@unimodules|@expo/vector-icons|expo-font|expo-asset|expo-file-system|react-native-iphone-x-helper|react-native-elements)/)"

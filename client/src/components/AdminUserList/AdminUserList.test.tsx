@@ -24,15 +24,11 @@ describe('Programs', () => {
     )
   }
 
-  const performance = global.performance
-
   beforeEach(() => {
-    global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
     initialState = { userReducer: { user: { ownerOfBox: {} }, users: [] } }
   })
 
   afterEach(() => {
-    global.performance = performance
     jest.resetAllMocks()
   })
 

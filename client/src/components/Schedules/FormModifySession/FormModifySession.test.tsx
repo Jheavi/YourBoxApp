@@ -25,16 +25,13 @@ describe('FormModifySession', () => {
       </Provider>
     )
   }
-  const performance = global.performance
 
   beforeEach(() => {
-    global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
     initialState = { userReducer: { user: { ownerOfBox: {} } } }
     wrapper = wrapperFactory(initialState)
   })
 
   afterEach(() => {
-    global.performance = performance
     initialState = null
     wrapper = null
     jest.resetAllMocks()

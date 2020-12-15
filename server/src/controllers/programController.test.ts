@@ -1,3 +1,4 @@
+export {}
 const programModel = require('../models/programModel')
 const programControllerTest = require('./programController')(programModel)
 

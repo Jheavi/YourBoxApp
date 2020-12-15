@@ -58,52 +58,22 @@ describe('Date Functions', () => {
       })
     })
 
-    test('should return weekDay = monday date is monday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-07')
+    const scenaries = [
+      { day: 'monday', date: '2020-12-07' },
+      { day: 'tuesday', date: '2020-12-08' },
+      { day: 'wednesday', date: '2020-12-09' },
+      { day: 'thursday', date: '2020-12-10' },
+      { day: 'friday', date: '2020-12-11' },
+      { day: 'saturday', date: '2020-12-12' },
+      { day: 'sunday', date: '2020-12-13' },
+      { day: 'error', date: 'error' }
+    ]
+    scenaries.forEach(({ day, date }: {day: string, date:string}) => {
+      test(`should return weekDay = ${day} date is ${day}`, () => {
+        const { weekDay } = extractDataFromDate(date)
 
-      expect(weekDay).toBe('monday')
-    })
-
-    test('should return weekDay = tuesday date is tuesday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-08')
-
-      expect(weekDay).toBe('tuesday')
-    })
-
-    test('should return weekDay = wednesday if date is wednesday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-09')
-
-      expect(weekDay).toBe('wednesday')
-    })
-
-    test('should return weekDay = thursday if date is thursday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-10')
-
-      expect(weekDay).toBe('thursday')
-    })
-
-    test('should return weekDay = friday if date is friday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-11')
-
-      expect(weekDay).toBe('friday')
-    })
-
-    test('should return weekDay = saturday if date is saturday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-12')
-
-      expect(weekDay).toBe('saturday')
-    })
-
-    test('should return weekDay = sunday if date is sunday', () => {
-      const { weekDay } = extractDataFromDate('2020-12-13')
-
-      expect(weekDay).toBe('sunday')
-    })
-
-    test('should return weekDay = error if date is error', () => {
-      const { weekDay } = extractDataFromDate('fakedate')
-
-      expect(weekDay).toBe('error')
+        expect(weekDay).toBe(day)
+      })
     })
   })
 

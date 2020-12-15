@@ -53,7 +53,7 @@ describe('Navigation', () => {
   })
 
   it('render the login component if there is no user', async () => {
-    const initialState = { userReducer: {} }
+    const initialState = { userReducer: {}, boxReducer: {} }
     const wrapper = wrapperFactory(initialState)
     const { getByText } = render(<Navigation />, { wrapper })
     const loginButton = getByText(/Login/)

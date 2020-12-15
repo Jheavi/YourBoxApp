@@ -4,13 +4,16 @@ import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
 import SessionItem from './SessionItem'
+import { SessionInterface } from '../../../interfaces/interfaces'
 
 jest.mock('../FormModifySession/FormModifySession')
 
 const buildStore = configureStore([thunk])
 
 describe('SessionItem', () => {
-  let session
+  let fakeSession: SessionInterface
+  let initialState
+  let wrapper: any
   const day = 'New Day'
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
@@ -23,15 +26,18 @@ describe('SessionItem', () => {
     )
   }
 
+  beforeEach(() => {
+    initialState = { userReducer: { user: { admin: true } } }
+    wrapper = wrapperFactory(initialState)
+    fakeSession = { finishHour: '10:00', startHour: '09:00', type: 'WOD' }
+  })
+
   afterEach(() => {
     jest.resetAllMocks()
   })
 
   it('renders correctly', () => {
-    session = { finishHour: '10:00', startHour: '09:00', type: 'WOD' }
-    const initialState = { userReducer: { user: { admin: true } } }
-    const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
+    const { getByTestId } = render(<SessionItem day={day} session={fakeSession}/>, { wrapper })
 
     const hourText = getByTestId('hourText')
 
@@ -39,10 +45,7 @@ describe('SessionItem', () => {
   })
 
   it('should render background color of session type WOD correctly', () => {
-    session = { finishHour: '10:00', startHour: '09:00', type: 'WOD' }
-    const initialState = { userReducer: { user: { admin: true } } }
-    const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
+    const { getByTestId } = render(<SessionItem day={day} session={fakeSession}/>, { wrapper })
 
     const sessionContainer = getByTestId('sessionContainer')
 
@@ -50,10 +53,8 @@ describe('SessionItem', () => {
   })
 
   it('should render background color of session type Open Box correctly', () => {
-    session = { finishHour: '10:00', startHour: '09:00', type: 'Open Box' }
-    const initialState = { userReducer: { user: { admin: true } } }
-    const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
+    fakeSession = { finishHour: '10:00', startHour: '09:00', type: 'Open Box' }
+    const { getByTestId } = render(<SessionItem day={day} session={fakeSession}/>, { wrapper })
 
     const sessionContainer = getByTestId('sessionContainer')
 
@@ -61,10 +62,8 @@ describe('SessionItem', () => {
   })
 
   it('should render background color of session type Olympics correctly', () => {
-    session = { finishHour: '10:00', startHour: '09:00', type: 'Olympics' }
-    const initialState = { userReducer: { user: { admin: true } } }
-    const wrapper = wrapperFactory(initialState)
-    const { getByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
+    fakeSession = { finishHour: '10:00', startHour: '09:00', type: 'Olympics' }
+    const { getByTestId } = render(<SessionItem day={day} session={fakeSession}/>, { wrapper })
 
     const sessionContainer = getByTestId('sessionContainer')
 
@@ -72,10 +71,7 @@ describe('SessionItem', () => {
   })
 
   it('should change the modal to visible if touchableModal is touched', () => {
-    session = { finishHour: '10:00', startHour: '09:00', type: 'Open Box' }
-    const initialState = { userReducer: { user: { admin: true } } }
-    const wrapper = wrapperFactory(initialState)
-    const { getAllByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
+    const { getAllByTestId } = render(<SessionItem day={day} session={fakeSession}/>, { wrapper })
 
     const [touchableModal, modal] = getAllByTestId(/Modal/)
 
@@ -85,10 +81,7 @@ describe('SessionItem', () => {
   })
 
   it('should change the modal to no-visible if backDropPress', () => {
-    session = { finishHour: '10:00', startHour: '09:00', type: 'Open Box' }
-    const initialState = { userReducer: { user: { admin: true } } }
-    const wrapper = wrapperFactory(initialState)
-    const { getAllByTestId } = render(<SessionItem day={day} session={session}/>, { wrapper })
+    const { getAllByTestId } = render(<SessionItem day={day} session={fakeSession}/>, { wrapper })
 
     const [touchableModal, modal] = getAllByTestId(/Modal/)
 

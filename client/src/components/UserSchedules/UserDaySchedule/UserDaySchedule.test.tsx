@@ -27,11 +27,8 @@ describe('UserDaySchedule', () => {
     )
   }
 
-  const performance = global.performance
-
   beforeEach(() => {
     fakeDay = '12'
-    global.performance = { ...global.performance, now: jest.fn().mockReturnValue(Math.random()) }
     fakeUser = {
       active: false,
       admin: false,
@@ -63,7 +60,6 @@ describe('UserDaySchedule', () => {
   })
 
   afterEach(() => {
-    global.performance = performance
     jest.resetAllMocks()
   })
 

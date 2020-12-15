@@ -15,6 +15,7 @@ const buildStore = configureStore([thunk])
 describe('ProgramDetail', () => {
   let initialState: any
   let fakeAffiliatedUser: userInterface
+  let wrapper: any
   const wrapperFactory = (wrapperInitialState: any) => {
     const store = buildStore(wrapperInitialState)
     store.dispatch = jest.fn()
@@ -28,6 +29,7 @@ describe('ProgramDetail', () => {
 
   beforeEach(() => {
     initialState = {}
+    wrapper = wrapperFactory(initialState)
     fakeAffiliatedUser = {
       active: false,
       admin: false,
@@ -37,7 +39,8 @@ describe('ProgramDetail', () => {
         name: '123',
         direction: '123',
         affiliates: [],
-        owner: '1'
+        owner: '1',
+        photos: []
       },
       affiliatedProgram: {
         _id: '12345',
@@ -60,7 +63,6 @@ describe('ProgramDetail', () => {
   })
 
   it('renders correctly the user\'s name', () => {
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser}/>, { wrapper })
 
     const programName = getByTestId('userName')
@@ -70,7 +72,6 @@ describe('ProgramDetail', () => {
 
   it('should render "Inactivate" in the button if the user is active', () => {
     fakeAffiliatedUser = { ...fakeAffiliatedUser, active: true }
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser}/>, { wrapper })
 
     const activateButtonText = getByTestId('activateBtnText')
@@ -80,7 +81,6 @@ describe('ProgramDetail', () => {
 
   it('should render "Activate" in the button if the user is inactive', () => {
     fakeAffiliatedUser = { ...fakeAffiliatedUser, active: false }
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser}/>, { wrapper })
 
     const activateButtonText = getByTestId('activateBtnText')
@@ -90,7 +90,6 @@ describe('ProgramDetail', () => {
 
   it('should render "none" if the user doesn\'t have a program', () => {
     fakeAffiliatedUser = { ...fakeAffiliatedUser, affiliatedProgram: undefined }
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser}/>, { wrapper })
 
     const affiliatedProgramName = getByTestId('affiliatedProgramName')
@@ -99,7 +98,6 @@ describe('ProgramDetail', () => {
   })
 
   it('should set modal to visible if "actual program" is touched', () => {
-    const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser} />, { wrapper })
 
     const [touchableModal, modal] = getAllByTestId(/Modal/)
@@ -110,7 +108,6 @@ describe('ProgramDetail', () => {
   })
 
   it('should change the modal to no-visible if backDropPress', () => {
-    const wrapper = wrapperFactory(initialState)
     const { getAllByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser} />, { wrapper })
 
     const [touchableModal, modal] = getAllByTestId(/Modal/)
@@ -122,7 +119,6 @@ describe('ProgramDetail', () => {
   })
 
   it('should call toggleUserActive if activate button is pressed', () => {
-    const wrapper = wrapperFactory(initialState)
     const { getByTestId } = render(<UserListDetail affiliatedUser={fakeAffiliatedUser} />, { wrapper })
 
     const activateButton = getByTestId('activateBtn')
