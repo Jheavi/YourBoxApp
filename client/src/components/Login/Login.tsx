@@ -11,7 +11,7 @@ import { BoxInterface, props } from '../../interfaces/interfaces'
 import UpperSawToothBorder from './SawToothBorders/UpperSawToothBorder'
 import LowerSawToothBorder from './SawToothBorders/LowerSawToothBorder'
 import { loadBoxes } from '../../redux/actions/boxActions'
-import Boxdetail from '../BoxDetail/Boxdetail'
+import Boxdetail from '../BoxDetail/BoxDetail'
 
 const { height, width } = Dimensions.get('window')
 
