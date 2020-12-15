@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 function BoxDetail ({ box, dispatch, navigation }: props) {
   function onPress () {
     navigation.navigate('AdminSchedules')
-    dispatch(loadSchedules(box._id))
+    dispatch(loadSchedules(box?._id))
   }
 
   return (
@@ -67,7 +67,7 @@ function BoxDetail ({ box, dispatch, navigation }: props) {
       <View style={styles.gymView}>
       <ImageBackground
         style={styles.gymBackImage}
-        source={{ uri: box.photos[0] }}
+        source={{ uri: box?.photos[0] }}
       />
       <View style={styles.triangleShape}/>
       <TouchableOpacity
@@ -76,7 +76,7 @@ function BoxDetail ({ box, dispatch, navigation }: props) {
         onPress= {onPress}
         testID="seeSchedulesBtn"
       >
-        <Text style={styles.schedulesButtonText}>See schedules</Text>
+        <Text style={styles.schedulesButtonText} testID="seeSchedulesBtnText">See schedules</Text>
       </TouchableOpacity>
       </View>
     </View>
