@@ -11,13 +11,10 @@ const initialState: boxState = {}
 export default function boxReducer (state = initialState, action: AnyAction): boxState {
   let updatedState: boxState
 
-  switch (action.type) {
-    case actionTypes.LOAD_BOXES:
-      updatedState = { ...state, boxes: action.boxes }
-      break
-    default:
-      updatedState = state
-      break
+  if (action.type === actionTypes.LOAD_BOXES) {
+    updatedState = { ...state, boxes: action.boxes }
+  } else {
+    updatedState = state
   }
 
   return updatedState
