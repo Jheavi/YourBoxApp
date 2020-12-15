@@ -24,11 +24,9 @@ const styles = StyleSheet.create({
 
 function Schedules ({ dispatch, schedules, schedulesLoading, user }: props) {
   useEffect(() => {
-    if (!schedules || !schedules.length) {
-      if (user) {
-        dispatch(isSchedulesLoading())
-        dispatch(loadSchedules(user.ownerOfBox!._id))
-      }
+    if (user) {
+      dispatch(isSchedulesLoading())
+      dispatch(loadSchedules(user.ownerOfBox!._id))
     }
   }, [])
 
@@ -41,18 +39,18 @@ function Schedules ({ dispatch, schedules, schedulesLoading, user }: props) {
       }
       {!schedulesLoading &&
       <View style={styles.container}>
-      <Text style={styles.titleText} testID="schedulesTitle">
-        {user?.admin && 'Your Schedules'}
-        {!user && 'Schedules'}
-      </Text>
-      <ScrollView
-        horizontal={true}
-        pagingEnabled={true}
-      >
-      {schedules && schedules.length && schedules.map((weekDay: scheduleInterface) => {
-        return <DaySchedule weekDay={weekDay} key={performance.now() * Math.random()} />
-      })}
-      </ScrollView>
+        <Text style={styles.titleText} testID="schedulesTitle">
+          {user?.admin && 'Your Schedules'}
+          {!user && 'Schedules'}
+        </Text>
+        <ScrollView
+          horizontal={true}
+          pagingEnabled={true}
+        >
+          {schedules && schedules.length && schedules.map((weekDay: scheduleInterface) => {
+            return <DaySchedule weekDay={weekDay} key={performance.now() * Math.random()} />
+          })}
+        </ScrollView>
       </View>
     }
     </>
