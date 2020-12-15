@@ -2,7 +2,7 @@ import programReducer from './programReducer'
 import actionTypes from '../actions/action-types'
 import { ProgramInterface } from '../../interfaces/interfaces'
 
-describe('schedulesReducer', () => {
+describe('programReducer', () => {
   let fakePrograms: ProgramInterface[]
   let fakeUpdatedProgram: ProgramInterface
   let fakeNewProgram: ProgramInterface
