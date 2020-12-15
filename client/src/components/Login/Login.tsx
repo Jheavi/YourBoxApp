@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Platform, Alert, ScrollView, Dimensions } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Alert, ScrollView, Dimensions } from 'react-native'
 import { images } from '../../constants/images'
 import { login } from '../../redux/actions/userActions'
 import { connect } from 'react-redux'
