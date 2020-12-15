@@ -36,6 +36,7 @@ describe('changeReservedSessionsToPastSessions', () => {
   })
 
   test('should call userModel.find', () => {
+    userModel.find = jest.fn().mockResolvedValueOnce([])
     changeReservedSessionsToPastSessions()
 
     expect(userModel.find).toHaveBeenCalled()

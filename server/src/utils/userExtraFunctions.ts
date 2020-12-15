@@ -7,6 +7,7 @@ export async function changeReservedSessionsToPastSessions () {
     const query = { admin: false }
 
     const users = await userModel.find(query)
+
     const bulkOps = []
 
     for (let index = 0; index < users.length; index += 1) {
