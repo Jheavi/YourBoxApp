@@ -99,10 +99,6 @@ function ProgramDetail ({ program }: props) {
             <FormModifyProgram program={program} />
           </Overlay>
         </TouchableOpacity>
-        <View style={{ flex: 1 }}/>
-        <TouchableOpacity style={styles.deleteButton}>
-          <Text style={styles.buttonText}>Delete</Text>
-        </TouchableOpacity>
         <View style={{ flex: 2 }}/>
       </View>
       <View style={{ flex: 1 }}/>

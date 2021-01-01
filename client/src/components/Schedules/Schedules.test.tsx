@@ -86,13 +86,16 @@ describe('Schedules', () => {
     expect(loadSchedules).toHaveBeenCalled()
   })
 
-  it('should not call loadSchedules if schedules array have something', () => {
+  it('should render two DaySchedule components if schedules array is length 2', () => {
     const initialState = {
-      schedulesReducer: { schedules: [{}] },
+      schedulesReducer: { schedules: [{}, {}] },
       userReducer: { user: { admin: true, ownerOfBox: {} } }
     }
     const wrapper = wrapperFactory(initialState)
-    render(<Schedules />, { wrapper })
-    expect(loadSchedules).not.toHaveBeenCalled()
+
+    const { getAllByText } = render(<Schedules />, { wrapper })
+    const daySchedules = getAllByText(/MockedDaySchedule/)
+
+    expect(daySchedules.length).toBe(2)
   })
 })
