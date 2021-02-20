@@ -13,6 +13,8 @@ export interface userState {
 
 const initialState: userState = { isLogged: false }
 
+const orderUsersByName = (userOne: userInterface, userTwo: userInterface) => userOne.name > userTwo.name ? 1 : -1
+
 export default function userReducer (state = initialState, action: AnyAction): userState {
   let pastSessionsThisMonth: PastSession[]
   let reservedSessionsThisMonth: ReservedSession[]
@@ -44,19 +46,23 @@ export default function userReducer (state = initialState, action: AnyAction): u
         user: userWithOrderedPastSessions
       }
       break
+
     case actionTypes.USER_LOGOUT:
       updatedState = { ...state, user: null, isLogged: false }
       break
+
     case actionTypes.LOAD_USERS:
-      orderedUsers = action.users.sort((userOne: userInterface, userTwo: userInterface) => userOne.name > userTwo.name ? 1 : -1)
+      orderedUsers = action.users.sort(orderUsersByName)
       updatedState = { ...state, users: orderedUsers }
       break
+
     case actionTypes.TOGGLE_USER_ACTIVE:
     case actionTypes.UPDATE_USER_PROGRAM:
       updatedUsers = state.users!.filter((user) => user.userId !== action.user.userId)
-      orderedUsers = [...updatedUsers, action.user].sort((userOne: userInterface, userTwo: userInterface) => userOne.name > userTwo.name ? 1 : -1)
+      orderedUsers = [...updatedUsers, action.user].sort(orderUsersByName)
       updatedState = { ...state, users: orderedUsers }
       break
+
     default:
       updatedState = state
       break
