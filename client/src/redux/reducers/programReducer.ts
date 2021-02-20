@@ -7,33 +7,35 @@ export interface programState {
   programsLoading?: boolean
 }
 
+const orderPrograms = (program1: ProgramInterface, program2: ProgramInterface) => (
+  program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
+)
+
 const initialState: programState = { programs: [] }
 
 export default function programReducer (state = initialState, action: AnyAction): programState {
   let updateState: programState
   let orderedPrograms: ProgramInterface[]
   let updatedPrograms: ProgramInterface[]
+
   switch (action.type) {
     case actionTypes.LOAD_PROGRAMS:
-      orderedPrograms = action.programs.sort((program1: ProgramInterface, program2: ProgramInterface) => (
-        program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
-      ))
+      orderedPrograms = action.programs.sort(orderPrograms)
       updateState = { ...state, programs: orderedPrograms }
       break
+
     case actionTypes.UPDATE_PROGRAM:
       updatedPrograms = state.programs.filter((program) => (program._id !== action.program._id))
-      orderedPrograms = [...updatedPrograms, action.program].sort((program1: ProgramInterface, program2: ProgramInterface) => (
-        program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
-      ))
+      orderedPrograms = [...updatedPrograms, action.program].sort(orderPrograms)
       updateState = { ...state, programs: orderedPrograms }
       break
+
     case actionTypes.CREATE_PROGRAM:
       updatedPrograms = [...state.programs, action.newProgram]
-      updatedPrograms.sort((program1: ProgramInterface, program2: ProgramInterface) => (
-        program1.sessionsPerMonth > program2.sessionsPerMonth ? 1 : -1
-      ))
+      updatedPrograms.sort(orderPrograms)
       updateState = { ...state, programs: updatedPrograms }
       break
+
     default:
       updateState = state
       break
