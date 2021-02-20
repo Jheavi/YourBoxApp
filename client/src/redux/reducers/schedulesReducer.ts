@@ -11,33 +11,38 @@ export interface schedulesState {
 
 const initialState: schedulesState = {}
 
+const orderSessions = (session1: SessionInterface, session2: SessionInterface) => (
+  session1.startHour >= session2.startHour ? 1 : -1
+)
+
 export default function schedulesReducer (state = initialState, action: AnyAction): schedulesState {
   let scheduleWithOrderedHours: scheduleInterface
   let schedulesWithOrderedHours: scheduleInterface[]
   let updatedState: schedulesState
+
   switch (action.type) {
     case actionTypes.LOAD_SCHEDULES:
     case actionTypes.UPDATE_SESSION:
     case actionTypes.CREATE_SESSION:
     case actionTypes.DELETE_SESSION:
       schedulesWithOrderedHours = action.schedules.map((schedule: scheduleInterface) => {
-        return { ...schedule, sessions: schedule.sessions.sort((session1, session2) => session1.startHour >= session2.startHour ? 1 : -1) }
+        return { ...schedule, sessions: schedule.sessions.sort(orderSessions) }
       }).sort(sortByWeekDays)
       updatedState = { ...state, schedules: schedulesWithOrderedHours, schedulesLoading: false }
       break
+
     case actionTypes.SCHEDULES_LOADING:
       updatedState = { ...state, schedulesLoading: true }
       break
+
     case actionTypes.LOAD_SCHEDULE:
       scheduleWithOrderedHours = {
         ...action.schedule,
-        sessions: action.schedule.sessions.sort(
-          (session1: SessionInterface, session2: SessionInterface) => (
-            session1.startHour >= session2.startHour ? 1 : -1
-          ))
+        sessions: action.schedule.sessions.sort(orderSessions)
       }
       updatedState = { ...state, schedule: scheduleWithOrderedHours, schedulesLoading: false }
       break
+
     default:
       updatedState = state
       break
