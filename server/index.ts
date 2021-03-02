@@ -10,6 +10,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const chalk = require('chalk')
+require('dotenv').config()
 const workoutRouter = require('./src/routes/workoutRouter')(workoutModel)
 const scheduleRouter = require('./src/routes/scheduleRouter')(scheduleModel)
 const userRouter = require('./src/routes/userRouter')(userModel, boxModel)
@@ -19,7 +20,7 @@ const programRouter = require('./src/routes/programRouter')(programModel)
 const oneHourTime = 3600000
 const server = express()
 const port = process.env.PORT || 2130
-const dbUrl = process.env.DBURL || 'mongodb+srv://Jheavi:JaviMongo@gymapp.yu4va.mongodb.net/gymappdb?retryWrites=true&w=majority'
+const dbUrl = process.env.MONGO_DDBB
 
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 

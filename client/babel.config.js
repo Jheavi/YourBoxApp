@@ -4,6 +4,9 @@ module.exports = function (api) {
     presets: [
       'babel-preset-expo'
     ],
-    plugins: ['@babel/plugin-syntax-flow']
+    plugins: [
+      '@babel/plugin-syntax-flow',
+      'module:react-native-dotenv'
+    ]
   }
 }
