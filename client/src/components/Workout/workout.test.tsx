@@ -81,7 +81,7 @@ describe('Workout', () => {
 
     fireEvent(day20button!, 'press')
 
-    expect(dateTitle.children[0]).toBe(`20/${todayDate.month}/${todayDate.year}`)
+    expect(dateTitle.children[0]).toBe(`20/${todayDate.monthString}/${todayDate.year}`)
   })
 
   it('should put the workout date int the title when the workout is loaded', () => {

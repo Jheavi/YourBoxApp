@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.43.206:2130'
+const baseUrl = 'http://192.168.72.206:2130'
 
 const serverUrls = {
   workoutUrl: `${baseUrl}/workouts`,

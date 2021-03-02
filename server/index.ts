@@ -19,7 +19,7 @@ const programRouter = require('./src/routes/programRouter')(programModel)
 const oneHourTime = 3600000
 const server = express()
 const port = process.env.PORT || 2130
-const dbUrl = process.env.DBURL || 'mongodb+srv://Jheavi:GymAppSkylab@gymapp.yu4va.mongodb.net/gymappdb?retryWrites=true&w=majority'
+const dbUrl = process.env.DBURL || 'mongodb+srv://Jheavi:JaviMongo@gymapp.yu4va.mongodb.net/gymappdb?retryWrites=true&w=majority'
 
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 

@@ -44,6 +44,7 @@ export function extractDataFromDate (date?: string): dateObject {
     year,
     hour: hourString,
     dayString: `${year}-${monthString}-${dayString}`,
+    monthString,
     formattedDate: `${dayString}/${monthString}/${year}`,
     weekDay
   }

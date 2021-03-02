@@ -21,6 +21,7 @@ describe('Date Functions', () => {
         year: 2020,
         hour: '10:00',
         dayString: '2020-11-25',
+        monthString: '11',
         formattedDate: '25/11/2020',
         weekDay: 'wednesday'
       })
@@ -38,6 +39,7 @@ describe('Date Functions', () => {
         year: 2020,
         hour: '00:00',
         dayString: '2020-09-02',
+        monthString: '09',
         formattedDate: '02/09/2020',
         weekDay: 'wednesday'
       })
@@ -53,6 +55,7 @@ describe('Date Functions', () => {
         year: 2020,
         hour: '02:00',
         dayString: '2020-09-02',
+        monthString: '09',
         formattedDate: '02/09/2020',
         weekDay: 'wednesday'
       })

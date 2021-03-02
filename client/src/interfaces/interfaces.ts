@@ -27,6 +27,7 @@ export interface dateObject {
   year: number
   hour: string
   dayString: string
+  monthString: string
   formattedDate: string
   weekDay: string
 }

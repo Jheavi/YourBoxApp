@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { fireEvent, render } from '@testing-library/react-native'
-import Boxdetail from './Boxdetail'
+import BoxDetail from './BoxDetail'
 import { BoxInterface } from '../../interfaces/interfaces'
 
 jest.mock('@react-navigation/native')
@@ -43,7 +43,7 @@ describe('Login', () => {
   })
 
   it('should render "See Schedules" button', async () => {
-    const { getByTestId } = render(<Boxdetail navigation={navigation} box={fakeBox}/>, { wrapper })
+    const { getByTestId } = render(<BoxDetail navigation={navigation} box={fakeBox}/>, { wrapper })
 
     const seeSchedulesButtonText = getByTestId('seeSchedulesBtnText')
 
@@ -51,7 +51,7 @@ describe('Login', () => {
   })
 
   it('should call navigate to AdminSchedules if "See Schedules" button is pressed', async () => {
-    const { getByTestId } = render(<Boxdetail navigation={navigation} box={fakeBox}/>, { wrapper })
+    const { getByTestId } = render(<BoxDetail navigation={navigation} box={fakeBox}/>, { wrapper })
 
     const seeSchedulesButton = getByTestId('seeSchedulesBtn')
     fireEvent.press(seeSchedulesButton)
