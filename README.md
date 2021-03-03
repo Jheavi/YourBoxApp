@@ -15,7 +15,7 @@ The app is made for crossfit users and crossfit box owners where you can:
 ### As an admin 
 
 - See your planned workouts for every day interacting with the calendar, with the possibility of create or modify the workout.
-- See your session schedules, with the possibility of create a new session, modify any existing session or delete them.
+- See your session schedules, with the possibility of create a new session, modify any existing session or delete it.
 - See your programs and modify them, to change the name or the quantity of monthly sessions.
 - See your box affiliates, in which you can activate or deactivate them to let them book sessions. Also you can change their program to change the number of monthly sessions they can book.
 - See your profile, your gym affiliates and your box info.
