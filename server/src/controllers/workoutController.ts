@@ -31,11 +31,10 @@ function workoutController (workoutModel): workoutControllerInterface {
 
   async function updateWorkout ({ params: { date }, body: { boxId, updatedDescription, updatedTitle, updatedType } }: Request, res: Response) {
     try {
-      const queryToFind = { date }
+      const queryToFind = { date, box: boxId }
       const workout = await workoutModel.findOneAndUpdate(
         queryToFind,
         {
-          box: boxId,
           description: updatedDescription,
           title: updatedTitle,
           type: updatedType
